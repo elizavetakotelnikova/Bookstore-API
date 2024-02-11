@@ -4,7 +4,9 @@ package com.bookstore.app.entities.user.persistance;
 import com.bookstore.app.entities.user.User;
 import lombok.AllArgsConstructor;
 
+import javax.management.Query;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -17,14 +19,13 @@ public class UsersRepository implements IUsersRepository {
     public User save(User user) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "INSERT INTO users(id, login, password, balance, birthday) VALUES(@id, @login, @password, @balance, @birthday)");
+                    "INSERT INTO users(id, phone_number, password, balance, birthday) VALUES(?, ?, ?, ?, ?)");
             st.setObject(1, user.getId());
             st.setString(2, user.getPhoneNumber());
             st.setString(3, user.getPassword());
             st.setInt(4, user.getBalance());
-            st.setDate(5, (Date) user.getBirthday());
-            ResultSet rs = st.executeQuery();
-            rs.close();
+            st.setObject(5, user.getBirthday());
+            st.execute();
             st.close();
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
@@ -47,7 +48,7 @@ public class UsersRepository implements IUsersRepository {
                 rs.getString("login"),
                 rs.getString("password"),
                 rs.getInt("balance"),
-                rs.getDate("birthday"));
+                rs.getObject("birthday", LocalDate.class));
         st = connection.prepareStatement(
                     "SELECT id FROM orders" +
                             "WHERE user_id = @id");

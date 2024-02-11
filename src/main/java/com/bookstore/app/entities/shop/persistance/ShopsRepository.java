@@ -96,7 +96,7 @@ public class ShopsRepository implements IShopsRepository {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "DELETE FROM shops WHERE id == @id");
-            st.setLong(1, id);
+            st.setObject(1, id);
             ResultSet rs = st.executeQuery();
             rs.close();
             st.close();

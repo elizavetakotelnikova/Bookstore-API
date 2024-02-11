@@ -15,9 +15,5 @@ public class FeatureType {
         this.id = UUID.randomUUID();
         this.name = name;
     }
-    public FeatureType(UUID id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 }
 

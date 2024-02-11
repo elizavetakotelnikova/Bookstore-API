@@ -37,7 +37,7 @@ public class ProductTypesRepository implements IProductTypesRepository {
             PreparedStatement st = connection.prepareStatement(
                     "SELECT id, name " +
                             "WHERE id = @id");
-            st.setLong(1, id);
+            st.setObject(1, id);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) throw new SQLException();
             ProductType productType = new ProductType(

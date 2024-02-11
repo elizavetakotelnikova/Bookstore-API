@@ -13,10 +13,10 @@ public class User {
     private String phoneNumber;
     private String password;
     private int balance;
-    private Date birthday;
+    private java.time.LocalDate birthday;
     private List<UUID> OrdersHistory;
 
-    public User(String phoneNumber, String password, int balance, Date birthday, List<UUID> ordersHistory) {
+    public User(String phoneNumber, String password, int balance, java.time.LocalDate birthday, List<UUID> ordersHistory) {
         this.id = UUID.randomUUID();
         this.phoneNumber = phoneNumber;
         this.password = password;
@@ -24,7 +24,7 @@ public class User {
         this.birthday = birthday;
         this.OrdersHistory = ordersHistory;
     }
-    public User(UUID id, String phoneNumber, String password, int balance, Date birthday) {
+    public User(UUID id, String phoneNumber, String password, int balance, java.time.LocalDate birthday) {
         this.id = id;
         this.phoneNumber = phoneNumber;
         this.password = password;
