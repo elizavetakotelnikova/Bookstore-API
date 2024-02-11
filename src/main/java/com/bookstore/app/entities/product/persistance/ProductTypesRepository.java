@@ -18,9 +18,8 @@ public class ProductTypesRepository implements IProductTypesRepository {
     public ProductType save(ProductType productType) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "INSERT INTO product_types(name) VALUES(@name) " +
-                            "RETURNING id");
-            st.setString(1,productType.getName());
+                    "INSERT INTO product_types(name) VALUES(@name)");
+            st.setString(1, productType.getName());
             ResultSet rs = st.executeQuery();
             if (!rs.next()) throw new SQLException();
             productType.setId(UUID.fromString(rs.getString("id")));

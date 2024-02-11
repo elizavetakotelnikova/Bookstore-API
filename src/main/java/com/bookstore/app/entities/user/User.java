@@ -1,10 +1,9 @@
 package com.bookstore.app.entities.user;
-
-import com.bookstore.application.entities.order.Order;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -15,9 +14,9 @@ public class User {
     private String password;
     private int balance;
     private Date birthday;
-    private Order[] OrdersHistory;
+    private List<UUID> OrdersHistory;
 
-    public User(String phoneNumber, String password, int balance, Date birthday, Order[] ordersHistory) {
+    public User(String phoneNumber, String password, int balance, Date birthday, List<UUID> ordersHistory) {
         this.id = UUID.randomUUID();
         this.phoneNumber = phoneNumber;
         this.password = password;
