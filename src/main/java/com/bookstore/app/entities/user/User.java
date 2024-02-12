@@ -11,12 +11,12 @@ import java.util.UUID;
 public class User {
     private UUID id;
     private String phoneNumber;
-    private String password;
+    private byte[] password;
     private int balance;
     private java.time.LocalDate birthday;
     private List<UUID> OrdersHistory;
 
-    public User(String phoneNumber, String password, int balance, java.time.LocalDate birthday, List<UUID> ordersHistory) {
+    public User(String phoneNumber, byte[] password, int balance, java.time.LocalDate birthday, List<UUID> ordersHistory) {
         this.id = UUID.randomUUID();
         this.phoneNumber = phoneNumber;
         this.password = password;
@@ -24,7 +24,7 @@ public class User {
         this.birthday = birthday;
         this.OrdersHistory = ordersHistory;
     }
-    public User(UUID id, String phoneNumber, String password, int balance, java.time.LocalDate birthday) {
+    public User(UUID id, String phoneNumber, byte[] password, int balance, java.time.LocalDate birthday) {
         this.id = id;
         this.phoneNumber = phoneNumber;
         this.password = password;

@@ -8,9 +8,11 @@ import com.bookstore.app.entities.product.persistance.IFeatureTypesRepository;
 import com.bookstore.app.entities.product.persistance.IFeatureValuesRepository;
 import com.bookstore.app.entities.user.persistance.IUsersRepository;
 import com.bookstore.app.entities.user.persistance.UsersRepository;
+import com.bookstore.app.infrastructure.HashingConfigure;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 
 @Configuration
@@ -36,5 +38,9 @@ public class BeansConfiguration {
     @Bean
     public IFeatureTypesRepository IFeatureTypesRepository() {
         return new FeatureTypesRepository(connection);
+    }
+    @Bean
+    public HashingConfigure HashingConfigure() throws NoSuchAlgorithmException {
+        return new HashingConfigure();
     }
 }
