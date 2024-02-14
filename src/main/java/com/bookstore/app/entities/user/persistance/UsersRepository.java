@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -33,7 +35,7 @@ public class UsersRepository implements IUsersRepository {
     }
 
     @Override
-    public User getUserById(UUID id) {
+    public User findUserById(UUID id) {
         try {
         PreparedStatement st = connection.prepareStatement(
                 "SELECT id, phone_number, password, balance, birthday FROM users " +
@@ -62,7 +64,16 @@ public class UsersRepository implements IUsersRepository {
     }
 
     @Override
-    public User geUserByPhoneNumber(String phoneNumber) {
+    public List<User> findUserByCriteria(FindCriteria criteria) {
+        List<User> listOfUsers = new ArrayList<>();
+        if (criteria.getPhoneNumber() != null) {
+            listOfUsers.add(findUserByPhoneNumber(criteria.getPhoneNumber()));
+        }
+        if (criteria.getBirthday() != null) listOfUsers = findUserByBirthday(criteria.getBirthday());
+        return listOfUsers;
+    }
+
+    public User findUserByPhoneNumber(String phoneNumber) {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "SELECT id, phone_number, password, balance, birthday FROM users " +
@@ -90,10 +101,56 @@ public class UsersRepository implements IUsersRepository {
         }
     }
 
-    @Override
-    public void updateUser() {
+    public List<User> findUserByBirthday(LocalDate date) {
+        try {
+            PreparedStatement st = connection.prepareStatement(
+                    "SELECT id, phone_number, password, balance, birthday FROM users " +
+                            "WHERE birthday = ?");
+            st.setObject(1, date);
+            ResultSet rs = st.executeQuery();
+            if (!rs.next()) throw new SQLException();
+            List<User> listOfUsers = new ArrayList<>();
+            while(rs.next()) {
+                User user = new User(UUID.fromString(rs.getString("id")),
+                        rs.getString("phone_number"),
+                        rs.getBytes("password"),
+                        rs.getInt("balance"),
+                        rs.getObject("birthday", LocalDate.class));
+                st = connection.prepareStatement(
+                        "SELECT id FROM orders" +
+                                "WHERE user_id = ?");
+                st.setObject(1, user.getId());
+                while (rs.next()) {
+                    user.getOrdersHistory().add(UUID.fromString(rs.getString("id")));
+                }
+                listOfUsers.add(user);
+            }
+            rs.close();
+            st.close();
+            return listOfUsers;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 
-    }  //подумать над этим
+    @Override
+    public User updateUser(User user) {
+        try {
+            PreparedStatement st = connection.prepareStatement(
+                    "UPDATE users SET id = ?, phone_number = ?, password = ?, balance = ?, birthday = ?");
+            st.setObject(1, user.getId());
+            st.setString(2, user.getPhoneNumber());
+            st.setBytes(3, user.getPassword());
+            st.setInt(4, user.getBalance());
+            st.setObject(5, user.getBirthday());
+            st.execute();
+            st.close();
+            //check orders?
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return user;
+    }
 
     @Override
     public void deleteUserById(UUID id) {

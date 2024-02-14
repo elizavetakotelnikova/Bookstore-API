@@ -6,6 +6,6 @@ import lombok.Data;
 import java.util.UUID;
 @AllArgsConstructor
 @Data
-public class CreateResponseBody {
+public class UserIDResponse {
     UUID id;
 }

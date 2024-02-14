@@ -9,7 +9,8 @@ import java.util.UUID;
 public interface IShopsRepository {
     Shop save(Shop shop);
     Shop getShopById(UUID id);
-    List<Shop> findAllShopsByCity(String city);
+    List<Shop> findShopsByCriteria(FindCriteria criteria);
+
     void deleteShopById(UUID id);
     Shop update(Shop shop);
 }

@@ -6,6 +6,7 @@ import com.bookstore.app.entities.product.persistance.FeatureTypesRepository;
 import com.bookstore.app.entities.product.persistance.FeatureValuesRepository;
 import com.bookstore.app.entities.product.persistance.IFeatureTypesRepository;
 import com.bookstore.app.entities.product.persistance.IFeatureValuesRepository;
+import com.bookstore.app.entities.user.api.UserMapper;
 import com.bookstore.app.entities.user.persistance.IUsersRepository;
 import com.bookstore.app.entities.user.persistance.UsersRepository;
 import com.bookstore.app.infrastructure.HashingConfigure;
@@ -42,5 +43,9 @@ public class BeansConfiguration {
     @Bean
     public HashingConfigure HashingConfigure() throws NoSuchAlgorithmException {
         return new HashingConfigure();
+    }
+    @Bean
+    public UserMapper UserMapper() {
+        return new UserMapper();
     }
 }

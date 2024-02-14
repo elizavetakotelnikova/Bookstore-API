@@ -37,7 +37,7 @@ CREATE TABLE shops (
                         id UUID PRIMARY KEY,
                         country varchar(255) NOT NULL,
                         city varchar(255) NOT NULL,
-                        street_name varchar(255) NOT NULL,
+                        street varchar(255) NOT NULL,
                         house_number varchar(255) NOT NULL,
                         building_number int);
 

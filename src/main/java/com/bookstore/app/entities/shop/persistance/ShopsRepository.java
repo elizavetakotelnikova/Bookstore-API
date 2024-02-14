@@ -19,7 +19,7 @@ public class ShopsRepository implements IShopsRepository {
     public Shop save(Shop shop) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "INSERT INTO shops(id, country, city, street_name, house_number, building_number) VALUES(@id, @country, @city, @street, @house_number, @building_number)");
+                    "INSERT INTO shops(id, country, city, street, house_number, building_number) VALUES(?, ?, ?, ?, ?, ?)");
             st.setObject(1, shop.getId());
             st.setString(2, shop.getAddress().getCountry());
             st.setString(3, shop.getAddress().getCity());
@@ -41,7 +41,7 @@ public class ShopsRepository implements IShopsRepository {
             PreparedStatement st = connection.prepareStatement(
                     "SELECT id, country, city, street, house_number, building_number " +
                             "FROM shops " +
-                            "WHERE id == @id");
+                            "WHERE id = ?");
             st.setObject(1, id);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) throw new SQLException();
@@ -62,12 +62,17 @@ public class ShopsRepository implements IShopsRepository {
     }
 
     @Override
+    public List<Shop> findShopsByCriteria(FindCriteria criteria) {
+        if (criteria.city != null) return findAllShopsByCity(criteria.city);
+        return null;
+    }
+
     public List<Shop> findAllShopsByCity(String city) {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "SELECT id, country, city, street, house_number, building_number " +
                             "FROM shops " +
-                            "WHERE city == @city");
+                            "WHERE city = ?");
             st.setString(1, city);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) throw new SQLException();
@@ -75,7 +80,7 @@ public class ShopsRepository implements IShopsRepository {
             while (rs.next())
             {
                 listOfShops.add(new Shop(
-                        rs.getLong("id"),
+                        UUID.fromString(rs.getString("id")),
                         new ShopAddress(
                                 rs.getString("country"),
                                 rs.getString("city"),
@@ -95,7 +100,7 @@ public class ShopsRepository implements IShopsRepository {
     public void deleteShopById(UUID id) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "DELETE FROM shops WHERE id == @id");
+                    "DELETE FROM shops WHERE id == ?");
             st.setObject(1, id);
             ResultSet rs = st.executeQuery();
             rs.close();
@@ -109,7 +114,7 @@ public class ShopsRepository implements IShopsRepository {
     public Shop update(Shop shop) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "UPDATE shops SET id = @id, country = @country, city = @city, street_name = @street, house_number = @house_number, building_number = @building_number");
+                    "UPDATE shops SET id = ?, country = ?, city = ?, street = ?, house_number = ?, building_number = ?");
             st.setObject(1, shop.getId());
             st.setString(2, shop.getAddress().getCountry());
             st.setString(3, shop.getAddress().getCity());
