@@ -1,6 +1,5 @@
-package com.bookstore.app.entities.user.persistance;
+package com.bookstore.app.entities.user.usecases.commands;
 
-import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -9,8 +8,10 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class FindCriteria {
+public class CreateUserCommand {
     private String phoneNumber;
-    @Nullable
+    private String password;
+    private int balance;
     private java.time.LocalDate birthday;
+    private List<UUID> OrdersHistory;
 }

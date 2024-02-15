@@ -1,4 +1,4 @@
-package com.bookstore.app.entities.user.api;
+package com.bookstore.app.entities.user.api.viewModels;
 
 import lombok.Data;
 

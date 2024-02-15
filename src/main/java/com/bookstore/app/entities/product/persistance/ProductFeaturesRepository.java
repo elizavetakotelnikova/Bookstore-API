@@ -13,19 +13,18 @@ import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
-public class FeatureValuesRepository implements IFeatureValuesRepository {
+public class ProductFeaturesRepository implements IProductFeaturesRepository {
     private Connection connection;
 
     @Override
     public ProductFeature save(ProductFeature productFeature) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "INSERT INTO feature_value(id, feature_type_id, value) VALUES(@feature_type_id, @value)");
-            st.setObject(1, productFeature.getType().getId());
-            st.setString(2, productFeature.getValue());
-            ResultSet rs = st.executeQuery();
-            if (!rs.next()) throw new SQLException();
-            rs.close();
+                    "INSERT INTO feature_value(id, feature_type_id, value) VALUES(?, ?, ?)");
+            st.setObject(1, productFeature.getId());
+            st.setObject(2, productFeature.getType().getId());
+            st.setString(3, productFeature.getValue());
+            st.executeQuery();
             st.close();
             return productFeature;
         } catch (Exception e) {
@@ -41,7 +40,7 @@ public class FeatureValuesRepository implements IFeatureValuesRepository {
                             "FROM feature_value AS f_v" +
                             "INNER JOIN feature_type AS f_t" +
                             "ON f_v.feature_type_id == f_t.id" +
-                            "WHERE f_v.id = @id");
+                            "WHERE f_v.id = ?");
             st.setObject(1, id);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) throw new SQLException();
@@ -65,7 +64,7 @@ public class FeatureValuesRepository implements IFeatureValuesRepository {
                             "FROM feature_value AS f_v" +
                             "INNER JOIN feature_type AS f_t" +
                             "ON f_v.feature_type_id == f_t.id" +
-                            "WHERE f_v.feature_type_id = @id");
+                            "WHERE f_v.feature_type_id = ?");
             st.setObject(1, id);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) throw new SQLException();
@@ -87,7 +86,7 @@ public class FeatureValuesRepository implements IFeatureValuesRepository {
     }
 
     @Override
-    public void deleteFeatureByFeatureId(UUID id) {
+    public void deleteProductFeatureById(UUID id) {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "DELETE FROM feature_value WHERE id == @id");

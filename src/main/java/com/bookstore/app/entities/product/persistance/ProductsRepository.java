@@ -21,20 +21,19 @@ public class ProductsRepository implements IProductsRepository {
     public Product save(Product product) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "INSERT INTO products(id, type_id, price) VALUES(@product_id, @type_id, @price)");
+                    "INSERT INTO products(id, type_id, price) VALUES(?, ?, ?)");
             st.setObject(1, product.getId());
             st.setObject(2, product.getType().getId());
             st.setInt(3, product.getPrice());
-            ResultSet rs = st.executeQuery();
+            st.executeQuery();
 
             st = connection.prepareStatement(
-                    "INSERT INTO product_features(product_id, feature_id) VALUES(@product_id, @feature_id)");
+                    "INSERT INTO product_features(product_id, feature_id) VALUES(?, ?)");
             for (ProductFeature feature : product.getFeatures()) {
                 st.setObject(1, product.getId());
                 st.setObject(2, feature.getId());
-                rs = st.executeQuery();
+                st.executeQuery();
             }
-            rs.close();
             st.close();
             return product;
         } catch (Exception e) {
@@ -50,7 +49,7 @@ public class ProductsRepository implements IProductsRepository {
                             "FROM products AS p" +
                             "INNER JOIN types AS t" +
                             "ON p.type_id == t.id" +
-                            "WHERE id = @product_id");
+                            "WHERE id = ?");
             st.setObject(1, id);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) throw new SQLException();
@@ -66,7 +65,7 @@ public class ProductsRepository implements IProductsRepository {
                             "FROM feature_value AS f_v" +
                             "INNER JOIN feature_type AS f_t" +
                             "ON f_v.feature_type_id == f_t.id" +
-                            "WHERE f_v.id = @id");
+                            "WHERE f_v.id = ?");
             rs = st.executeQuery();
             while (!rs.next()) {
                 ProductFeature currentFeature = new ProductFeature(UUID.fromString(rs.getString("f_v.id")),
@@ -85,14 +84,19 @@ public class ProductsRepository implements IProductsRepository {
     }
 
     @Override
-    public List<Product> findAllProductsByTypeId(UUID id) {
+    public List<Product> findProductsByCriteria(FindCriteria criteria) {
+        if (criteria.typeId != null) return findProductsByTypeId(criteria.typeId);
+        return null;
+    }
+
+    public List<Product> findProductsByTypeId(UUID id) {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "SELECT p.id, p.type_id, p.price, p.name, t.name " +
                             "FROM products AS p" +
                             "INNER JOIN types AS t" +
                             "ON p.type_id == t.id" +
-                            "WHERE p.type_id = @type_id");
+                            "WHERE p.type_id = ?");
             st.setObject(1, id);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) throw new SQLException();
@@ -105,7 +109,7 @@ public class ProductsRepository implements IProductsRepository {
                         rs.getString("p.name"),
                         rs.getInt("p.price"));
 
-                while (!rs.next()) {
+                while (rs.next()) {
                     ProductFeature currentFeature = new ProductFeature(UUID.fromString(rs.getString("f_v.id")),
                             new FeatureType(
                                     UUID.fromString(rs.getString("f_v.feature_type_id")),
@@ -122,12 +126,14 @@ public class ProductsRepository implements IProductsRepository {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
+        //заменить цикл, посмотреть в чем ошибка была
     }
 
     @Override
     public Product updateProduct(Product product) {
         deleteProductById(product.getId());
         save(product);
+        //заменить на нормальный update
         return product;
     }
 
@@ -137,15 +143,14 @@ public class ProductsRepository implements IProductsRepository {
     public void deleteProductById(UUID id) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "DELETE FROM products WHERE id == @product_id");
+                    "DELETE FROM products WHERE id = ?");
             st.setObject(1, id);
-            ResultSet rs = st.executeQuery();
+            st.executeQuery();
 
             st = connection.prepareStatement(
-                    "DELETE FROM product_features WHERE product_id == @id");
+                    "DELETE FROM product_features WHERE product_id = ?");
             st.setObject(1, id);
-            rs = st.executeQuery();
-            rs.close();
+            st.executeQuery();
             st.close();
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());

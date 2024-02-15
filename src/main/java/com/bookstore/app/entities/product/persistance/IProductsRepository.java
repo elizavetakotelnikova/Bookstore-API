@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface IProductsRepository {
     Product save(Product product);
     Product getProductById(UUID id);
-    List<Product> findAllProductsByTypeId(UUID id);
+    List<Product> findProductsByCriteria(FindCriteria criteria);
 
     Product updateProduct(Product product);
     void deleteProductById(UUID id);

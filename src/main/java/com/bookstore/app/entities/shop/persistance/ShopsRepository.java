@@ -46,7 +46,7 @@ public class ShopsRepository implements IShopsRepository {
             ResultSet rs = st.executeQuery();
             if (!rs.next()) throw new SQLException();
             Shop shop = new Shop(
-                    rs.getLong("id"),
+                    UUID.fromString(rs.getString("id")),
                     new ShopAddress(
                             rs.getString("country"),
                             rs.getString("city"),

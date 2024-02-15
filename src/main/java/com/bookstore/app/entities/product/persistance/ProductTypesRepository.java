@@ -18,12 +18,9 @@ public class ProductTypesRepository implements IProductTypesRepository {
     public ProductType save(ProductType productType) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "INSERT INTO product_types(name) VALUES(@name)");
+                    "INSERT INTO product_types(name) VALUES(?)");
             st.setString(1, productType.getName());
-            ResultSet rs = st.executeQuery();
-            if (!rs.next()) throw new SQLException();
-            productType.setId(UUID.fromString(rs.getString("id")));
-            rs.close();
+            st.executeQuery();
             st.close();
             return productType;
         } catch (Exception e) {
@@ -36,7 +33,7 @@ public class ProductTypesRepository implements IProductTypesRepository {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "SELECT id, name " +
-                            "WHERE id = @id");
+                            "WHERE id = ?");
             st.setObject(1, id);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) throw new SQLException();
@@ -55,10 +52,9 @@ public class ProductTypesRepository implements IProductTypesRepository {
     public void deleteProductTypeById(UUID id) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "DELETE FROM product_types WHERE id == @id");
+                    "DELETE FROM product_types WHERE id = ?");
             st.setObject(1, id);
-            ResultSet rs = st.executeQuery();
-            rs.close();
+            st.executeQuery();
             st.close();
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
@@ -68,9 +64,17 @@ public class ProductTypesRepository implements IProductTypesRepository {
     @Override
     @Transactional
     @Modifying
-    public ProductType updateProductTypeNameById(UUID id, String newName) {
-        ProductType productType = this.getProductTypeById(id);
-        productType.setName(newName);
-        return productType;
+    public ProductType updateProductType(ProductType productType) {
+        try {
+            PreparedStatement st = connection.prepareStatement(
+                    "UPDATE product_types SET name = ? " +
+                            "WHERE id = type.id");
+            st.setString(1, productType.getName());
+            st.executeQuery();
+            st.close();
+            return productType;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

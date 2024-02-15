@@ -1,4 +1,4 @@
-package com.bookstore.app.entities.user.api;
+package com.bookstore.app.entities.user.api.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

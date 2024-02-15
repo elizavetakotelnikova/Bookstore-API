@@ -16,7 +16,7 @@ public class FeatureTypesRepository implements IFeatureTypesRepository {
     public FeatureType save(FeatureType featureType) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "INSERT INTO feature_types(id, name) VALUES(@id, @name)");
+                    "INSERT INTO feature_types(id, name) VALUES(?, ?)");
             st.setObject(1, featureType.getId());
             st.setString(2, featureType.getName());
             ResultSet rs = st.executeQuery();
@@ -30,11 +30,11 @@ public class FeatureTypesRepository implements IFeatureTypesRepository {
     }
 
     @Override
-    public FeatureType getFeatureNameById(UUID id) {
+    public FeatureType getFeatureTypeById(UUID id) {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "SELECT id, name FROM feature_types " +
-                            "WHERE id = @id");
+                            "WHERE id = ?");
             st.setObject(1, id);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) throw new SQLException();
@@ -53,10 +53,9 @@ public class FeatureTypesRepository implements IFeatureTypesRepository {
     public void deleteFeatureTypeById(UUID id) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "DELETE FROM feature_types WHERE id == @id");
+                    "DELETE FROM feature_types WHERE id == ?");
             st.setObject(1, id);
-            ResultSet rs = st.executeQuery();
-            rs.close();
+            st.executeQuery();
             st.close();
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());

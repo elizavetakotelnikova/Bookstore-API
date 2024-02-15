@@ -6,6 +6,6 @@ import java.util.UUID;
 
 public interface IFeatureTypesRepository {
     FeatureType save(FeatureType product);
-    FeatureType getFeatureNameById(UUID id);
+    FeatureType getFeatureTypeById(UUID id);
     void deleteFeatureTypeById(UUID id);
 }

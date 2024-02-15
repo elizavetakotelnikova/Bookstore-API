@@ -3,9 +3,9 @@ package com.bookstore.app.configuration;
 import com.bookstore.app.entities.order.persistance.IOrdersRepository;
 import com.bookstore.app.entities.order.persistance.OrdersRepository;
 import com.bookstore.app.entities.product.persistance.FeatureTypesRepository;
-import com.bookstore.app.entities.product.persistance.FeatureValuesRepository;
+import com.bookstore.app.entities.product.persistance.ProductFeaturesRepository;
 import com.bookstore.app.entities.product.persistance.IFeatureTypesRepository;
-import com.bookstore.app.entities.product.persistance.IFeatureValuesRepository;
+import com.bookstore.app.entities.product.persistance.IProductFeaturesRepository;
 import com.bookstore.app.entities.user.api.UserMapper;
 import com.bookstore.app.entities.user.persistance.IUsersRepository;
 import com.bookstore.app.entities.user.persistance.UsersRepository;
@@ -33,8 +33,8 @@ public class BeansConfiguration {
         return new UsersRepository(connection);
     }
     @Bean
-    public IFeatureValuesRepository IFeatureValuesRepository() {
-        return new FeatureValuesRepository(connection);
+    public IProductFeaturesRepository IFeatureValuesRepository() {
+        return new ProductFeaturesRepository(connection);
     }
     @Bean
     public IFeatureTypesRepository IFeatureTypesRepository() {
