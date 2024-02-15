@@ -6,7 +6,7 @@ import com.bookstore.app.infrastructure.HashingConfigure;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GetTokenUsecase {
+public class GetTokenUseCase {
     IUsersRepository usersRepository;
     HashingConfigure hashingConfigure;
     public String ValidatePasswordFromDB(String passwordFromUser, String phoneNumber) {

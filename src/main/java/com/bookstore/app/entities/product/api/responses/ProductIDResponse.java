@@ -1,12 +1,11 @@
-package com.bookstore.app.entities.shop.api;
+package com.bookstore.app.entities.product.api.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.UUID;
-
 @Data
 @AllArgsConstructor
-public class ShopIDResponse {
-    private UUID id;
+public class ProductIDResponse {
+    UUID id;
 }

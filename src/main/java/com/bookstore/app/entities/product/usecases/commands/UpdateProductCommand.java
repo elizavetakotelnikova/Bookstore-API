@@ -1,4 +1,4 @@
-package com.bookstore.app.entities.product.api;
+package com.bookstore.app.entities.product.usecases.commands;
 
 import com.bookstore.app.models.ProductFeature;
 import com.bookstore.app.models.ProductType;
@@ -6,11 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class CreateProductViewModel {
+public class UpdateProductCommand {
     private ProductType type;
     private String name;
     private int price;

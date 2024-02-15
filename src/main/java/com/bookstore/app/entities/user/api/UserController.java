@@ -27,17 +27,17 @@ public class UserController {
     @Autowired
     private IUsersRepository usersRepository;
     @Autowired
-    private GetTokenUsecase getTokenUsecase;
+    private GetTokenUseCase getTokenUsecase;
     @Autowired
-    private CreateUserUsecase createUserUsecase;
+    private CreateUserUseCase createUserUsecase;
     @Autowired
-    private FindUserByIdUsecase findUserByIdUsecase;
+    private FindUserByIdUseCase findUserByIdUsecase;
     @Autowired
-    private FindUsersByCriteriaUsecase findUsersByCriteriaUsecase;
+    private FindUsersByCriteriaUseCase findUsersByCriteriaUsecase;
     @Autowired
-    private UpdateUserUsecase updateUserUsecase;
+    private UpdateUserUseCase updateUserUsecase;
     @Autowired
-    private DeleteUserUsecase deleteUserUsecase;
+    private DeleteUserUseCase deleteUserUsecase;
     //private UserMapper userMapper; not known where to place it
 
     @PostMapping("/users")

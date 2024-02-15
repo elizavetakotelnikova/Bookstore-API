@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CreateUserUsecase {
+public class CreateUserUseCase {
     @Autowired
     private HashingConfigure hashingConfigure;
     public boolean ValidateUser(CreateUserCommand command) {

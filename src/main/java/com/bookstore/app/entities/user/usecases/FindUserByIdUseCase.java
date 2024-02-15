@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class DeleteUserUsecase {
+public class FindUserByIdUseCase {
     private IUsersRepository usersRepository;
 
-    public void Handle(UUID id) {
-        usersRepository.deleteUserById(id);
+    public User Handle(UUID id) {
+        return usersRepository.findUserById(id);
     }
 }

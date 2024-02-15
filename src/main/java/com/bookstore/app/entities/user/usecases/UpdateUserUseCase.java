@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UpdateUserUsecase {
+public class UpdateUserUseCase {
     @Autowired
     private IUsersRepository usersRepository;
     private HashingConfigure hashingConfigure;

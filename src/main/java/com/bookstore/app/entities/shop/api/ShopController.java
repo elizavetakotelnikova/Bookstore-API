@@ -1,6 +1,9 @@
 package com.bookstore.app.entities.shop.api;
 
 import com.bookstore.app.entities.shop.Shop;
+import com.bookstore.app.entities.shop.api.responses.ShopIDResponse;
+import com.bookstore.app.entities.shop.api.responses.ShopJsonResponse;
+import com.bookstore.app.entities.shop.api.viewModels.CreateShopViewModel;
 import com.bookstore.app.entities.shop.persistance.IShopsRepository;
 import com.bookstore.app.entities.shop.persistance.FindCriteria;
 import org.springframework.data.repository.query.Param;

@@ -1,4 +1,4 @@
-package com.bookstore.app.entities.shop.api;
+package com.bookstore.app.entities.shop.api.responses;
 
 import com.bookstore.app.models.ShopAddress;
 import lombok.AllArgsConstructor;

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class FindUsersByCriteriaUsecase {
+public class FindUsersByCriteriaUseCase {
     @Autowired
     private IUsersRepository usersRepository;
 
