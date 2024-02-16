@@ -6,6 +6,8 @@ import com.bookstore.app.entities.product.persistance.FeatureTypesRepository;
 import com.bookstore.app.entities.product.persistance.ProductFeaturesRepository;
 import com.bookstore.app.entities.product.persistance.IFeatureTypesRepository;
 import com.bookstore.app.entities.product.persistance.IProductFeaturesRepository;
+import com.bookstore.app.entities.shop.persistance.IShopsRepository;
+import com.bookstore.app.entities.shop.persistance.ShopsRepository;
 import com.bookstore.app.entities.user.persistance.IUsersRepository;
 import com.bookstore.app.entities.user.persistance.UsersRepository;
 import com.bookstore.app.infrastructure.HashingConfigure;
@@ -38,6 +40,10 @@ public class BeansConfiguration {
     @Bean
     public IFeatureTypesRepository IFeatureTypesRepository() {
         return new FeatureTypesRepository(connection);
+    }
+    @Bean
+    public IShopsRepository IShopsRepository() {
+        return new ShopsRepository(connection);
     }
     @Bean
     public HashingConfigure HashingConfigure() throws NoSuchAlgorithmException {

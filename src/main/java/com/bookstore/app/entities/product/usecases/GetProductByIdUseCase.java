@@ -11,7 +11,7 @@ import java.util.UUID;
 public class GetProductByIdUseCase {
     @Autowired
     private IProductsRepository productsRepository;
-    public Product Handle(UUID id) {
+    public Product handle(UUID id) {
         return productsRepository.getProductById(id);
     }
 }

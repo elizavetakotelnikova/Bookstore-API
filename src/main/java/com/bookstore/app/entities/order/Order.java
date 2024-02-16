@@ -33,6 +33,12 @@ public class Order {
         this.shopId = shopId;
         this.orderState = state;
     }
+    public Order(UUID userId, Date date, UUID shopId, OrderState state, List<Product> productList) {
+        this.userId = userId;
+        this.date = date;
+        this.shopId = shopId;
+        this.orderState = state;
+    }
 
     public float calculateTotalPrice() {
         return productList.stream().mapToInt(Product::getPrice).sum();

@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -22,7 +23,7 @@ public class OrdersRepository implements IOrdersRepository {
     public Order save(Order order) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "INSERT INTO orders(id, user_id, date, shop_id, state) VALUES(@id, @user_id, @date, @shop_id, @order_state)");
+                    "INSERT INTO orders(id, user_id, date, shop_id, state) VALUES(?, ?, ?, ?, ?)");
             st.setObject(1, order.getId());
             st.setObject(2, order.getUserId());
             st.setDate(3, order.getDate());
@@ -31,7 +32,7 @@ public class OrdersRepository implements IOrdersRepository {
             ResultSet rs = st.executeQuery();
 
             st = connection.prepareStatement(
-                    "INSERT INTO order_content(order_id, product_id) VALUES(@order_id, @product_id)");
+                    "INSERT INTO order_content(order_id, product_id) VALUES(?, ?)");
             for (Product product : order.getProductList()) {
                 st.setObject(1, order.getId());
                 st.setObject(2, product.getId());
@@ -50,7 +51,7 @@ public class OrdersRepository implements IOrdersRepository {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "SELECT id, user_id, date, shop_id, state " +
-                            "FROM orders ");
+                            "FROM orders WHERE id = ?");
             st.setObject(1, id);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) throw new SQLException();
@@ -64,7 +65,7 @@ public class OrdersRepository implements IOrdersRepository {
 
             st = connection.prepareStatement(
                     "SELECT product_id FROM order_content " +
-                            "WHERE order_id == @id");
+                            "WHERE order_id = ?");
             st.setObject(1, order.getId());
             List<UUID> listOfIds = new ArrayList<>();
             rs = st.executeQuery();
@@ -81,11 +82,17 @@ public class OrdersRepository implements IOrdersRepository {
     }
 
     @Override
+    public List<Order> findOrdersByCriteria(FindCriteria criteria) {
+        if (criteria.getUserId() != null) return findAllOrdersByUserId(criteria.getUserId());
+        if (criteria.getDate() != null) return findAllOrdersByDate(criteria.getDate());
+        throw new RuntimeException("cannot find any orders");
+    }
+
     public List<Order> findAllOrdersByUserId(UUID id) {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "SELECT id FROM orders" +
-                            "WHERE user_id = @id");
+                            "WHERE user_id = ?");
             st.setObject(1, id);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) throw new SQLException();
@@ -102,13 +109,12 @@ public class OrdersRepository implements IOrdersRepository {
         }
     }
 
-    @Override
-    public List<Order> findAllOrdersByDate(Date date) {
+    public List<Order> findAllOrdersByDate(LocalDate date) {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "SELECT id FROM orders"+
-                    "WHERE date == @date");
-            st.setDate(1, date);
+                    "WHERE date = ?");
+            st.setDate(1, Date.valueOf(date));
             ResultSet rs = st.executeQuery();
             if (!rs.next()) throw new SQLException();
             List<Order> listOfOrders = new ArrayList<>();
@@ -128,11 +134,11 @@ public class OrdersRepository implements IOrdersRepository {
     public void deleteOrderById(UUID id) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "DELETE FROM orders WHERE id == @order_id");
+                    "DELETE FROM orders WHERE id = ?");
             st.setObject(1, id);
             ResultSet rs = st.executeQuery();
             st = connection.prepareStatement(
-                    "DELETE FROM order_content WHERE order_id == @order_id");
+                    "DELETE FROM order_content WHERE order_id = ?");
             st.setObject(1, id);
             rs = st.executeQuery();
             rs.close();
@@ -151,7 +157,7 @@ public class OrdersRepository implements IOrdersRepository {
                                 "FROM products AS p" +
                                 "INNER JOIN types AS t" +
                                 "ON p.type_id == t.id" +
-                                "WHERE id = @product_id");
+                                "WHERE id = ?");
                 st.setObject(1, currentId);
                 ResultSet rs = st.executeQuery();
                 if (!rs.next()) throw new SQLException();
@@ -167,7 +173,7 @@ public class OrdersRepository implements IOrdersRepository {
                                 "FROM feature_value AS f_v" +
                                 "INNER JOIN feature_type AS f_t" +
                                 "ON f_v.feature_type_id == f_t.id" +
-                                "WHERE f_v.id = @id");
+                                "WHERE f_v.id = ?");
                 rs = st.executeQuery();
                 while (!rs.next()) {
                     ProductFeature currentFeature = new ProductFeature(UUID.fromString(rs.getString("f_v.id")),
@@ -192,7 +198,7 @@ public class OrdersRepository implements IOrdersRepository {
     public Order updateOrder(Order order) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "UPDATE orders SET id = @id, user_id = @user_id, date = @date, shop_id = @shop_id, state = @state");
+                    "UPDATE orders SET id = ?, user_id = ?, date = ?, shop_id = ?, state = ?");
             st.setObject(1, order.getId());
             st.setObject(2, order.getUserId());
             st.setDate(3, order.getDate());
@@ -201,7 +207,7 @@ public class OrdersRepository implements IOrdersRepository {
             ResultSet rs = st.executeQuery();
 
             st = connection.prepareStatement(
-                    "UPDATE order_content SET order_id = @order_id, product_id = @product_id");
+                    "UPDATE order_content SET order_id = ?, product_id = ?");
             for (Product product : order.getProductList()) {
                 st.setObject(1, order.getId());
                 st.setObject(2, product.getId());

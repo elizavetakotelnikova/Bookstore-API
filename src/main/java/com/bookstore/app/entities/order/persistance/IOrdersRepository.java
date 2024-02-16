@@ -3,9 +3,11 @@ package com.bookstore.app.entities.order.persistance;
 import com.bookstore.app.entities.order.Order;
 import com.bookstore.app.valueObjects.OrderState;
 import jakarta.transaction.Transactional;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,8 +15,7 @@ import java.util.UUID;
 public interface IOrdersRepository {
     Order save(Order order);
     Order getOrderById(UUID id);
-    List<Order> findAllOrdersByUserId(UUID id);
-    List<Order> findAllOrdersByDate(Date date);
+    List<Order> findOrdersByCriteria(FindCriteria criteria);
     void deleteOrderById(UUID id);
     //Order updateOrdersStateById(UUID id, OrderState newOrderState);
 

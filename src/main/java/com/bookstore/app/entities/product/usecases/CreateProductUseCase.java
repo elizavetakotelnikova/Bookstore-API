@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CreateProductUseCase {
     private IProductsRepository productsRepository;
-    public Product Handle(CreateProductCommand command) {
+    public Product handle(CreateProductCommand command) {
         if (command.getName() == null ||
         command.getType().getName() == null) throw new RuntimeException("Cannot create product");
         var product = new Product(command.getType(), command.getName(), command.getPrice(), command.getFeatures());

@@ -13,7 +13,7 @@ public class FindUsersByCriteriaUseCase {
     @Autowired
     private IUsersRepository usersRepository;
 
-    public List<User> Handle(FindCriteria criteria) {
+    public List<User> handle(FindCriteria criteria) {
         return usersRepository.findUserByCriteria(criteria);
     }
 }

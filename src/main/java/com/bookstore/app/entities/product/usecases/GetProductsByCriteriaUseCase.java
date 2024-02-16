@@ -12,7 +12,7 @@ import java.util.List;
 public class GetProductsByCriteriaUseCase {
     @Autowired
     private IProductsRepository productsRepository;
-    public List<Product> Handle(FindCriteria criteria) {
+    public List<Product> handle(FindCriteria criteria) {
         return productsRepository.findProductsByCriteria(criteria);
     }
 }

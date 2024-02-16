@@ -8,7 +8,8 @@ import com.bookstore.app.entities.shop.api.viewModels.UpdateShopViewModels;
 import com.bookstore.app.entities.shop.persistance.IShopsRepository;
 import com.bookstore.app.entities.shop.persistance.FindCriteria;
 import com.bookstore.app.entities.shop.usecases.*;
-import com.bookstore.app.entities.shop.usecases.viewModels.CreateShopCommand;
+import com.bookstore.app.entities.shop.usecases.DTOs.CreateShopDTO;
+import com.bookstore.app.entities.shop.usecases.DTOs.UpdateShopDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,7 @@ public class ShopController {
 
     @PostMapping("/shops")
     public ShopIDResponse createShop(@RequestBody CreateShopViewModel providedShop) {
-        var command = new CreateShopCommand(providedShop.getAddress());
+        var command = new CreateShopDTO(providedShop.getAddress());
         var shop = createShopUseCase.handle(command);
         return new ShopIDResponse(shop.getId());
     }
@@ -58,7 +59,7 @@ public class ShopController {
 
     @PutMapping("/shop/{shopId}")
     public ShopIDResponse updateShop(@PathVariable("shopId") UUID id, @RequestBody UpdateShopViewModels providedShop) {
-        var command = new UpdateShopCommand(id, providedShop.getAddress());
+        var command = new UpdateShopDTO(id, providedShop.getAddress());
         var shop = updateShopUseCase.handle(command);
         return new ShopIDResponse(shop.getId());
     }

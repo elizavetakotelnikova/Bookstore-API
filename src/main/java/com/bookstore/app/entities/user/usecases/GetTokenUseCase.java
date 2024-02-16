@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class GetTokenUseCase {
     IUsersRepository usersRepository;
     HashingConfigure hashingConfigure;
-    public String ValidatePasswordFromDB(String passwordFromUser, String phoneNumber) {
+    public String validatePasswordFromDB(String passwordFromUser, String phoneNumber) {
         var criteria = new FindCriteria(phoneNumber, null);
         var users = usersRepository.findUserByCriteria(criteria);
         if (users.size() != 1) throw new RuntimeException("Wrong response from a database");

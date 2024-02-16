@@ -9,7 +9,7 @@ import java.util.UUID;
 public class DeleteUserUseCase {
     private IUsersRepository usersRepository;
 
-    public void Handle(UUID id) {
+    public void handle(UUID id) {
         usersRepository.deleteUserById(id);
     }
 }

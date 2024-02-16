@@ -1,14 +1,11 @@
-package com.bookstore.app.entities.shop.usecases;
+package com.bookstore.app.entities.shop.usecases.DTOs;
 
 import com.bookstore.app.models.ShopAddress;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.UUID;
-
 @Data
 @AllArgsConstructor
-public class UpdateShopCommand {
-    public UUID id;
+public class CreateShopDTO {
     public ShopAddress address;
 }

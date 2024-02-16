@@ -25,13 +25,13 @@ public class ProductController {
     public ProductIDResponse createProduct(@RequestBody CreateProductViewModel providedProduct) throws InvalidKeySpecException {
         var command = new CreateProductCommand(providedProduct.getType(), providedProduct.getName(),
                 providedProduct.getPrice(), providedProduct.getFeatures());
-        var product = createProductUseCase.Handle(command);
+        var product = createProductUseCase.handle(command);
         return new ProductIDResponse(product.getId());
     }
 
     @GetMapping("/product/{productId}")
     public Product getProductById(@PathVariable("productId") UUID productId) {
-        return getProductByIdUseCase.Handle(productId);
+        return getProductByIdUseCase.handle(productId);
     }
     @GetMapping("/products/")
     public List<Product> getProductByCriteria(@Param("typeId") UUID typeId, @Param("name") String name) {
@@ -39,7 +39,7 @@ public class ProductController {
         if (typeId != null) criteria.setTypeId(typeId);
         if (name != null) criteria.setName(name);
 
-        return getProductsByCriteriaUsecase.Handle(criteria);
+        return getProductsByCriteriaUsecase.handle(criteria);
     }
 
     @PutMapping("/product/{productId}")

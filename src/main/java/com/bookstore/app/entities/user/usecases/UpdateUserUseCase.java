@@ -12,7 +12,7 @@ public class UpdateUserUseCase {
     @Autowired
     private IUsersRepository usersRepository;
     private HashingConfigure hashingConfigure;
-    public User Handle(UpdateUserCommand command) {
+    public User handle(UpdateUserCommand command) {
         if (command.getBirthday() == null) {
             throw new RuntimeException("cannot update user, invalid password");
         }

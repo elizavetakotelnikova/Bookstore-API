@@ -10,7 +10,7 @@ import java.util.UUID;
 public class FindUserByIdUseCase {
     private IUsersRepository usersRepository;
 
-    public User Handle(UUID id) {
+    public User handle(UUID id) {
         return usersRepository.findUserById(id);
     }
 }

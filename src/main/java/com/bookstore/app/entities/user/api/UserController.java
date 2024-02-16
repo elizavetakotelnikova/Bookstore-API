@@ -43,13 +43,13 @@ public class UserController {
     @PostMapping("/users")
     public UserIDResponse createUser(@RequestBody CreateUserViewModel providedUser) throws InvalidKeySpecException {
         var command = new CreateUserCommand(providedUser.getPhoneNumber(), providedUser.getPassword(), providedUser.getBalance(), providedUser.getBirthday(), providedUser.getOrdersHistory());
-        var user = createUserUsecase.CreateUser(command);
+        var user = createUserUsecase.handle(command);
         return new UserIDResponse(user.getId());
     }
 
     @GetMapping("/user/{userId}")
     public User getUserById(@PathVariable("userId") UUID userId) {
-        return findUserByIdUsecase.Handle(userId);
+        return findUserByIdUsecase.handle(userId);
     }
     @GetMapping("/users/")
     public List<User> getUserByCriteria(@Param("birthday") String date, @Param("phoneNumber") String phoneNumber) {
@@ -67,7 +67,7 @@ public class UserController {
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<TokenResponse> getUserToken(@RequestBody GetTokenViewModel providedData) {
-        var token = getTokenUsecase.ValidatePasswordFromDB(providedData.password, providedData.phoneNumber);
+        var token = getTokenUsecase.validatePasswordFromDB(providedData.password, providedData.phoneNumber);
         if (token != null) return new ResponseEntity<>(new TokenResponse(token), HttpStatus.OK) ;
         return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
     }
@@ -76,12 +76,12 @@ public class UserController {
     public UserIDResponse updateUser(@PathVariable("userId") UUID id, @RequestBody CreateUserViewModel providedUser) {
         var command = new UpdateUserCommand(id, providedUser.getPhoneNumber(), providedUser.getPassword(),
                 providedUser.getBalance(), providedUser.getBirthday(), providedUser.getOrdersHistory());
-        var user = updateUserUsecase.Handle(command);
+        var user = updateUserUsecase.handle(command);
         return new UserIDResponse(user.getId());
     }
 
     @DeleteMapping("/user/{userId}")
     public void updateUser(@PathVariable("userId") UUID id) {
-        deleteUserUsecase.Handle(id);
+        deleteUserUsecase.handle(id);
     }
 }
