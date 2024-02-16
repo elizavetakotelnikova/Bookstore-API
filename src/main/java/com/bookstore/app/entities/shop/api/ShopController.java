@@ -4,8 +4,12 @@ import com.bookstore.app.entities.shop.Shop;
 import com.bookstore.app.entities.shop.api.responses.ShopIDResponse;
 import com.bookstore.app.entities.shop.api.responses.ShopJsonResponse;
 import com.bookstore.app.entities.shop.api.viewModels.CreateShopViewModel;
+import com.bookstore.app.entities.shop.api.viewModels.UpdateShopViewModels;
 import com.bookstore.app.entities.shop.persistance.IShopsRepository;
 import com.bookstore.app.entities.shop.persistance.FindCriteria;
+import com.bookstore.app.entities.shop.usecases.*;
+import com.bookstore.app.entities.shop.usecases.viewModels.CreateShopCommand;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,27 +20,36 @@ import java.util.UUID;
 @RestController
 public class ShopController {
     private IShopsRepository shopsRepository;
+    @Autowired
+    private CreateShopUseCase createShopUseCase;
+    @Autowired
+    private FindShopByIdUseCase findShopByIdUseCase;
+    @Autowired
+    private FindShopsByCriteriaUseCase findShopsByCriteriaUseCase;
+    @Autowired
+    private UpdateShopUseCase updateShopUseCase;
+    @Autowired
+    private DeleteShopUsesCase deleteShopUseCase;
 
     @PostMapping("/shops")
     public ShopIDResponse createShop(@RequestBody CreateShopViewModel providedShop) {
-        var shopMapper = new ShopMapper();
-        var shop = shopMapper.MapShopViewModelToShop(providedShop);
-        shop = shopsRepository.save(shop);
+        var command = new CreateShopCommand(providedShop.getAddress());
+        var shop = createShopUseCase.handle(command);
         return new ShopIDResponse(shop.getId());
     }
 
     @GetMapping("/shop/{shopId}")
     public ShopJsonResponse getUserById(@PathVariable("shopId") UUID shopId) {
-        var shopMapper = new ShopMapper();
-        return shopMapper.MapShopToViewModel(shopsRepository.getShopById(shopId));
+        var shop = findShopByIdUseCase.handle(shopId);
+        return new ShopJsonResponse(shop.getId(), shop.getAddress());
     }
     @GetMapping("/shops/")
     public List<ShopJsonResponse> getShopByCriteria(@Param("city") String city) {
         var criteria = new FindCriteria();
         if (city != null) criteria.setCity(city);
+        var shops = findShopsByCriteriaUseCase.handle(criteria);
         var shopMapper = new ShopMapper();
         List<ShopJsonResponse> listOfShops = new ArrayList<>();
-        List<Shop> shops = shopsRepository.findShopsByCriteria(criteria);
         for (Shop each: shops) {
             listOfShops.add(shopMapper.MapShopToViewModel(each));
         }
@@ -44,16 +57,15 @@ public class ShopController {
     }
 
     @PutMapping("/shop/{shopId}")
-    public ShopIDResponse updateUser(@PathVariable("shopId") UUID id, @RequestBody CreateShopViewModel providedShop) {
-        var shopMapper = new ShopMapper();
-        var shop = shopMapper.MapShopViewModelToShop(providedShop);
-        shop = shopsRepository.update(shop);
+    public ShopIDResponse updateShop(@PathVariable("shopId") UUID id, @RequestBody UpdateShopViewModels providedShop) {
+        var command = new UpdateShopCommand(id, providedShop.getAddress());
+        var shop = updateShopUseCase.handle(command);
         return new ShopIDResponse(shop.getId());
     }
 
     @DeleteMapping("/shop/{shopId}")
-    public void updateUser(@PathVariable("shopId") UUID id) {
-        shopsRepository.deleteShopById(id);
+    public void deleteShop(@PathVariable("shopId") UUID id) {
+        deleteShopUseCase.handle(id);
     }
 
 }

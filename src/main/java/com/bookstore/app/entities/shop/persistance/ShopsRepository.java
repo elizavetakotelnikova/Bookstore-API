@@ -1,6 +1,7 @@
 package com.bookstore.app.entities.shop.persistance;
 
 import com.bookstore.app.entities.shop.Shop;
+import com.bookstore.app.entities.shop.usecases.CreateShopUseCase;
 import com.bookstore.app.models.ShopAddress;
 import lombok.AllArgsConstructor;
 
