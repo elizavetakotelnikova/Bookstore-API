@@ -1,4 +1,4 @@
-package com.bookstore.app.entities.order.usecases.commands;
+package com.bookstore.app.entities.order.usecases.DTOs;
 
 import com.bookstore.app.entities.product.Product;
 import com.bookstore.app.valueObjects.OrderState;
@@ -11,10 +11,12 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class CreateOrderCommand {
+public class OrderDetailsDTO {
+    private UUID id;
     private UUID userId;
     private Date date;
     private UUID shopId;
     private OrderState orderState;
-    private List<UUID> productList;
+    private List<Product> productList;
+    private int totalPrice;
 }

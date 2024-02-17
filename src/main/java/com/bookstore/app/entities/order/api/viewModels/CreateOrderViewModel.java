@@ -16,5 +16,5 @@ public class CreateOrderViewModel {
     private Date date;
     private UUID shopId;
     private OrderState orderState;
-    private List<Product> productList;
+    private List<UUID> productList;
 }

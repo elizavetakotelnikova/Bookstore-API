@@ -15,7 +15,7 @@ import java.util.UUID;
 public class ProductTypesRepository implements IProductTypesRepository {
     private Connection connection;
     @Override
-    public ProductType save(ProductType productType) {
+    public ProductType saveProductType(ProductType productType) {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "INSERT INTO product_types(name) VALUES(?)");
@@ -29,7 +29,7 @@ public class ProductTypesRepository implements IProductTypesRepository {
     }
 
     @Override
-    public ProductType getProductTypeById(UUID id) {
+    public ProductType findProductTypeById(UUID id) {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "SELECT id, name " +

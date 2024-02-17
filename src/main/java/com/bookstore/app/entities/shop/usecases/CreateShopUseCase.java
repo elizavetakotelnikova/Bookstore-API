@@ -3,6 +3,7 @@ package com.bookstore.app.entities.shop.usecases;
 import com.bookstore.app.entities.shop.Shop;
 import com.bookstore.app.entities.shop.persistance.IShopsRepository;
 import com.bookstore.app.entities.shop.usecases.DTOs.CreateShopDTO;
+import com.bookstore.app.exceptions.IncorrectArgumentsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +11,9 @@ import org.springframework.stereotype.Service;
 public class CreateShopUseCase {
     @Autowired
     private IShopsRepository shopsRepository;
-    public Shop handle(CreateShopDTO command) {
-        if (command.address == null) throw new RuntimeException("Cannot create shop");
+    public Shop handle(CreateShopDTO command) throws IncorrectArgumentsException {
+        if (command.address == null) throw new IncorrectArgumentsException("Cannot create shop");
         var shop = new Shop(command.address);
-        return shopsRepository.save(shop);
+        return shopsRepository.saveShop(shop);
     }
 }

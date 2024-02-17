@@ -2,7 +2,9 @@ package com.bookstore.app.entities.user.usecases;
 
 import com.bookstore.app.entities.user.User;
 import com.bookstore.app.entities.user.persistance.IUsersRepository;
+import com.bookstore.app.entities.user.usecases.DTOs.UserDetailsDTO;
 import com.bookstore.app.entities.user.usecases.commands.UpdateUserCommand;
+import com.bookstore.app.exceptions.IncorrectArgumentsException;
 import com.bookstore.app.infrastructure.HashingConfigure;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,13 +13,17 @@ import org.springframework.stereotype.Service;
 public class UpdateUserUseCase {
     @Autowired
     private IUsersRepository usersRepository;
+    @Autowired
     private HashingConfigure hashingConfigure;
-    public User handle(UpdateUserCommand command) {
+    public UserDetailsDTO handle(UpdateUserCommand command) throws IncorrectArgumentsException {
         if (command.getBirthday() == null) {
-            throw new RuntimeException("cannot update user, invalid password");
+            throw new IncorrectArgumentsException("cannot update user, invalid password");
         }
         var hashedPassword = hashingConfigure.Hash(command.getPassword());
-        return usersRepository.updateUser(new User(command.getId(), command.getPhoneNumber(),
-                hashedPassword, command.getBalance(), command.getBirthday(), command.getOrdersHistory()));
+        var user = new User(command.getPhoneNumber(), hashedPassword, command.getBalance(),
+                command.getBirthday(), command.getOrdersHistory());
+        user = usersRepository.updateUser(user);
+        return new UserDetailsDTO(user.getId(), user.getPhoneNumber(),
+                user.getPassword(), user.getBalance(), user.getBirthday(), user.getOrdersHistory());
     }
 }

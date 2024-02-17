@@ -12,7 +12,7 @@ public class CreateProductUseCase {
         if (command.getName() == null ||
         command.getType().getName() == null) throw new RuntimeException("Cannot create product");
         var product = new Product(command.getType(), command.getName(), command.getPrice(), command.getFeatures());
-        product = productsRepository.save(product);
+        product = productsRepository.saveProduct(product);
         return product;
     }
 }

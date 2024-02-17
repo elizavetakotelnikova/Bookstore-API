@@ -13,7 +13,7 @@ import java.util.UUID;
 public class FeatureTypesRepository implements IFeatureTypesRepository {
     private Connection connection;
     @Override
-    public FeatureType save(FeatureType featureType) {
+    public FeatureType saveFeatureType(FeatureType featureType) {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "INSERT INTO feature_types(id, name) VALUES(?, ?)");
@@ -30,7 +30,7 @@ public class FeatureTypesRepository implements IFeatureTypesRepository {
     }
 
     @Override
-    public FeatureType getFeatureTypeById(UUID id) {
+    public FeatureType findFeatureTypeById(UUID id) {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "SELECT id, name FROM feature_types " +

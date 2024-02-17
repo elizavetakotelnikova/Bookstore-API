@@ -1,13 +1,18 @@
 package com.bookstore.app.entities.user.usecases;
 
 import com.bookstore.app.entities.user.User;
+import com.bookstore.app.entities.user.persistance.IUsersRepository;
+import com.bookstore.app.entities.user.usecases.DTOs.UserDetailsDTO;
 import com.bookstore.app.entities.user.usecases.commands.CreateUserCommand;
+import com.bookstore.app.exceptions.IncorrectArgumentsException;
 import com.bookstore.app.infrastructure.HashingConfigure;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CreateUserUseCase {
+    @Autowired
+    private IUsersRepository usersRepository;
     @Autowired
     private HashingConfigure hashingConfigure;
     public boolean validateUser(CreateUserCommand command) {
@@ -16,10 +21,13 @@ public class CreateUserUseCase {
         }
         return true;
     }
-    public User handle(CreateUserCommand command) {
-        if (!validateUser(command)) throw new RuntimeException("cannot create user, invalid data");
+    public UserDetailsDTO handle(CreateUserCommand command) throws IncorrectArgumentsException {
+        if (!validateUser(command)) throw new IncorrectArgumentsException("cannot create user, invalid data");
         var hashedPassword = hashingConfigure.Hash(command.getPassword());
-        return new User(command.getPhoneNumber(), hashedPassword, command.getBalance(),
+        var user = new User(command.getPhoneNumber(), hashedPassword, command.getBalance(),
                 command.getBirthday(), command.getOrdersHistory());
+        user = usersRepository.saveUser(user);
+        return new UserDetailsDTO(user.getId(), user.getPhoneNumber(),
+                user.getPassword(), user.getBalance(), user.getBirthday(), user.getOrdersHistory());
     }
 }

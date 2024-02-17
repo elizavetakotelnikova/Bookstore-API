@@ -1,16 +1,14 @@
 package com.bookstore.app.entities.shop.persistance;
 
 import com.bookstore.app.entities.shop.Shop;
-import com.bookstore.app.models.ShopAddress;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface IShopsRepository {
-    Shop save(Shop shop);
-    Shop getShopById(UUID id);
+    Shop saveShop(Shop shop);
+    Shop findShopById(UUID id);
     List<Shop> findShopsByCriteria(FindCriteria criteria);
-
     void deleteShopById(UUID id);
-    Shop update(Shop shop);
+    Shop updateShop(Shop shop);
 }

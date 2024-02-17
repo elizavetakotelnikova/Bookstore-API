@@ -20,7 +20,7 @@ public class OrdersRepository implements IOrdersRepository {
 
     private Connection connection;
     @Override
-    public Order save(Order order) {
+    public Order saveOrder(Order order) {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "INSERT INTO orders(id, user_id, date, shop_id, state) VALUES(?, ?, ?, ?, ?)");
@@ -47,7 +47,7 @@ public class OrdersRepository implements IOrdersRepository {
     }
 
     @Override
-    public Order getOrderById(UUID id) {
+    public Order findOrderById(UUID id) {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "SELECT id, user_id, date, shop_id, state " +
@@ -99,7 +99,7 @@ public class OrdersRepository implements IOrdersRepository {
             List<Order> listOfOrders = new ArrayList<>();
             while (rs.next())
             {
-                listOfOrders.add(getOrderById(UUID.fromString(rs.getString("id"))));
+                listOfOrders.add(findOrderById(UUID.fromString(rs.getString("id"))));
             }
             rs.close();
             st.close();
@@ -120,7 +120,7 @@ public class OrdersRepository implements IOrdersRepository {
             List<Order> listOfOrders = new ArrayList<>();
             while (rs.next())
             {
-                listOfOrders.add(getOrderById(UUID.fromString(rs.getString("id"))));
+                listOfOrders.add(findOrderById(UUID.fromString(rs.getString("id"))));
             }
             rs.close();
             st.close();

@@ -1,4 +1,4 @@
-package com.bookstore.app.entities.order.usecases.DTOs;
+package com.bookstore.app.entities.order.api.viewModels;
 
 import com.bookstore.app.entities.product.Product;
 import com.bookstore.app.valueObjects.OrderState;
@@ -11,12 +11,11 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class CreateOrderDTO {
+public class UpdateOrderViewModel {
     private UUID id;
     private UUID userId;
     private Date date;
     private UUID shopId;
     private OrderState orderState;
-    private List<Product> productList;
-    private int totalPrice;
+    private List<UUID> productList;
 }

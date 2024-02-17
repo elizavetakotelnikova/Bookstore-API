@@ -8,8 +8,8 @@ import java.util.UUID;
 
 @Repository
 public interface IProductsRepository {
-    Product save(Product product);
-    Product getProductById(UUID id);
+    Product saveProduct(Product product);
+    Product findProductById(UUID id);
     List<Product> findProductsByCriteria(FindCriteria criteria);
 
     Product updateProduct(Product product);

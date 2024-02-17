@@ -17,7 +17,7 @@ public class ProductFeaturesRepository implements IProductFeaturesRepository {
     private Connection connection;
 
     @Override
-    public ProductFeature save(ProductFeature productFeature) {
+    public ProductFeature saveProductFeature(ProductFeature productFeature) {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "INSERT INTO feature_value(id, feature_type_id, value) VALUES(?, ?, ?)");
@@ -33,7 +33,7 @@ public class ProductFeaturesRepository implements IProductFeaturesRepository {
     }
 
     @Override
-    public ProductFeature getProductFeatureByFeatureId(UUID id) {
+    public ProductFeature findProductFeatureById(UUID id) {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "SELECT f_v.id, f_v.feature_type_id, f_v.value, f_t.name " +

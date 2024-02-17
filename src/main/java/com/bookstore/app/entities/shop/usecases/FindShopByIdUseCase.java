@@ -12,6 +12,6 @@ public class FindShopByIdUseCase {
     @Autowired
     private IShopsRepository shopsRepository;
     public Shop handle(UUID id) {
-        return shopsRepository.getShopById(id);
+        return shopsRepository.findShopById(id);
     }
 }

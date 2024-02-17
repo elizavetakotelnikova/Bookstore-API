@@ -1,6 +1,5 @@
 package com.bookstore.app.entities.order.usecases.commands;
 
-import com.bookstore.app.entities.product.Product;
 import com.bookstore.app.valueObjects.OrderState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +10,8 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class CreateOrderCommand {
+public class UpdateOrderCommand {
+    private UUID id;
     private UUID userId;
     private Date date;
     private UUID shopId;

@@ -2,6 +2,7 @@ package com.bookstore.app.entities.order.persistance;
 
 import jakarta.annotation.Nullable;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
@@ -13,4 +14,8 @@ public class FindCriteria {
     private UUID userId;
     @Nullable
     private LocalDate date;
+    public FindCriteria() {
+        userId = null;
+        date = null;
+    }
 }

@@ -17,7 +17,7 @@ import java.util.UUID;
 public class ShopsRepository implements IShopsRepository {
     private Connection connection;
     @Override
-    public Shop save(Shop shop) {
+    public Shop saveShop(Shop shop) {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "INSERT INTO shops(id, country, city, street, house_number, building_number) VALUES(?, ?, ?, ?, ?, ?)");
@@ -37,7 +37,7 @@ public class ShopsRepository implements IShopsRepository {
     }
 
     @Override
-    public Shop getShopById(UUID id) {
+    public Shop findShopById(UUID id) {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "SELECT id, country, city, street, house_number, building_number " +
@@ -112,7 +112,7 @@ public class ShopsRepository implements IShopsRepository {
     }
 
     @Override
-    public Shop update(Shop shop) {
+    public Shop updateShop(Shop shop) {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "UPDATE shops SET id = ?, country = ?, city = ?, street = ?, house_number = ?, building_number = ?");

@@ -12,6 +12,6 @@ public class GetProductByIdUseCase {
     @Autowired
     private IProductsRepository productsRepository;
     public Product handle(UUID id) {
-        return productsRepository.getProductById(id);
+        return productsRepository.findProductById(id);
     }
 }

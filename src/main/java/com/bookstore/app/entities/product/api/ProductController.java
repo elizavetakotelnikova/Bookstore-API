@@ -7,8 +7,11 @@ import com.bookstore.app.entities.product.usecases.*;
 import com.bookstore.app.entities.product.persistance.FindCriteria;
 import com.bookstore.app.entities.product.usecases.commands.CreateProductCommand;
 import com.bookstore.app.entities.product.usecases.commands.UpdateProductCommand;
+import com.bookstore.app.exceptions.QueryException;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.spec.InvalidKeySpecException;
 import java.util.List;
@@ -52,6 +55,11 @@ public class ProductController {
 
     @DeleteMapping("/product/{productId}")
     public void updateProduct(@PathVariable("productId") UUID id) {
-        deleteProductUseCase.handle(id);
+        try {
+            deleteProductUseCase.handle(id);
+        } catch (QueryException exc) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, exc.getMessage(), exc);
+        }
     }
 }

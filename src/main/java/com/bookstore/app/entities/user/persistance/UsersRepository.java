@@ -15,7 +15,7 @@ public class UsersRepository implements IUsersRepository {
     private Connection connection;
 
     @Override
-    public User save(User user) {
+    public User saveUser(User user) {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "INSERT INTO users(id, phone_number, password, balance, birthday) VALUES(?, ?, ?, ?, ?)");

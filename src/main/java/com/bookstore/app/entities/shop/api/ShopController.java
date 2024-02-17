@@ -10,9 +10,13 @@ import com.bookstore.app.entities.shop.persistance.FindCriteria;
 import com.bookstore.app.entities.shop.usecases.*;
 import com.bookstore.app.entities.shop.usecases.DTOs.CreateShopDTO;
 import com.bookstore.app.entities.shop.usecases.DTOs.UpdateShopDTO;
+import com.bookstore.app.exceptions.IncorrectArgumentsException;
+import com.bookstore.app.exceptions.QueryException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +24,7 @@ import java.util.UUID;
 
 @RestController
 public class ShopController {
+    @Autowired
     private IShopsRepository shopsRepository;
     @Autowired
     private CreateShopUseCase createShopUseCase;
@@ -35,7 +40,13 @@ public class ShopController {
     @PostMapping("/shops")
     public ShopIDResponse createShop(@RequestBody CreateShopViewModel providedShop) {
         var command = new CreateShopDTO(providedShop.getAddress());
-        var shop = createShopUseCase.handle(command);
+        Shop shop;
+        try {
+            shop = createShopUseCase.handle(command);
+        } catch (IncorrectArgumentsException exc) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, exc.getMessage(), exc);
+        }
         return new ShopIDResponse(shop.getId());
     }
 
@@ -58,9 +69,15 @@ public class ShopController {
     }
 
     @PutMapping("/shop/{shopId}")
-    public ShopIDResponse updateShop(@PathVariable("shopId") UUID id, @RequestBody UpdateShopViewModels providedShop) {
+    public ShopIDResponse updateShop(@PathVariable("shopId") UUID id, @RequestBody UpdateShopViewModels providedShop)  {
         var command = new UpdateShopDTO(id, providedShop.getAddress());
-        var shop = updateShopUseCase.handle(command);
+        Shop shop = null;
+        try {
+            shop = updateShopUseCase.handle(command);
+        } catch (IncorrectArgumentsException exc) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, exc.getMessage(), exc);
+        }
         return new ShopIDResponse(shop.getId());
     }
 
