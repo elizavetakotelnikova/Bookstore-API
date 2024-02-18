@@ -2,6 +2,7 @@ package com.bookstore.app.entities.order.persistance;
 
 import com.bookstore.app.entities.order.Order;
 import com.bookstore.app.entities.product.Product;
+import com.bookstore.app.exceptions.QueryException;
 import com.bookstore.app.models.FeatureType;
 import com.bookstore.app.models.ProductFeature;
 import com.bookstore.app.models.ProductType;
@@ -54,7 +55,7 @@ public class OrdersRepository implements IOrdersRepository {
                             "FROM orders WHERE id = ?");
             st.setObject(1, id);
             ResultSet rs = st.executeQuery();
-            if (!rs.next()) throw new SQLException();
+            if (!rs.next()) throw new QueryException("No such orders");
             Order order = new Order(
                     UUID.fromString(rs.getString("id")),
                     UUID.fromString(rs.getString("user_id")),
@@ -76,7 +77,10 @@ public class OrdersRepository implements IOrdersRepository {
             rs.close();
             st.close();
             return order;
-        } catch (Exception e) {
+        } catch (QueryException e) {
+            return null;
+        }
+        catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -91,11 +95,11 @@ public class OrdersRepository implements IOrdersRepository {
     public List<Order> findAllOrdersByUserId(UUID id) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "SELECT id FROM orders" +
+                    "SELECT id FROM orders " +
                             "WHERE user_id = ?");
             st.setObject(1, id);
             ResultSet rs = st.executeQuery();
-            if (!rs.next()) throw new SQLException();
+            if (!rs.next()) throw new QueryException("No such orders");
             List<Order> listOfOrders = new ArrayList<>();
             while (rs.next())
             {
@@ -104,7 +108,10 @@ public class OrdersRepository implements IOrdersRepository {
             rs.close();
             st.close();
             return listOfOrders;
-        } catch (Exception e) {
+        } catch (QueryException e) {
+            return new ArrayList<>();
+        }
+        catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -112,11 +119,11 @@ public class OrdersRepository implements IOrdersRepository {
     public List<Order> findAllOrdersByDate(LocalDate date) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "SELECT id FROM orders"+
+                    "SELECT id FROM orders "+
                     "WHERE date = ?");
             st.setDate(1, Date.valueOf(date));
             ResultSet rs = st.executeQuery();
-            if (!rs.next()) throw new SQLException();
+            if (!rs.next()) throw new QueryException("No such orders");
             List<Order> listOfOrders = new ArrayList<>();
             while (rs.next())
             {
@@ -125,7 +132,10 @@ public class OrdersRepository implements IOrdersRepository {
             rs.close();
             st.close();
             return listOfOrders;
-        } catch (Exception e) {
+        } catch (QueryException e) {
+            return new ArrayList<>();
+        }
+        catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -154,13 +164,13 @@ public class OrdersRepository implements IOrdersRepository {
             for (var currentId : listOfIds) {
                 PreparedStatement st = connection.prepareStatement(
                         "SELECT p.id, p.type_id, p.price, p.name, t.name " +
-                                "FROM products AS p" +
-                                "INNER JOIN types AS t" +
-                                "ON p.type_id == t.id" +
+                                "FROM products AS p " +
+                                "INNER JOIN types AS t " +
+                                "ON p.type_id == t.id " +
                                 "WHERE id = ?");
                 st.setObject(1, currentId);
                 ResultSet rs = st.executeQuery();
-                if (!rs.next()) throw new SQLException();
+                if (!rs.next()) throw new QueryException("No such order");
                 Product product = new Product(
                         UUID.fromString(rs.getString("p.id")),
                         new ProductType(UUID.fromString(rs.getString("t.type_id")), rs.getString("t.name")),
@@ -170,9 +180,9 @@ public class OrdersRepository implements IOrdersRepository {
 
                 st = connection.prepareStatement(
                         "SELECT f_v.id, f_v.feature_type_id, f_v.value, f_t.name " +
-                                "FROM feature_value AS f_v" +
-                                "INNER JOIN feature_type AS f_t" +
-                                "ON f_v.feature_type_id == f_t.id" +
+                                "FROM feature_value AS f_v " +
+                                "INNER JOIN feature_type AS f_t " +
+                                "ON f_v.feature_type_id == f_t.id " +
                                 "WHERE f_v.id = ?");
                 rs = st.executeQuery();
                 while (!rs.next()) {
@@ -188,7 +198,10 @@ public class OrdersRepository implements IOrdersRepository {
                 st.close();
             }
             return productList;
-        } catch (Exception e) {
+        } catch (QueryException e) {
+            return new ArrayList<>();
+        }
+        catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }

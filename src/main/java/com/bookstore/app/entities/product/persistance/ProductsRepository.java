@@ -46,9 +46,9 @@ public class ProductsRepository implements IProductsRepository {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "SELECT p.id, p.type_id, p.price, p.name, t.name " +
-                            "FROM products AS p" +
-                            "INNER JOIN types AS t" +
-                            "ON p.type_id = t.id" +
+                            "FROM products AS p " +
+                            "INNER JOIN types AS t " +
+                            "ON p.type_id = t.id " +
                             "WHERE id = ?");
             st.setObject(1, id);
             ResultSet rs = st.executeQuery();
@@ -62,10 +62,10 @@ public class ProductsRepository implements IProductsRepository {
 
             st = connection.prepareStatement(
                     "SELECT f_v.id, f_v.feature_type_id, f_v.value, f_t.name " +
-                            "FROM feature_value AS f_v" +
-                            "INNER JOIN feature_type AS f_t" +
-                            "ON f_v.feature_type_id == f_t.id" +
-                            "WHERE f_v.id = ?");
+                            "FROM feature_value AS f_v " +
+                            "INNER JOIN feature_type AS f_t " +
+                            "ON f_v.feature_type_id == f_t.id " +
+                            "WHERE f_v.id = ? ");
             rs = st.executeQuery();
             while (!rs.next()) {
                 ProductFeature currentFeature = new ProductFeature(UUID.fromString(rs.getString("f_v.id")),
@@ -94,7 +94,7 @@ public class ProductsRepository implements IProductsRepository {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "SELECT p.id, p.type_id, p.price, p.name, t.name " +
-                            "FROM products AS p" +
+                            "FROM products AS p " +
                             "WHERE p.type_id = ?");
             st.setObject(1, id);
             ResultSet rs = st.executeQuery();
@@ -110,9 +110,9 @@ public class ProductsRepository implements IProductsRepository {
 
                 PreparedStatement stSecond = connection.prepareStatement(
                         "SELECT f_v.id, f_v.feature_type_id, f_v.value, f_t.name " +
-                                "FROM feature_value AS f_v" +
-                                "INNER JOIN feature_type AS f_t" +
-                                "ON f_v.feature_type_id = f_t.id" +
+                                "FROM feature_value AS f_v " +
+                                "INNER JOIN feature_type AS f_t " +
+                                "ON f_v.feature_type_id = f_t.id " +
                                 "WHERE f_v.feature_type_id = ?");
                 stSecond.setObject(1, id);
                 ResultSet rsSecond = stSecond.executeQuery();
@@ -140,9 +140,9 @@ public class ProductsRepository implements IProductsRepository {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "SELECT p.id, p.type_id, p.price, p.name, t.name " +
-                            "FROM products AS p" +
-                            "INNER JOIN types AS t" +
-                            "ON p.type_id = t.id" +
+                            "FROM products AS p " +
+                            "INNER JOIN types AS t " +
+                            "ON p.type_id = t.id " +
                             "WHERE p.name = ?");
             st.setObject(1, name);
             ResultSet rs = st.executeQuery();
@@ -158,9 +158,9 @@ public class ProductsRepository implements IProductsRepository {
 
                 PreparedStatement stSecond = connection.prepareStatement(
                         "SELECT f_v.id, f_v.feature_type_id, f_v.value, f_t.name " +
-                                "FROM feature_value AS f_v" +
-                                "INNER JOIN feature_type AS f_t" +
-                                "ON f_v.feature_type_id = f_t.id" +
+                                "FROM feature_value AS f_v " +
+                                "INNER JOIN feature_type AS f_t " +
+                                "ON f_v.feature_type_id = f_t.id " +
                                 "WHERE f_v.feature_type_id = ?");
                 stSecond.setObject(1, currentProduct.getType());
                 ResultSet rsSecond = stSecond.executeQuery();

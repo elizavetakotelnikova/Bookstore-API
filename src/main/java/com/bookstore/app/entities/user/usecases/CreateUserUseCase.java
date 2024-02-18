@@ -10,6 +10,8 @@ import com.bookstore.app.infrastructure.HashingConfigure;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class CreateUserUseCase {
     @Autowired
@@ -32,6 +34,6 @@ public class CreateUserUseCase {
                 command.getBirthday(), command.getOrdersHistory());
         user = usersRepository.saveUser(user);
         return new UserDetailsDTO(user.getId(), user.getPhoneNumber(),
-                user.getPassword(), user.getBalance(), user.getBirthday(), user.getOrdersHistory());
+                user.getPassword(), user.getBalance(), user.getBirthday(), new ArrayList<>());
     }
 }

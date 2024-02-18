@@ -27,7 +27,6 @@ public class UsersRepository implements IUsersRepository {
             st.setObject(5, user.getBirthday());
             st.execute();
             st.close();
-            //check orders?
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -49,13 +48,6 @@ public class UsersRepository implements IUsersRepository {
                 rs.getBytes("password"),
                 rs.getInt("balance"),
                 rs.getObject("birthday", LocalDate.class));
-        st = connection.prepareStatement(
-                    "SELECT id FROM orders" +
-                            "WHERE user_id = ?");
-        st.setObject(1, id);
-        while (rs.next()) {
-            user.getOrdersHistory().add(UUID.fromString(rs.getString("id")));
-        }
         rs.close();
         st.close();
         return user;
@@ -88,13 +80,6 @@ public class UsersRepository implements IUsersRepository {
                     rs.getBytes("password"),
                     rs.getInt("balance"),
                     rs.getObject("birthday", LocalDate.class));
-            st = connection.prepareStatement(
-                    "SELECT id FROM orders" +
-                            "WHERE user_id = ?");
-            st.setObject(1, user.getId());
-            while (rs.next()) {
-                user.getOrdersHistory().add(UUID.fromString(rs.getString("id")));
-            }
             rs.close();
             st.close();
             return user;
@@ -121,14 +106,6 @@ public class UsersRepository implements IUsersRepository {
                         rs.getBytes("password"),
                         rs.getInt("balance"),
                         rs.getObject("birthday", LocalDate.class));
-                st = connection.prepareStatement(
-                        "SELECT id FROM orders" +
-                                "WHERE user_id = ?");
-                st.setObject(1, user.getId());
-                while (rs.next()) {
-                    user.getOrdersHistory().add(UUID.fromString(rs.getString("id")));
-                }
-                listOfUsers.add(user);
             }
             rs.close();
             st.close();
@@ -153,7 +130,6 @@ public class UsersRepository implements IUsersRepository {
             st.setObject(5, user.getBirthday());
             st.execute();
             st.close();
-            //check orders?
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }

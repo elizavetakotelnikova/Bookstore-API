@@ -14,7 +14,6 @@ public class User {
     private byte[] password;
     private int balance;
     private java.time.LocalDate birthday;
-    private List<UUID> ordersHistory;
 
     public User(String phoneNumber, byte[] password, int balance, java.time.LocalDate birthday, List<UUID> ordersHistory) {
         this.id = UUID.randomUUID();
@@ -22,15 +21,6 @@ public class User {
         this.password = password;
         this.balance = balance;
         this.birthday = birthday;
-        this.ordersHistory = ordersHistory;
-    }
-    public User(UUID id, String phoneNumber, byte[] password, int balance, java.time.LocalDate birthday) {
-        this.id = id;
-        this.phoneNumber = phoneNumber;
-        this.password = password;
-        this.balance = balance;
-        this.birthday = birthday;
-        this.ordersHistory = new ArrayList<>();
     }
 }
 

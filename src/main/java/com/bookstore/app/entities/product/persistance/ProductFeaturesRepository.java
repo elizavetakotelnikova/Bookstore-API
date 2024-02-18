@@ -37,9 +37,9 @@ public class ProductFeaturesRepository implements IProductFeaturesRepository {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "SELECT f_v.id, f_v.feature_type_id, f_v.value, f_t.name " +
-                            "FROM feature_value AS f_v" +
-                            "INNER JOIN feature_type AS f_t" +
-                            "ON f_v.feature_type_id == f_t.id" +
+                            "FROM feature_value AS f_v " +
+                            "INNER JOIN feature_type AS f_t " +
+                            "ON f_v.feature_type_id = f_t.id " +
                             "WHERE f_v.id = ?");
             st.setObject(1, id);
             ResultSet rs = st.executeQuery();
@@ -61,10 +61,10 @@ public class ProductFeaturesRepository implements IProductFeaturesRepository {
         try {
             PreparedStatement st = connection.prepareStatement(
                     "SELECT f_v.id, f_v.feature_type_id, f_v.value, f_t.name " +
-                            "FROM feature_value AS f_v" +
-                            "INNER JOIN feature_type AS f_t" +
-                            "ON f_v.feature_type_id == f_t.id" +
-                            "WHERE f_v.feature_type_id = ?");
+                            "FROM feature_value AS f_v " +
+                            "INNER JOIN feature_type AS f_t " +
+                            "ON f_v.feature_type_id == f_t.id " +
+                            "WHERE f_v.feature_type_id = ? ");
             st.setObject(1, id);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) throw new SQLException();
