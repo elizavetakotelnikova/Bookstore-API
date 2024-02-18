@@ -26,9 +26,8 @@ public class ShopsRepository implements IShopsRepository {
             st.setString(3, shop.getAddress().getCity());
             st.setString(4, shop.getAddress().getStreet());
             st.setString(5, shop.getAddress().getHouseNumber());
-            st.setString(6, shop.getAddress().getBuildingNumber());
-            ResultSet rs = st.executeQuery();
-            rs.close();
+            st.setInt(6, shop.getAddress().getBuildingNumber());
+            st.execute();
             st.close();
             return shop;
         } catch (Exception e) {
@@ -53,7 +52,7 @@ public class ShopsRepository implements IShopsRepository {
                             rs.getString("city"),
                             rs.getString("street"),
                             rs.getString("house_number"),
-                            rs.getString("building_number")));
+                            rs.getInt("building_number")));
             rs.close();
             st.close();
             return shop;
@@ -87,7 +86,7 @@ public class ShopsRepository implements IShopsRepository {
                                 rs.getString("city"),
                                 rs.getString("street"),
                                 rs.getString("house_number"),
-                                rs.getString("building_number"))));
+                                rs.getInt("building_number"))));
             }
             rs.close();
             st.close();
@@ -121,7 +120,7 @@ public class ShopsRepository implements IShopsRepository {
             st.setString(3, shop.getAddress().getCity());
             st.setString(4, shop.getAddress().getStreet());
             st.setString(5, shop.getAddress().getHouseNumber());
-            st.setString(6, shop.getAddress().getBuildingNumber());
+            st.setInt(6, shop.getAddress().getBuildingNumber());
             ResultSet rs = st.executeQuery();
             rs.close();
             st.close();

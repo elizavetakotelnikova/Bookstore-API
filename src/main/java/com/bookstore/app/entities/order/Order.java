@@ -37,6 +37,7 @@ public class Order {
         this.productList = new ArrayList<>();
     }
     public Order(UUID userId, Date date, UUID shopId, OrderState state, List<Product> productList) {
+        this.id = UUID.randomUUID();
         this.userId = userId;
         this.date = date;
         this.shopId = shopId;

@@ -12,6 +12,7 @@ import com.bookstore.app.entities.order.usecases.commands.CreateOrderCommand;
 import com.bookstore.app.entities.order.usecases.commands.UpdateOrderCommand;
 import com.bookstore.app.exceptions.QueryException;
 import org.aspectj.bridge.ICommand;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -25,10 +26,15 @@ import java.util.UUID;
 
 @RestController
 public class OrderController {
+    @Autowired
     private CreateOrderUseCase createOrderUseCase;
+    @Autowired
     private GetOrderByIdUseCase getOrderByIdUseCase;
+    @Autowired
     private GetOrdersByCriteriaUseCase getOrdersByCriteriaUsecase;
+    @Autowired
     private UpdateOrderUseCase updateOrderUseCase;
+    @Autowired
     private DeleteOrderUseCase deleteOrderUseCase;
     @PostMapping("/orders")
     public OrderResponse createOrder(@RequestBody CreateOrderViewModel providedOrder) throws InvalidKeySpecException {

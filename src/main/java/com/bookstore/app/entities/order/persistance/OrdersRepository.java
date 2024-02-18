@@ -24,22 +24,21 @@ public class OrdersRepository implements IOrdersRepository {
     public Order saveOrder(Order order) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "INSERT INTO orders(id, user_id, date, shop_id, state) VALUES(?, ?, ?, ?, ?)");
+                    "INSERT INTO orders(id, user_id, date, shop_id, state) VALUES(?, ?, ?, ?, CAST(? AS order_state))");
             st.setObject(1, order.getId());
             st.setObject(2, order.getUserId());
             st.setDate(3, order.getDate());
             st.setObject(4, order.getShopId());
-            st.setString(5, String.valueOf(order.getOrderState()));
-            ResultSet rs = st.executeQuery();
+            st.setObject(5, order.getOrderState().toString().toLowerCase());
+            st.execute();
 
             st = connection.prepareStatement(
                     "INSERT INTO order_content(order_id, product_id) VALUES(?, ?)");
             for (Product product : order.getProductList()) {
                 st.setObject(1, order.getId());
                 st.setObject(2, product.getId());
-                rs = st.executeQuery();
+                st.execute();
             }
-            rs.close();
             st.close();
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
@@ -211,12 +210,12 @@ public class OrdersRepository implements IOrdersRepository {
     public Order updateOrder(Order order) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "UPDATE orders SET id = ?, user_id = ?, date = ?, shop_id = ?, state = ?");
+                    "UPDATE orders SET id = ?, user_id = ?, date = ?, shop_id = ?, state = CAST(? AS order_state)");
             st.setObject(1, order.getId());
             st.setObject(2, order.getUserId());
             st.setDate(3, order.getDate());
             st.setObject(4, order.getShopId());
-            st.setString(5, String.valueOf(order.getOrderState()));
+            st.setObject(5, order.getOrderState().toString().toLowerCase());
             ResultSet rs = st.executeQuery();
 
             st = connection.prepareStatement(

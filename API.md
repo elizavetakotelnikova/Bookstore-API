@@ -143,6 +143,7 @@ response:
 ```json
 {
   "phoneNumber": "+79816998765",
+  "password" : "firstPassword12345",
   "balance": 0,
   "ordersHistory": [
     "04056053-5d96-4069-94c3-4b3281ef32a0",
@@ -169,7 +170,7 @@ response:
 
 **response:** none
 
-## order
+## Order
 
 ### FindByID
 
@@ -301,17 +302,17 @@ response:
 
 **response:** none
 
-# gatheringPlace
+# Shop
 
-### FindByID
+### FindById
 
-**route:** /api/gatheringPlace/find_by_id/{gatheringPlaceID}
+**route:** /shop/{shopId}
 
 **Method:** GET
 
 **path Parameters**
 
-* {gatheringPlaceID}
+* {shopId}
 
 **request:** none
 
@@ -323,29 +324,22 @@ response:
   "address": {
     "country":        "Russia",
     "city":           "Piter",
-    "streetName ":    "kronverksky",
+    "street":    "kronverksky",
     "houseNumber":    "49",
-    "BbuildingNumber" 5
-  },
-  "averagePrice": 1,
-  "cuisineType": 0,
-  "rating": 1,
-  "phoneNumber": "88005553535"
+    "BbuildingNumber": 5
+  }
 }
 ```
 
 ### Find
 
-**route:** /api/gatheringPlace/find
+**route:** /shops
 
 **Method:** GET
 
 **path Parameters**
 
-* initiator=uuid
-* rating=int
-* aвdress=(сложна, наверное надо разбить на несколько параметров адреса)
-* cuisine_type=int
+* adress=(сложна, наверное надо разбить на несколько параметров адреса)
 
 **request:** none
 
@@ -353,29 +347,20 @@ response:
 
 ```json
 {
-  "04056053-5d96-4069-94c3-4b3281ef32a0": {
-    "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
-    "address": {
-      "country":        "Russia",
-      "city":           "Piter",
-      "streetName ":    "kronverksky",
-      "houseNumber":    "49",
-      "BbuildingNumber" 5
-    },
-    "averagePrice": 1,
-    "cuisineType": 0,
-    "rating": 1,
-    "phoneNumber": "88005553535"
-  },
-  "04056053-5d96-4069-94c3-4b3281ef32a0": {
-    ...
+  "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
+  "address": {
+    "country":        "Russia",
+    "city":           "Piter",
+    "street":    "kronverksky",
+    "houseNumber":    "49",
+    "BuildingNumber": 5
   }
-} // это map[uuid]user
+}
 ```
 
 ### Create
 
-**route:** /api/gatheringPlace/create
+**route:** /shops
 
 **Method:** POST
 
@@ -383,17 +368,14 @@ response:
 
 ```json
 {
+  "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
   "address": {
     "country":        "Russia",
     "city":           "Piter",
-    "streetName ":    "kronverksky",
+    "street":    "kronverksky",
     "houseNumber":    "49",
-    "BbuildingNumber" 5
-  },
-  "averagePrice": 1,
-  "cuisineType": 0,
-  "rating": 1,
-  "phoneNumber": "88005553535"
+    "BuildingNumber": 5
+  }
 }
 ```
 

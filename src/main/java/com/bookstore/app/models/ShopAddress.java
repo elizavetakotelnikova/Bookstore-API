@@ -10,5 +10,5 @@ public class ShopAddress {
     private String city;
     private String street;
     private String houseNumber;
-    private String buildingNumber;
+    private int buildingNumber;
 }
