@@ -1,6 +1,5 @@
 package com.bookstore.app.entities.user.usecases;
 
-import com.bookstore.app.entities.user.User;
 import com.bookstore.app.entities.user.persistance.IUsersRepository;
 import com.bookstore.app.entities.user.usecases.DTOs.UserDetailsDTO;
 import org.springframework.beans.factory.annotation.Autowired;

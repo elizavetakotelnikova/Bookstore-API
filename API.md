@@ -10,12 +10,6 @@
 
 **request:**
 
-private UUID id;
-private String phoneNumber;
-private String password;
-private int balance;
-private Date birthday;
-private List<UUID> OrdersHistory;
 ```json
 {
     "phoneNumber": "880005553535",
@@ -115,6 +109,7 @@ response:
 ```json
 {
   "phoneNumber": "+79816998765",
+  "password": "firstPassword12345",
   "balance": 0,
   "ordersHistory": [
     "04056053-5d96-4069-94c3-4b3281ef32a0",

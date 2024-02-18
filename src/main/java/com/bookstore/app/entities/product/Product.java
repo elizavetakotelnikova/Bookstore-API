@@ -5,6 +5,7 @@ import com.bookstore.app.models.ProductType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,6 +28,7 @@ public class Product {
         this.id = id;
         this.name = name;
         this.price = price;
+        this.features = new ArrayList<>();
     }
 
 }

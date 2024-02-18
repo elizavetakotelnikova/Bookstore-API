@@ -1,6 +1,7 @@
 package com.bookstore.app.entities.user.usecases;
 
 import com.bookstore.app.entities.user.User;
+import com.bookstore.app.entities.user.persistance.FindCriteria;
 import com.bookstore.app.entities.user.persistance.IUsersRepository;
 import com.bookstore.app.entities.user.usecases.DTOs.UserDetailsDTO;
 import com.bookstore.app.entities.user.usecases.commands.CreateUserCommand;
@@ -22,7 +23,10 @@ public class CreateUserUseCase {
         return true;
     }
     public UserDetailsDTO handle(CreateUserCommand command) throws IncorrectArgumentsException {
-        if (!validateUser(command)) throw new IncorrectArgumentsException("cannot create user, invalid data");
+        if (!validateUser(command)) throw new IncorrectArgumentsException("Cannot create user, invalid data");
+        if (!usersRepository.findUserByCriteria(new FindCriteria(command.getPhoneNumber(), null)).isEmpty()) {
+            throw new IncorrectArgumentsException("User with same phone number already exists");
+        }
         var hashedPassword = hashingConfigure.Hash(command.getPassword());
         var user = new User(command.getPhoneNumber(), hashedPassword, command.getBalance(),
                 command.getBirthday(), command.getOrdersHistory());

@@ -16,6 +16,6 @@ public class GetTokenUseCase {
         if (users.getFirst().getPassword() != hashingConfigure.Hash(passwordFromUser)) {
             throw new SecurityException("Wrong password");
         }
-        return //in case of success should return a JWT
+        return null; //should return a JWT
     }
 }

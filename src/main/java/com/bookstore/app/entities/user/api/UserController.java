@@ -43,7 +43,6 @@ public class UserController {
     private UpdateUserUseCase updateUserUsecase;
     @Autowired
     private DeleteUserUseCase deleteUserUsecase;
-    //private UserMapper userMapper; not known where to place it
 
     @PostMapping("/users")
     public UserIDResponse createUser(@RequestBody CreateUserViewModel providedUser) throws InvalidKeySpecException {
@@ -85,7 +84,7 @@ public class UserController {
         return userResponses;
     }
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/user/token/{userId}")
     public ResponseEntity<TokenResponse> getUserToken(@RequestBody GetTokenViewModel providedData) {
         var token = getTokenUsecase.validatePasswordFromDB(providedData.password, providedData.phoneNumber);
         if (token != null) return new ResponseEntity<>(new TokenResponse(token), HttpStatus.OK) ;

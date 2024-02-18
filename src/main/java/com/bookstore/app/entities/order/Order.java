@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,6 +25,7 @@ public class Order {
         this.date = date;
         this.shopId = shopId;
         this.orderState = orderState;
+        this.productList = new ArrayList<>();
     }
 
     public Order(UUID id, UUID userId, Date date, UUID shopId, OrderState state) {
@@ -32,12 +34,14 @@ public class Order {
         this.date = date;
         this.shopId = shopId;
         this.orderState = state;
+        this.productList = new ArrayList<>();
     }
     public Order(UUID userId, Date date, UUID shopId, OrderState state, List<Product> productList) {
         this.userId = userId;
         this.date = date;
         this.shopId = shopId;
         this.orderState = state;
+        this.productList = new ArrayList<>();
     }
 
     public float calculateTotalPrice() {

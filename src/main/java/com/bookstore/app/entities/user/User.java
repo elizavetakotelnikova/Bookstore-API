@@ -2,7 +2,7 @@ package com.bookstore.app.entities.user;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,7 +14,7 @@ public class User {
     private byte[] password;
     private int balance;
     private java.time.LocalDate birthday;
-    private List<UUID> OrdersHistory;
+    private List<UUID> ordersHistory;
 
     public User(String phoneNumber, byte[] password, int balance, java.time.LocalDate birthday, List<UUID> ordersHistory) {
         this.id = UUID.randomUUID();
@@ -22,7 +22,7 @@ public class User {
         this.password = password;
         this.balance = balance;
         this.birthday = birthday;
-        this.OrdersHistory = ordersHistory;
+        this.ordersHistory = ordersHistory;
     }
     public User(UUID id, String phoneNumber, byte[] password, int balance, java.time.LocalDate birthday) {
         this.id = id;
@@ -30,6 +30,7 @@ public class User {
         this.password = password;
         this.balance = balance;
         this.birthday = birthday;
+        this.ordersHistory = new ArrayList<>();
     }
 }
 
