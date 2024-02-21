@@ -12,8 +12,8 @@
 
 ```json
 {
-    "phoneNumber": "880005553535",
-    "password": "1234567890"
+  "phoneNumber": "880005553535",
+  "password": "1234567890"
 }
 ```
 
@@ -21,7 +21,7 @@
 
 ```json
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o"
 }
 ```
 
@@ -40,24 +40,23 @@
 **request:**
 ```json
 {
-    "id": "04056053-5d96-4069-94c3-4b3281ef32a0"
+  "id": "04056053-5d96-4069-94c3-4b3281ef32a0"
 }
 ```
+
 response:
 
 ```json
 {
-    "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
-    "phoneNumber": "+79816998765",
-    "currentMeetingId": "04056053-5d96-4069-94c3-4b3281ef32a0",
-	"ordersHistory": [
-        "04056053-5d96-4069-94c3-4b3281ef32a0",
-        "04056053-5d96-4069-94c3-4b3281ef32a0",
-        "04056053-5d96-4069-94c3-4b3281ef32a0"
-    ],
-	"rating": 1,
-	"age": 1,
-	"gender": 1
+  "phoneNumber": "+79816998765",
+  "password": "firstPassword12345",
+  "balance": 0,
+  "ordersHistory": [
+    "04056053-5d96-4069-94c3-4b3281ef32a0",
+    "04056053-5d96-4069-94c3-4b3281ef32a0",
+    "04056053-5d96-4069-94c3-4b3281ef32a0"
+  ],
+  "birthday" : "2012-02-02T08:08:08Z"
 }
 ```
 
@@ -79,18 +78,15 @@ response:
 ```json
 {
     "04056053-5d96-4069-94c3-4b3281ef32a0": {
-        "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
-        "username": "string",
-        "displayName": "string",
-        "currentMeetingId": "04056053-5d96-4069-94c3-4b3281ef32a0",
-        "meetingHistory": [
-            "04056053-5d96-4069-94c3-4b3281ef32a0",
-            "04056053-5d96-4069-94c3-4b3281ef32a0",
-            "04056053-5d96-4069-94c3-4b3281ef32a0"
-        ],
-        "rating": 1,
-        "age": 1,
-        "gender": 1
+      "phoneNumber": "+79816998765",
+      "password": "firstPassword12345",
+      "balance": 0,
+      "ordersHistory": [
+        "04056053-5d96-4069-94c3-4b3281ef32a0",
+        "04056053-5d96-4069-94c3-4b3281ef32a0",
+        "04056053-5d96-4069-94c3-4b3281ef32a0"
+      ],
+      "birthday" : "2012-02-02T08:08:08Z"
     },
     "04056053-5d96-4069-94c3-4b3281ef32a0": {
         ...
@@ -130,7 +126,7 @@ response:
 
 ### Update
 
-**route:** /api/user/update/{userID}
+**route:** /user/{userID}
 
 **Method:** PUT
 
@@ -158,13 +154,13 @@ response:
 
 ### Delete
 
-**route:** /api/user/update/{userID}
+**route:** /user/{userId}
 
 **Method:** DELETE
 
 **path Parameters**
 
-* {userID}
+* {userId}
 
 **request:** none
 
@@ -174,13 +170,13 @@ response:
 
 ### FindByID
 
-**route:** /api/meeting/find_by_id/{meetingID}
+**route:** /order/{orderId}
 
 **Method:** GET
 
 **path Parameters**
 
-* {meetingID}
+* {orderId}
 
 **request:** none
 
@@ -189,25 +185,25 @@ response:
 ```json
 {
   "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
-  "gatheringPlaceId": "04056053-5d96-4069-94c3-4b3281ef32a0",
-  "initiatorsId": "04056053-5d96-4069-94c3-4b3281ef32a0",
-  "startTime": "2024-01-30T18:38:25.125Z",
-  "endTime": "2024-01-30T18:38:25.125Z",
-  "usersQuantity": 2,
-  "state": 0
+  "userId": "04056053-5d96-4069-94c3-4b3281ef32a0",
+  "shopId": "04056053-5d96-4069-94c3-4b3281ef32a0",
+  "date": "2024-02-13",
+  "state": "Created",
+  "productList": [],
+  "totalPrice": 1999,
 }
 ```
 
 ### Find
 
-**route:** /api/meeting/find
+**route:** /orders
 
 **Method:** GET
 
 **path Parameters**
 
-* gathering place=uuid
-* initiator=uuid
+* date = date
+* userId = uuid
 
 **request:** none
 
@@ -217,22 +213,22 @@ response:
 {
   "04056053-5d96-4069-94c3-4b3281ef32a0": {
     "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
-    "gatheringPlaceId": "04056053-5d96-4069-94c3-4b3281ef32a0",
-    "initiatorsId": "04056053-5d96-4069-94c3-4b3281ef32a0",
-    "startTime": "2024-01-30T18:38:25.125Z",
-    "endTime": "2024-01-30T18:38:25.125Z",
-    "usersQuantity": 2,
-    "state": 0
+    "userId": "04056053-5d96-4069-94c3-4b3281ef32a0",
+    "shopId": "04056053-5d96-4069-94c3-4b3281ef32a0",
+    "date": "2024-02-13",
+    "state": "Created",
+    "productList": [],
+    "totalPrice": 1999,
   },
   "04056053-5d96-4069-94c3-4b3281ef32a0": {
     ...
   }
-} // это map[uuid]user
+}
 ```
 
 ### Create
 
-**route:** /api/meeting/create
+**route:** /orders
 
 **Method:** POST
 
@@ -240,12 +236,10 @@ response:
 
 ```json
 {
-  "gatheringPlaceId": "04056053-5d96-4069-94c3-4b3281ef32a0",
-  "initiatorsId": "04056053-5d96-4069-94c3-4b3281ef32a0",
-  "startTime": "2024-01-30T18:38:25.125Z",
-  "endTime": "2024-01-30T18:38:25.125Z",
-  "usersQuantity": 2,
-  "state": 0
+  "userId": "04056053-5d96-4069-94c3-4b3281ef32a0",
+  "shopId": "04056053-5d96-4069-94c3-4b3281ef32a0",
+  "date": "2024-01-30",
+  "state": "Created"
 }
 ```
 
@@ -259,24 +253,26 @@ response:
 
 ### Update
 
-**route:** /api/meeting/update/{meetingID}
+**route:** /order/{orderId}
 
 **Method:** PUT
 
 **path Parameters**
 
-* {meetingID}
+* {orderId}
 
 **request:**
 
 ```json
-{
-  "gatheringPlaceId": "04056053-5d96-4069-94c3-4b3281ef32a0",
-  "initiatorsId": "04056053-5d96-4069-94c3-4b3281ef32a0",
-  "startTime": "2024-01-30T18:38:25.125Z",
-  "endTime": "2024-01-30T18:38:25.125Z",
-  "usersQuantity": 2,
-  "state": 0
+ {
+  "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
+  "userId": "04056053-5d96-4069-94c3-4b3281ef32a0",
+  "shopId": "04056053-5d96-4069-94c3-4b3281ef32a0",
+  "date": "2024-02-13",
+  "state": "Created",
+  "productList": [
+    "04056053-5d96-4069-94c3-4b3281ef32a0"
+  ],
 }
 ```
 
@@ -290,13 +286,13 @@ response:
 
 ### Delete
 
-**route:** /api/meeting/update/{meetingID}
+**route:** /order/{orderId}
 
 **Method:** DELETE
 
 **path Parameters**
 
-* {meetingID}
+* {orderId}
 
 **request:** none
 
@@ -326,7 +322,7 @@ response:
     "city":           "Piter",
     "street":    "kronverksky",
     "houseNumber":    "49",
-    "BbuildingNumber": 5
+    "buildingNumber": 5
   }
 }
 ```
@@ -339,7 +335,7 @@ response:
 
 **path Parameters**
 
-* adress=(сложна, наверное надо разбить на несколько параметров адреса)
+* adress
 
 **request:** none
 
@@ -353,7 +349,7 @@ response:
     "city":           "Piter",
     "street":    "kronverksky",
     "houseNumber":    "49",
-    "BuildingNumber": 5
+    "buildingNumber": 5
   }
 }
 ```
@@ -374,7 +370,7 @@ response:
     "city":           "Piter",
     "street":    "kronverksky",
     "houseNumber":    "49",
-    "BuildingNumber": 5
+    "buildingNumber": 5
   }
 }
 ```
@@ -389,13 +385,13 @@ response:
 
 ### Update
 
-**route:** /api/gatheringPlace/update/{gatheringPlaceID}
+**route:** /shop/{shopId}
 
 **Method:** PUT
 
 **path Parameters**
 
-* {gatheringPlaceID}
+* {shopId}
 
 **request:**
 
@@ -404,14 +400,10 @@ response:
   "address": {
     "country":        "Russia",
     "city":           "Piter",
-    "streetName ":    "kronverksky",
+    "street ":    "kronverksky",
     "houseNumber":    "49",
-    "BbuildingNumber" 5
-  },
-  "averagePrice": 1,
-  "cuisineType": 0,
-  "rating": 1,
-  "phoneNumber": "88005553535"
+    "buildingNumber": 5
+  }
 }
 ```
 
@@ -425,13 +417,175 @@ response:
 
 ### Delete
 
-**route:** /api/gatheringPlace/update/{gatheringPlaceID}
+**route:** /shop/{shopId}
 
 **Method:** DELETE
 
 **path Parameters**
 
-* {gatheringPlaceID}
+* {shopId}
+
+**request:** none
+
+**response:** none
+
+## Product
+
+### FindByID
+
+**route:** /products/{productId}
+
+**Method:** GET
+
+**path Parameters**
+
+* {productId}
+
+**request:** none
+
+response:
+
+```json
+{
+  "type": {
+    "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
+    "name": "notebook"
+  },
+  "name": "Yellow notebook",
+  "price": "78",
+  "features": [
+    "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
+    "type": [
+      "id": "04056053-5d96-4069-94c3-4b3281ef32b0",
+      "name": "color"
+    ]
+    "value": "yellow"
+  ]
+}
+```
+
+### Find
+
+**route:** /products
+
+**Method:** GET
+
+**path Parameters**
+
+* typeId = uuid
+* name = String
+
+**request:** none
+
+**response:**
+
+```json
+{
+  "04056053-5d96-4069-94c3-4b3281ef32a0": {
+    "type": {
+      "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
+      "name": "notebook"
+    },
+    "name": "Yellow notebook",
+    "price": "78",
+    "features": [
+      "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
+      "type": [
+        "id": "04056053-5d96-4069-94c3-4b3281ef32b0",
+        "name": "color"
+      ]
+      "value": "yellow"
+    ]
+  },
+  "04056053-5d96-4069-94c3-4b3281ef32a0": {
+    ...
+  }
+}
+```
+
+### Create
+
+**route:** /products
+
+**Method:** POST
+
+**request:**
+
+```json
+{
+  "type": {
+    "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
+    "name": "notebook"
+  },
+  "name": "Yellow notebook",
+  "price": "78",
+  "features": [
+    "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
+    "type": [
+      "id": "04056053-5d96-4069-94c3-4b3281ef32b0",
+      "name": "color"
+    ]
+    "value": "yellow"
+  ]
+}
+```
+
+**response:**
+
+```json
+{
+  "id": "04056053-5d96-4069-94c3-4b3281ef32a0"
+}
+```
+
+### Update
+
+**route:** /product/{productId}
+
+**Method:** PUT
+
+**path Parameters**
+
+* {productId}
+
+**request:**
+
+```json
+{
+  "type": {
+    "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
+    "name": "notebook"
+  },
+  "name": "Yellow notebook",
+  "price": "78",
+  "features": [
+    "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
+    "type": [
+      "id": "04056053-5d96-4069-94c3-4b3281ef32b0",
+      "name": "color"
+    ]
+    "value": "yellow"
+  ]
+}
+```
+
+**response:**
+
+```json
+{
+  "id": "04056053-5d96-4069-94c3-4b3281ef32a0"
+}
+```
+
+### Delete
+
+**route:** /product/{productId}
+
+**Method:** DELETE
+
+**path Parameters**
+
+* {productId}
 
 **request:** none
 
