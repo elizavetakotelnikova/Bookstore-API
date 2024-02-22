@@ -2,7 +2,9 @@ package com.bookstore.app.entities.product.api;
 
 import com.bookstore.app.entities.product.Product;
 import com.bookstore.app.entities.product.api.responses.ProductIDResponse;
+import com.bookstore.app.entities.product.api.responses.ProductResponse;
 import com.bookstore.app.entities.product.api.viewModels.CreateProductViewModel;
+import com.bookstore.app.entities.product.api.viewModels.UpdateProductViewModel;
 import com.bookstore.app.entities.product.usecases.*;
 import com.bookstore.app.entities.product.persistance.FindCriteria;
 import com.bookstore.app.entities.product.usecases.commands.CreateProductCommand;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,20 +36,27 @@ public class ProductController {
     }
 
     @GetMapping("/product/{productId}")
-    public Product getProductById(@PathVariable("productId") UUID productId) {
-        return getProductByIdUseCase.handle(productId);
+    public ProductResponse getProductById(@PathVariable("productId") UUID productId) {
+        var product = getProductByIdUseCase.handle(productId);
+        return new ProductResponse(product.getId(), product.getType(),
+                product.getName(), product.getPrice(), product.getFeatures());
     }
     @GetMapping("/products/")
-    public List<Product> getProductByCriteria(@Param("typeId") UUID typeId, @Param("name") String name) {
+    public List<ProductResponse> getProductByCriteria(@Param("typeId") UUID typeId, @Param("name") String name) {
         var criteria = new FindCriteria(null, null);
         if (typeId != null) criteria.setTypeId(typeId);
         if (name != null) criteria.setName(name);
 
-        return getProductsByCriteriaUsecase.handle(criteria);
+        var products = getProductsByCriteriaUsecase.handle(criteria);
+        var result = new ArrayList<ProductResponse>();
+        for (Product each : products) {
+            result.add(new ProductResponse(each.getId(), each.getType(), each.getName(), each.getPrice(), each.getFeatures()));
+        }
+        return result;
     }
 
     @PutMapping("/product/{productId}")
-    public ProductIDResponse updateProduct(@PathVariable("productId") UUID id, @RequestBody CreateProductViewModel providedProduct) {
+    public ProductIDResponse updateProduct(@PathVariable("productId") UUID id, @RequestBody UpdateProductViewModel providedProduct) {
         var command = new UpdateProductCommand(providedProduct.getType(),
                 providedProduct.getName(), providedProduct.getPrice(), providedProduct.getFeatures());
         var product = updateProductUseCase.handle(command);
