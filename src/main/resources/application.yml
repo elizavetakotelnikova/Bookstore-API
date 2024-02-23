@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/bookstore
+    username: postgres
+    password: postgres
+  main:
+    allow-bean-definition-overriding: true
+
+
+
+flyway:
+  url: jdbc:postgresql://localhost:5432/bookstore;
+  user: postgres
+  password: postgres
+  enabled: true
+  locations:
+    - 'classpath:db/migration'
+
+security.basic.enable: false
+  security.ignored=/**
+
