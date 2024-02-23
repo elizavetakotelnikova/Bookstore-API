@@ -431,6 +431,8 @@ response:
 
 ## Product
 
+!Note! FeatureType/FeatureValue/ProductType are not changeable by API. They should be in a existing database to create a product.
+
 ### FindByID
 
 **route:** /products/{productId}
