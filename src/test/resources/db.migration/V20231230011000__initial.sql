@@ -31,6 +31,7 @@ CREATE INDEX product_types_name_idx ON product_types(name);
 CREATE TABLE products (
                        id UUID PRIMARY KEY NOT NULL,
                        type_id UUID REFERENCES product_types(id),
+                       name VARCHAR(255),
                        price float);
 
 CREATE TABLE shops (
@@ -59,7 +60,7 @@ CREATE INDEX available_features_name_idx ON feature_types(name);
 
 CREATE TABLE feature_value (
                        id UUID PRIMARY KEY,
-                       feature_types_id UUID REFERENCES feature_types(id),
+                       feature_type_id UUID REFERENCES feature_types(id),
                        value varchar(255)
                        );
 

@@ -19,9 +19,7 @@ public class FeatureTypesRepository implements IFeatureTypesRepository {
                     "INSERT INTO feature_types(id, name) VALUES(?, ?)");
             st.setObject(1, featureType.getId());
             st.setString(2, featureType.getName());
-            ResultSet rs = st.executeQuery();
-            if (!rs.next()) throw new SQLException();
-            rs.close();
+            st.execute();
             st.close();
             return featureType;
         } catch (Exception e) {

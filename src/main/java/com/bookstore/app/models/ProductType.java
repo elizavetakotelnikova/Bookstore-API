@@ -10,5 +10,10 @@ import java.util.UUID;
 public class ProductType {
     private UUID id;
     private String name;
+
+    public ProductType(String name) {
+        this.id = UUID.randomUUID();
+        this.name = name;
+    }
 }
 
