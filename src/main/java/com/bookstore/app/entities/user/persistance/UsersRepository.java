@@ -42,7 +42,7 @@ public class UsersRepository implements IUsersRepository {
                 "WHERE id = ?");
         st.setObject(1, id);
         ResultSet rs = st.executeQuery();
-        if (!rs.next()) throw new SQLException();
+        if (!rs.next()) throw new QueryException("No such user");
         User user = new User(UUID.fromString(rs.getString("id")),
                 rs.getString("phone_number"),
                 rs.getBytes("password"),
@@ -51,7 +51,10 @@ public class UsersRepository implements IUsersRepository {
         rs.close();
         st.close();
         return user;
-    } catch (Exception e) {
+    } catch (QueryException e) {
+            return null;
+        }
+        catch (Exception e) {
         throw new RuntimeException(e.getMessage());
     }
     }
@@ -98,7 +101,6 @@ public class UsersRepository implements IUsersRepository {
                             "WHERE birthday = ?");
             st.setObject(1, date);
             ResultSet rs = st.executeQuery();
-            if (!rs.next()) throw new QueryException("No such user");
             List<User> listOfUsers = new ArrayList<>();
             while(rs.next()) {
                 User user = new User(UUID.fromString(rs.getString("id")),
@@ -106,12 +108,11 @@ public class UsersRepository implements IUsersRepository {
                         rs.getBytes("password"),
                         rs.getInt("balance"),
                         rs.getObject("birthday", LocalDate.class));
+                listOfUsers.add(user);
             }
             rs.close();
             st.close();
             return listOfUsers;
-        } catch (QueryException e){
-            return new ArrayList<User>();
         }
         catch (Exception e) {
             throw new RuntimeException(e.getMessage());
@@ -142,8 +143,7 @@ public class UsersRepository implements IUsersRepository {
             PreparedStatement st = connection.prepareStatement(
                     "DELETE FROM users WHERE id = ?");
             st.setObject(1, id);
-            ResultSet rs = st.executeQuery();
-            rs.close();
+            st.execute();
             st.close();
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());

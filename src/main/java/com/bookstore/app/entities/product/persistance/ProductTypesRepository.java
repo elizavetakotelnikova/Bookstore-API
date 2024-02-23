@@ -18,9 +18,10 @@ public class ProductTypesRepository implements IProductTypesRepository {
     public ProductType saveProductType(ProductType productType) {
         try {
             PreparedStatement st = connection.prepareStatement(
-                    "INSERT INTO product_types(name) VALUES(?)");
-            st.setString(1, productType.getName());
-            st.executeQuery();
+                    "INSERT INTO product_types(id, name) VALUES(?, ?)");
+            st.setObject(1, productType.getId());
+            st.setString(2, productType.getName());
+            st.execute();
             st.close();
             return productType;
         } catch (Exception e) {

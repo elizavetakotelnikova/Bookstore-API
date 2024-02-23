@@ -10,6 +10,7 @@ import com.bookstore.app.entities.product.persistance.FindCriteria;
 import com.bookstore.app.entities.product.usecases.commands.CreateProductCommand;
 import com.bookstore.app.entities.product.usecases.commands.UpdateProductCommand;
 import com.bookstore.app.exceptions.QueryException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +23,15 @@ import java.util.UUID;
 
 @RestController
 public class ProductController {
+    @Autowired
     private CreateProductUseCase createProductUseCase;
+    @Autowired
     private GetProductByIdUseCase getProductByIdUseCase;
+    @Autowired
     private GetProductsByCriteriaUseCase getProductsByCriteriaUsecase;
+    @Autowired
     private UpdateProductUseCase updateProductUseCase;
+    @Autowired
     private DeleteProductUseCase deleteProductUseCase;
     @PostMapping("/products")
     public ProductIDResponse createProduct(@RequestBody CreateProductViewModel providedProduct) throws InvalidKeySpecException {

@@ -31,7 +31,7 @@ public class CreateUserUseCase {
         }
         var hashedPassword = hashingConfigure.Hash(command.getPassword());
         var user = new User(command.getPhoneNumber(), hashedPassword, command.getBalance(),
-                command.getBirthday(), command.getOrdersHistory());
+                command.getBirthday());
         user = usersRepository.saveUser(user);
         return new UserDetailsDTO(user.getId(), user.getPhoneNumber(),
                 user.getPassword(), user.getBalance(), user.getBirthday(), new ArrayList<>());
