@@ -20,12 +20,14 @@ public class Product {
 
     public Product(ProductType type, String name, int price, List<ProductFeature> features) {
         this.id = UUID.randomUUID();
+        this.type = type;
         this.name = name;
         this.price = price;
         this.features = features;
     }
     public Product(UUID id, ProductType type, String name, int price) {
         this.id = id;
+        this.type = type;
         this.name = name;
         this.price = price;
         this.features = new ArrayList<>();

@@ -24,7 +24,7 @@ public class ProductFeaturesRepository implements IProductFeaturesRepository {
             st.setObject(1, productFeature.getId());
             st.setObject(2, productFeature.getType().getId());
             st.setString(3, productFeature.getValue());
-            st.executeQuery();
+            st.execute();
             st.close();
             return productFeature;
         } catch (Exception e) {

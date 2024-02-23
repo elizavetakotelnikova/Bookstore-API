@@ -9,6 +9,7 @@ import com.bookstore.app.models.ProductType;
 import com.bookstore.app.valueObjects.OrderState;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -18,7 +19,6 @@ import java.util.UUID;
 
 @AllArgsConstructor
 public class OrdersRepository implements IOrdersRepository {
-
     private Connection connection;
     @Override
     public Order saveOrder(Order order) {

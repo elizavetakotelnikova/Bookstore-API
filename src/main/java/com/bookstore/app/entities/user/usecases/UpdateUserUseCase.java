@@ -28,7 +28,7 @@ public class UpdateUserUseCase {
         }
         var hashedPassword = hashingConfigure.Hash(command.getPassword());
         var user = new User(command.getPhoneNumber(), hashedPassword, command.getBalance(),
-                command.getBirthday(), command.getOrdersHistory());
+                command.getBirthday());
         user = usersRepository.updateUser(user);
         var orders = ordersRepository.findOrdersByCriteria(new FindCriteria(user.getId(), null));
         var ordersIds = new ArrayList<UUID>();

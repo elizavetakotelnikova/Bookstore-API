@@ -15,7 +15,7 @@ public class User {
     private int balance;
     private java.time.LocalDate birthday;
 
-    public User(String phoneNumber, byte[] password, int balance, java.time.LocalDate birthday, List<UUID> ordersHistory) {
+    public User(String phoneNumber, byte[] password, int balance, java.time.LocalDate birthday) {
         this.id = UUID.randomUUID();
         this.phoneNumber = phoneNumber;
         this.password = password;
