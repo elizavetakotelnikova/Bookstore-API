@@ -1,5 +1,6 @@
-package com.bookstore.app.models;
+package com.bookstore.app.entities.productFeature;
 
+import com.bookstore.app.models.FeatureType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

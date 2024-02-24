@@ -16,7 +16,7 @@ create type transaction_type as enum
 CREATE TABLE users (
                       id UUID PRIMARY KEY NOT NULL,
                       password bytea NOT NULL,
-                      phone_number TEXT NOT NULL,
+                      phone_number VARCHAR(50) NOT NULL,
                       balance INT NOT NULL DEFAULT 0,
                       birthday DATE);
 

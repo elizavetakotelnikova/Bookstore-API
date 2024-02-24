@@ -45,7 +45,7 @@ public class UserController {
     private DeleteUserUseCase deleteUserUsecase;
 
     @PostMapping("/users")
-    public UserIDResponse createUser(@RequestBody CreateUserViewModel providedUser) throws InvalidKeySpecException {
+    public UserIDResponse createUser(@RequestBody CreateUserViewModel providedUser) {
         var command = new CreateUserCommand(providedUser.getPhoneNumber(), providedUser.getPassword(), providedUser.getBalance(), providedUser.getBirthday(), providedUser.getOrdersHistory());
         UserDetailsDTO user;
         try {

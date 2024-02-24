@@ -9,6 +9,7 @@ import com.bookstore.app.entities.product.usecases.*;
 import com.bookstore.app.entities.product.persistance.FindCriteria;
 import com.bookstore.app.entities.product.usecases.commands.CreateProductCommand;
 import com.bookstore.app.entities.product.usecases.commands.UpdateProductCommand;
+import com.bookstore.app.exceptions.IncorrectArgumentsException;
 import com.bookstore.app.exceptions.QueryException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -37,8 +38,14 @@ public class ProductController {
     public ProductIDResponse createProduct(@RequestBody CreateProductViewModel providedProduct) throws InvalidKeySpecException {
         var command = new CreateProductCommand(providedProduct.getType(), providedProduct.getName(),
                 providedProduct.getPrice(), providedProduct.getFeatures());
-        var product = createProductUseCase.handle(command);
-        return new ProductIDResponse(product.getId());
+        try {
+            var product = createProductUseCase.handle(command);
+            return new ProductIDResponse(product.getId());
+        }
+        catch (IncorrectArgumentsException exc) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, exc.getMessage(), exc);
+        }
     }
 
     @GetMapping("/product/{productId}")
@@ -65,8 +72,14 @@ public class ProductController {
     public ProductIDResponse updateProduct(@PathVariable("productId") UUID id, @RequestBody UpdateProductViewModel providedProduct) {
         var command = new UpdateProductCommand(providedProduct.getType(),
                 providedProduct.getName(), providedProduct.getPrice(), providedProduct.getFeatures());
-        var product = updateProductUseCase.handle(command);
-        return new ProductIDResponse(product.getId());
+        try {
+            var product = updateProductUseCase.handle(command);
+            return new ProductIDResponse(product.getId());
+        }
+        catch (IncorrectArgumentsException exc) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, exc.getMessage(), exc);
+        }
     }
 
     @DeleteMapping("/product/{productId}")

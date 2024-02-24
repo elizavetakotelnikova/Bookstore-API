@@ -189,7 +189,7 @@ response:
   "shopId": "04056053-5d96-4069-94c3-4b3281ef32a0",
   "date": "2024-02-13",
   "state": "Created",
-  "productList": [],
+  "productList": ["04056053-5d96-4069-94c3-4b3281ef32a0"],
   "totalPrice": 1999,
 }
 ```
@@ -239,7 +239,8 @@ response:
   "userId": "04056053-5d96-4069-94c3-4b3281ef32a0",
   "shopId": "04056053-5d96-4069-94c3-4b3281ef32a0",
   "date": "2024-01-30",
-  "state": "Created"
+  "state": "Created",
+  "productList": ["04056053-5d96-4069-94c3-4b3281ef32a0"]
 }
 ```
 
@@ -456,11 +457,7 @@ response:
   "name": "Yellow notebook",
   "price": "78",
   "features": [
-    "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
-    "type": [
-      "id": "04056053-5d96-4069-94c3-4b3281ef32b0",
-      "name": "color"
-    ]
+    "featureTypeId": "04056053-5d96-4069-94c3-4b3281ef32a0",
     "value": "yellow"
   ]
 }
@@ -491,11 +488,7 @@ response:
     "name": "Yellow notebook",
     "price": "78",
     "features": [
-      "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
-      "type": [
-        "id": "04056053-5d96-4069-94c3-4b3281ef32b0",
-        "name": "color"
-      ]
+      "featureTypeId": "04056053-5d96-4069-94c3-4b3281ef32a0",
       "value": "yellow"
     ]
   },
@@ -522,11 +515,7 @@ response:
   "name": "Yellow notebook",
   "price": "78",
   "features": [
-    "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
-    "type": [
-      "id": "04056053-5d96-4069-94c3-4b3281ef32b0",
-      "name": "color"
-    ]
+    "featureTypeId": "04056053-5d96-4069-94c3-4b3281ef32a0",
     "value": "yellow"
   ]
 }
@@ -561,11 +550,7 @@ response:
   "name": "Yellow notebook",
   "price": "78",
   "features": [
-    "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
-    "type": [
-      "id": "04056053-5d96-4069-94c3-4b3281ef32b0",
-      "name": "color"
-    ]
+    "featureTypeId": "04056053-5d96-4069-94c3-4b3281ef32a0",
     "value": "yellow"
   ]
 }

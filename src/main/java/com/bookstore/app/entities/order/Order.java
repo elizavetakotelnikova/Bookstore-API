@@ -17,7 +17,7 @@ public class Order {
     private Date date;
     private UUID shopId;
     private OrderState orderState;
-    private List<Product> productList;
+    private List<Product> productList = new ArrayList<>();
 
     public Order(UUID userId, Date date, UUID shopId, OrderState orderState){
         this.id = UUID.randomUUID();
@@ -25,7 +25,6 @@ public class Order {
         this.date = date;
         this.shopId = shopId;
         this.orderState = orderState;
-        this.productList = new ArrayList<>();
     }
 
     public Order(UUID id, UUID userId, Date date, UUID shopId, OrderState state) {
@@ -34,7 +33,6 @@ public class Order {
         this.date = date;
         this.shopId = shopId;
         this.orderState = state;
-        this.productList = new ArrayList<>();
     }
     public Order(UUID userId, Date date, UUID shopId, OrderState state, List<Product> productList) {
         this.id = UUID.randomUUID();
@@ -42,7 +40,7 @@ public class Order {
         this.date = date;
         this.shopId = shopId;
         this.orderState = state;
-        this.productList = new ArrayList<>();
+        this.productList = productList;
     }
 
     public float calculateTotalPrice() {

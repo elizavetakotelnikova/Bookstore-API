@@ -1,6 +1,6 @@
 package com.bookstore.app.entities.product.api.responses;
 
-import com.bookstore.app.models.ProductFeature;
+import com.bookstore.app.entities.productFeature.ProductFeature;
 import com.bookstore.app.models.ProductType;
 import lombok.AllArgsConstructor;
 import lombok.Data;

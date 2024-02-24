@@ -3,14 +3,13 @@ package com.bookstore.app.entities.product.persistance;
 import com.bookstore.app.entities.product.Product;
 import com.bookstore.app.exceptions.QueryException;
 import com.bookstore.app.models.FeatureType;
-import com.bookstore.app.models.ProductFeature;
+import com.bookstore.app.entities.productFeature.ProductFeature;
 import com.bookstore.app.models.ProductType;
 import lombok.AllArgsConstructor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;

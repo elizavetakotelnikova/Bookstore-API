@@ -1,7 +1,8 @@
-package com.bookstore.app.entities.product.persistance;
+package com.bookstore.app.entities.productFeature.persistance;
 
+import com.bookstore.app.entities.productFeature.persistance.IProductFeaturesRepository;
 import com.bookstore.app.models.FeatureType;
-import com.bookstore.app.models.ProductFeature;
+import com.bookstore.app.entities.productFeature.ProductFeature;
 import lombok.AllArgsConstructor;
 
 import java.sql.Connection;

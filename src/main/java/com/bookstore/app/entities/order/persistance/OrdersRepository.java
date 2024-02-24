@@ -4,12 +4,11 @@ import com.bookstore.app.entities.order.Order;
 import com.bookstore.app.entities.product.Product;
 import com.bookstore.app.exceptions.QueryException;
 import com.bookstore.app.models.FeatureType;
-import com.bookstore.app.models.ProductFeature;
+import com.bookstore.app.entities.productFeature.ProductFeature;
 import com.bookstore.app.models.ProductType;
 import com.bookstore.app.valueObjects.OrderState;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.*;
 import java.time.LocalDate;
