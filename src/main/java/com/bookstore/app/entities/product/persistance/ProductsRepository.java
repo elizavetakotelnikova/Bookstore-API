@@ -2,9 +2,9 @@ package com.bookstore.app.entities.product.persistance;
 
 import com.bookstore.app.entities.product.Product;
 import com.bookstore.app.exceptions.QueryException;
-import com.bookstore.app.models.FeatureType;
+import com.bookstore.app.entities.productFeature.FeatureType;
 import com.bookstore.app.entities.productFeature.ProductFeature;
-import com.bookstore.app.models.ProductType;
+import com.bookstore.app.entities.product.ProductType;
 import lombok.AllArgsConstructor;
 
 import java.sql.Connection;

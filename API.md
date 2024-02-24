@@ -432,8 +432,6 @@ response:
 
 ## Product
 
-!Note! FeatureType/FeatureValue/ProductType are not changeable by API. They should be in a existing database to create a product.
-
 ### FindByID
 
 **route:** /products/{productId}
@@ -573,6 +571,218 @@ response:
 **path Parameters**
 
 * {productId}
+
+**request:** none
+
+**response:** none
+
+## Methods for creating product types (categories)/feature types (should not be accessible for a usual user)
+
+### Product Type: FindByID
+
+**route:** /productTypes/{productTypeId}
+
+**Method:** GET
+
+**path Parameters**
+
+* {productTypeId}
+
+**request:** none
+
+response:
+
+```json
+{
+  "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
+  "name": "notebook"
+}
+```
+
+### Product Type: FindByName
+
+**route:** /productTypes
+
+**Method:** GET
+
+**path Parameters**
+
+* name = String
+
+**request:** none
+
+**response:**
+
+```json
+{
+  "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
+  "name": "notebook"
+}
+```
+
+### Product Type: Create
+
+**route:** /productTypes
+
+**Method:** POST
+
+**request:**
+
+```json
+{
+  "name": "notebook"
+}
+```
+
+**response:**
+
+```json
+{
+  "id": "04056053-5d96-4069-94c3-4b3281ef32a0"
+}
+```
+
+### Product Type: Update
+
+**route:** /productType/{productTypeId}
+
+**Method:** PUT
+
+**path Parameters**
+
+* {productTypeId}
+
+**request:**
+
+```json
+{
+  "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
+  "name": "notebook"
+}
+```
+
+**response:**
+
+```json
+{
+  "id": "04056053-5d96-4069-94c3-4b3281ef32a0"
+}
+```
+
+### Product Type: Delete
+
+**route:** /productType/{productTypeId}
+
+**Method:** DELETE
+
+**path Parameters**
+
+* {productTypeId}
+
+**request:** none
+
+**response:** none
+
+### Feature Type: FindByID
+
+**route:** /featureTypes/{featureTypeId}
+
+**Method:** GET
+
+**path Parameters**
+
+* {featureTypeId}
+
+**request:** none
+
+response:
+
+```json
+{
+  "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
+  "name": "color"
+}
+```
+
+### Feature Type: FindByName
+
+**route:** /featureTypes
+
+**Method:** GET
+
+**path Parameters**
+
+* name = String
+
+**request:** none
+
+**response:**
+
+```json
+{
+  "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
+  "name": "color"
+}
+```
+
+### Feature Type: Create
+
+**route:** /featureTypes
+
+**Method:** POST
+
+**request:**
+
+```json
+{
+  "name": "color"
+}
+```
+
+**response:**
+
+```json
+{
+  "id": "04056053-5d96-4069-94c3-4b3281ef32a0"
+}
+```
+
+### Feature Type: Update
+
+**route:** /featureType/{featureTypeId}
+
+**Method:** PUT
+
+**path Parameters**
+
+* {productTypeId}
+
+**request:**
+
+```json
+{
+  "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
+  "name": "color"
+}
+```
+
+**response:**
+
+```json
+{
+  "id": "04056053-5d96-4069-94c3-4b3281ef32a0"
+}
+```
+
+### Feature Type: Delete
+
+**route:** /featureType/{featureTypeId}
+
+**Method:** DELETE
+
+**path Parameters**
+
+* {featureTypeId}
 
 **request:** none
 

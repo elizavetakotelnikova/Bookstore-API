@@ -1,4 +1,4 @@
-package com.bookstore.app.entities.productFeature.persistance;
+package com.bookstore.app.entities.product.persistance;
 
 import com.bookstore.app.entities.productFeature.ProductFeature;
 

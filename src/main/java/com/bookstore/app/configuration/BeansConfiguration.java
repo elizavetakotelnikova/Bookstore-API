@@ -5,8 +5,8 @@ import com.bookstore.app.entities.order.persistance.OrdersRepository;
 import com.bookstore.app.entities.product.persistance.*;
 import com.bookstore.app.entities.productFeature.persistance.FeatureTypesRepository;
 import com.bookstore.app.entities.productFeature.persistance.IFeatureTypesRepository;
-import com.bookstore.app.entities.productFeature.persistance.IProductFeaturesRepository;
-import com.bookstore.app.entities.productFeature.persistance.ProductFeaturesRepository;
+import com.bookstore.app.entities.product.persistance.IProductFeaturesRepository;
+import com.bookstore.app.entities.product.persistance.ProductFeaturesRepository;
 import com.bookstore.app.entities.shop.persistance.IShopsRepository;
 import com.bookstore.app.entities.shop.persistance.ShopsRepository;
 import com.bookstore.app.entities.user.persistance.IUsersRepository;
@@ -49,6 +49,11 @@ public class BeansConfiguration {
     @Bean
     public IProductsRepository IProductsRepository() {
         return new ProductsRepository(connection);
+    }
+
+    @Bean
+    public IProductTypesRepository IProductTypesRepository() {
+        return new ProductTypesRepository(connection);
     }
     @Bean
     public HashingConfigure HashingConfigure() throws NoSuchAlgorithmException {

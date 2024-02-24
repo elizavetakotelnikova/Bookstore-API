@@ -1,4 +1,4 @@
-package com.bookstore.app.entities.product.usecases;
+package com.bookstore.app.entities.product.usecases.productUseCases;
 
 import com.bookstore.app.entities.product.persistance.IProductsRepository;
 import com.bookstore.app.exceptions.QueryException;

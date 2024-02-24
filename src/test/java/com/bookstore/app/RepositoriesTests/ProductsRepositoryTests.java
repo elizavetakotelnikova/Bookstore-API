@@ -2,13 +2,10 @@ package com.bookstore.app.RepositoriesTests;
 
 import com.bookstore.app.entities.product.Product;
 import com.bookstore.app.entities.product.persistance.*;
-import com.bookstore.app.entities.productFeature.persistance.FeatureTypesRepository;
-import com.bookstore.app.entities.productFeature.persistance.IFeatureTypesRepository;
-import com.bookstore.app.entities.productFeature.persistance.IProductFeaturesRepository;
-import com.bookstore.app.entities.productFeature.persistance.ProductFeaturesRepository;
-import com.bookstore.app.models.FeatureType;
+import com.bookstore.app.entities.productFeature.persistance.*;
+import com.bookstore.app.entities.productFeature.FeatureType;
 import com.bookstore.app.entities.productFeature.ProductFeature;
-import com.bookstore.app.models.ProductType;
+import com.bookstore.app.entities.product.ProductType;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;

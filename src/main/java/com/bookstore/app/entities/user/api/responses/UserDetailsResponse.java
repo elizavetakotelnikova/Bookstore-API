@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class UserResponse {
+public class UserDetailsResponse {
     private UUID id;
     private String phoneNumber;
     private byte[] password;

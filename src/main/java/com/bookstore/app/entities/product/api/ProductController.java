@@ -1,14 +1,14 @@
 package com.bookstore.app.entities.product.api;
 
 import com.bookstore.app.entities.product.Product;
-import com.bookstore.app.entities.product.api.responses.ProductIDResponse;
+import com.bookstore.app.entities.product.api.responses.IDResponse;
 import com.bookstore.app.entities.product.api.responses.ProductResponse;
 import com.bookstore.app.entities.product.api.viewModels.CreateProductViewModel;
 import com.bookstore.app.entities.product.api.viewModels.UpdateProductViewModel;
-import com.bookstore.app.entities.product.usecases.*;
 import com.bookstore.app.entities.product.persistance.FindCriteria;
 import com.bookstore.app.entities.product.usecases.commands.CreateProductCommand;
 import com.bookstore.app.entities.product.usecases.commands.UpdateProductCommand;
+import com.bookstore.app.entities.product.usecases.productUseCases.*;
 import com.bookstore.app.exceptions.IncorrectArgumentsException;
 import com.bookstore.app.exceptions.QueryException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +35,12 @@ public class ProductController {
     @Autowired
     private DeleteProductUseCase deleteProductUseCase;
     @PostMapping("/products")
-    public ProductIDResponse createProduct(@RequestBody CreateProductViewModel providedProduct) throws InvalidKeySpecException {
+    public IDResponse createProduct(@RequestBody CreateProductViewModel providedProduct) throws InvalidKeySpecException {
         var command = new CreateProductCommand(providedProduct.getType(), providedProduct.getName(),
                 providedProduct.getPrice(), providedProduct.getFeatures());
         try {
             var product = createProductUseCase.handle(command);
-            return new ProductIDResponse(product.getId());
+            return new IDResponse(product.getId());
         }
         catch (IncorrectArgumentsException exc) {
             throw new ResponseStatusException(
@@ -69,12 +69,12 @@ public class ProductController {
     }
 
     @PutMapping("/product/{productId}")
-    public ProductIDResponse updateProduct(@PathVariable("productId") UUID id, @RequestBody UpdateProductViewModel providedProduct) {
+    public IDResponse updateProduct(@PathVariable("productId") UUID id, @RequestBody UpdateProductViewModel providedProduct) {
         var command = new UpdateProductCommand(providedProduct.getType(),
                 providedProduct.getName(), providedProduct.getPrice(), providedProduct.getFeatures());
         try {
             var product = updateProductUseCase.handle(command);
-            return new ProductIDResponse(product.getId());
+            return new IDResponse(product.getId());
         }
         catch (IncorrectArgumentsException exc) {
             throw new ResponseStatusException(

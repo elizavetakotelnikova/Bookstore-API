@@ -1,4 +1,4 @@
-package com.bookstore.app.models;
+package com.bookstore.app.entities.productFeature;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,11 +7,11 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class ProductType {
+public class FeatureType {
     private UUID id;
     private String name;
 
-    public ProductType(String name) {
+    public FeatureType(String name) {
         this.id = UUID.randomUUID();
         this.name = name;
     }

@@ -1,7 +1,6 @@
 package com.bookstore.app.entities.product.api.viewModels;
 
-import com.bookstore.app.entities.productFeature.ProductFeature;
-import com.bookstore.app.models.ProductType;
+import com.bookstore.app.entities.product.ProductType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.antlr.v4.runtime.misc.Pair;

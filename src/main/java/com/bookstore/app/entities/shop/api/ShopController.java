@@ -1,8 +1,8 @@
 package com.bookstore.app.entities.shop.api;
 
 import com.bookstore.app.entities.shop.Shop;
-import com.bookstore.app.entities.shop.api.responses.ShopIDResponse;
-import com.bookstore.app.entities.shop.api.responses.ShopJsonResponse;
+import com.bookstore.app.entities.shop.api.responses.IDResponse;
+import com.bookstore.app.entities.shop.api.responses.ShopDetailsResponse;
 import com.bookstore.app.entities.shop.api.viewModels.CreateShopViewModel;
 import com.bookstore.app.entities.shop.api.viewModels.UpdateShopViewModels;
 import com.bookstore.app.entities.shop.persistance.IShopsRepository;
@@ -11,7 +11,6 @@ import com.bookstore.app.entities.shop.usecases.*;
 import com.bookstore.app.entities.shop.usecases.DTOs.CreateShopDTO;
 import com.bookstore.app.entities.shop.usecases.DTOs.UpdateShopDTO;
 import com.bookstore.app.exceptions.IncorrectArgumentsException;
-import com.bookstore.app.exceptions.QueryException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -38,7 +37,7 @@ public class ShopController {
     private DeleteShopUsesCase deleteShopUseCase;
 
     @PostMapping("/shops")
-    public ShopIDResponse createShop(@RequestBody CreateShopViewModel providedShop) {
+    public IDResponse createShop(@RequestBody CreateShopViewModel providedShop) {
         var command = new CreateShopDTO(providedShop.getAddress());
         Shop shop;
         try {
@@ -47,21 +46,21 @@ public class ShopController {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, exc.getMessage(), exc);
         }
-        return new ShopIDResponse(shop.getId());
+        return new IDResponse(shop.getId());
     }
 
     @GetMapping("/shop/{shopId}")
-    public ShopJsonResponse getUserById(@PathVariable("shopId") UUID shopId) {
+    public ShopDetailsResponse getUserById(@PathVariable("shopId") UUID shopId) {
         var shop = findShopByIdUseCase.handle(shopId);
-        return new ShopJsonResponse(shop.getId(), shop.getAddress());
+        return new ShopDetailsResponse(shop.getId(), shop.getAddress());
     }
     @GetMapping("/shops/")
-    public List<ShopJsonResponse> getShopByCriteria(@Param("city") String city) {
+    public List<ShopDetailsResponse> getShopByCriteria(@Param("city") String city) {
         var criteria = new FindCriteria();
         if (city != null) criteria.setCity(city);
         var shops = findShopsByCriteriaUseCase.handle(criteria);
         var shopMapper = new ShopMapper();
-        List<ShopJsonResponse> listOfShops = new ArrayList<>();
+        List<ShopDetailsResponse> listOfShops = new ArrayList<>();
         for (Shop each: shops) {
             listOfShops.add(shopMapper.MapShopToViewModel(each));
         }
@@ -69,7 +68,7 @@ public class ShopController {
     }
 
     @PutMapping("/shop/{shopId}")
-    public ShopIDResponse updateShop(@PathVariable("shopId") UUID id, @RequestBody UpdateShopViewModels providedShop)  {
+    public IDResponse updateShop(@PathVariable("shopId") UUID id, @RequestBody UpdateShopViewModels providedShop)  {
         var command = new UpdateShopDTO(id, providedShop.getAddress());
         Shop shop = null;
         try {
@@ -78,7 +77,7 @@ public class ShopController {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, exc.getMessage(), exc);
         }
-        return new ShopIDResponse(shop.getId());
+        return new IDResponse(shop.getId());
     }
 
     @DeleteMapping("/shop/{shopId}")

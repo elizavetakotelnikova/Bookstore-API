@@ -1,5 +1,5 @@
 # Bookstore-API
-This project consists of a webstore REST-API. Main entities are User, Order, Product. CRUD operations of these entities and Shop entity are exposed to the API, FeatureTypes/Values/ProductTypes are only changeable via a repository and query to the existing database.
+This project consists of a webstore REST-API. Main entities are User, Order, Product. CRUD operations of these entities (and others as well) needed entity are exposed to the API.
 # Stack
 Java 21, Java Spring Boot, PostgreSQL, Flyaway, Docker & integration tests using Testcontainers library.
 
