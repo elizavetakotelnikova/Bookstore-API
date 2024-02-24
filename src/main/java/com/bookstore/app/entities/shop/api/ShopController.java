@@ -3,13 +3,11 @@ package com.bookstore.app.entities.shop.api;
 import com.bookstore.app.entities.shop.Shop;
 import com.bookstore.app.entities.shop.api.responses.IDResponse;
 import com.bookstore.app.entities.shop.api.responses.ShopDetailsResponse;
-import com.bookstore.app.entities.shop.api.viewModels.CreateShopViewModel;
-import com.bookstore.app.entities.shop.api.viewModels.UpdateShopViewModels;
+import com.bookstore.app.entities.shop.dto.CreateShopDTO;
+import com.bookstore.app.entities.shop.dto.UpdateShopDTO;
 import com.bookstore.app.entities.shop.persistance.IShopsRepository;
 import com.bookstore.app.entities.shop.persistance.FindCriteria;
 import com.bookstore.app.entities.shop.usecases.*;
-import com.bookstore.app.entities.shop.usecases.DTOs.CreateShopDTO;
-import com.bookstore.app.entities.shop.usecases.DTOs.UpdateShopDTO;
 import com.bookstore.app.exceptions.IncorrectArgumentsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -37,8 +35,8 @@ public class ShopController {
     private DeleteShopUsesCase deleteShopUseCase;
 
     @PostMapping("/shops")
-    public IDResponse createShop(@RequestBody CreateShopViewModel providedShop) {
-        var command = new CreateShopDTO(providedShop.getAddress());
+    public IDResponse createShop(@RequestBody CreateShopDTO providedShop) {
+        var command = new com.bookstore.app.entities.shop.usecases.DTOs.CreateShopDTO(providedShop.getAddress());
         Shop shop;
         try {
             shop = createShopUseCase.handle(command);
@@ -68,8 +66,8 @@ public class ShopController {
     }
 
     @PutMapping("/shop/{shopId}")
-    public IDResponse updateShop(@PathVariable("shopId") UUID id, @RequestBody UpdateShopViewModels providedShop)  {
-        var command = new UpdateShopDTO(id, providedShop.getAddress());
+    public IDResponse updateShop(@PathVariable("shopId") UUID id, @RequestBody UpdateShopDTO providedShop)  {
+        var command = new com.bookstore.app.entities.shop.usecases.DTOs.UpdateShopDTO(id, providedShop.getAddress());
         Shop shop = null;
         try {
             shop = updateShopUseCase.handle(command);

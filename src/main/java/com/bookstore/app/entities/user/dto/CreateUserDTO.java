@@ -1,4 +1,4 @@
-package com.bookstore.app.entities.user.api.viewModels;
+package com.bookstore.app.entities.user.dto;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-public class CreateUserViewModel {
+public class CreateUserDTO {
     private String phoneNumber;
     private String password;
     private int balance;

@@ -1,7 +1,7 @@
 package com.bookstore.app.entities.productFeature.api;
 import com.bookstore.app.entities.productFeature.api.responses.FeatureDetailsResponse;
 import com.bookstore.app.entities.productFeature.api.responses.IDResponse;
-import com.bookstore.app.entities.productFeature.api.viewModels.CreateFeatureTypeRequest;
+import com.bookstore.app.entities.productFeature.dto.CreateFeatureTypeDTO;
 import com.bookstore.app.entities.productFeature.usecases.*;
 import com.bookstore.app.entities.productFeature.usecases.commands.UpdateCommand;
 import com.bookstore.app.exceptions.IncorrectArgumentsException;
@@ -29,7 +29,7 @@ public class FeatureTypesController {
     private DeleteFeatureTypeUseCase deleteFeatureTypeUseCase;
 
     @PostMapping("/featureTypes")
-    public IDResponse createFeatureType(@RequestBody CreateFeatureTypeRequest providedFeatureType) throws InvalidKeySpecException {
+    public IDResponse createFeatureType(@RequestBody CreateFeatureTypeDTO providedFeatureType) throws InvalidKeySpecException {
         try {
             var FeatureType = createFeatureTypeUseCase.handle(providedFeatureType.getName());
             return new IDResponse(FeatureType.getId());
@@ -52,7 +52,7 @@ public class FeatureTypesController {
     }
 
     @PutMapping("/featureType/{featureTypeId}")
-    public IDResponse updateFeatureType(@PathVariable("featureTypeId") UUID id, @RequestBody CreateFeatureTypeRequest providedFeatureType) {
+    public IDResponse updateFeatureType(@PathVariable("featureTypeId") UUID id, @RequestBody CreateFeatureTypeDTO providedFeatureType) {
         try {
             var featureType = updateFeatureTypeByIdUseCase.handle(new UpdateCommand(id, providedFeatureType.getName()));
             return new IDResponse(featureType.getId());

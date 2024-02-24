@@ -2,7 +2,7 @@ package com.bookstore.app.entities.product.api;
 
 import com.bookstore.app.entities.product.api.responses.IDResponse;
 import com.bookstore.app.entities.product.api.responses.ProductTypeResponse;
-import com.bookstore.app.entities.product.api.viewModels.CreateProductTypeRequest;
+import com.bookstore.app.entities.product.dto.CreateProductTypeDTO;
 import com.bookstore.app.entities.product.usecases.commands.UpdateProductTypeCommand;
 import com.bookstore.app.entities.product.usecases.productTypeUseCases.*;
 import com.bookstore.app.exceptions.IncorrectArgumentsException;
@@ -30,7 +30,7 @@ public class ProductTypesController {
     private DeleteProductTypeUseCase deleteProductTypeUseCase;
 
     @PostMapping("/productTypes")
-    public IDResponse createProductType(@RequestBody CreateProductTypeRequest providedProductType) throws InvalidKeySpecException {
+    public IDResponse createProductType(@RequestBody CreateProductTypeDTO providedProductType) throws InvalidKeySpecException {
         try {
             var productType = createProductTypeUseCase.handle(providedProductType.getName());
             return new IDResponse(productType.getId());
@@ -53,7 +53,7 @@ public class ProductTypesController {
     }
 
     @PutMapping("/productType/{productTypeId}")
-    public IDResponse updateProductType(@PathVariable("productTypeId") UUID id, @RequestBody CreateProductTypeRequest providedProductType) {
+    public IDResponse updateProductType(@PathVariable("productTypeId") UUID id, @RequestBody CreateProductTypeDTO providedProductType) {
         try {
             var productType = updateProductTypeUseCase.handle(new UpdateProductTypeCommand(id, providedProductType.getName()));
             return new IDResponse(productType.getId());

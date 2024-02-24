@@ -1,4 +1,4 @@
-package com.bookstore.app.entities.product.api.viewModels;
+package com.bookstore.app.entities.product.dto;
 
 import com.bookstore.app.entities.product.ProductType;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class CreateProductViewModel {
+public class UpdateProductDTO {
     private ProductType type;
     private String name;
     private int price;

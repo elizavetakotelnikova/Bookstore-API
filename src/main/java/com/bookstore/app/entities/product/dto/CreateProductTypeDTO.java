@@ -1,10 +1,10 @@
-package com.bookstore.app.entities.productFeature.api.viewModels;
+package com.bookstore.app.entities.product.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class CreateFeatureTypeRequest {
+public class CreateProductTypeDTO {
     private String name;
 }

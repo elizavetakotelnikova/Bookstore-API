@@ -3,8 +3,8 @@ package com.bookstore.app.entities.user.api;
 import com.bookstore.app.entities.user.api.responses.TokenResponse;
 import com.bookstore.app.entities.user.api.responses.IDResponse;
 import com.bookstore.app.entities.user.api.responses.UserDetailsResponse;
-import com.bookstore.app.entities.user.api.viewModels.CreateUserViewModel;
-import com.bookstore.app.entities.user.api.viewModels.GetTokenViewModel;
+import com.bookstore.app.entities.user.dto.CreateUserDTO;
+import com.bookstore.app.entities.user.dto.GetTokenDTO;
 import com.bookstore.app.entities.user.persistance.FindCriteria;
 import com.bookstore.app.entities.user.persistance.IUsersRepository;
 import com.bookstore.app.entities.user.usecases.*;
@@ -43,7 +43,7 @@ public class UserController {
     private DeleteUserUseCase deleteUserUsecase;
 
     @PostMapping("/users")
-    public IDResponse createUser(@RequestBody CreateUserViewModel providedUser) {
+    public IDResponse createUser(@RequestBody CreateUserDTO providedUser) {
         var command = new CreateUserCommand(providedUser.getPhoneNumber(), providedUser.getPassword(), providedUser.getBalance(), providedUser.getBirthday(), providedUser.getOrdersHistory());
         UserDetailsDTO user;
         try {
@@ -83,14 +83,14 @@ public class UserController {
     }
 
     @GetMapping("/user/token/{userId}")
-    public ResponseEntity<TokenResponse> getUserToken(@RequestBody GetTokenViewModel providedData) {
+    public ResponseEntity<TokenResponse> getUserToken(@RequestBody GetTokenDTO providedData) {
         var token = getTokenUsecase.validatePasswordFromDB(providedData.password, providedData.phoneNumber);
         if (token != null) return new ResponseEntity<>(new TokenResponse(token), HttpStatus.OK) ;
         return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
     }
 
     @PutMapping("/user/{userId}")
-    public IDResponse updateUser(@PathVariable("userId") UUID id, @RequestBody CreateUserViewModel providedUser) {
+    public IDResponse updateUser(@PathVariable("userId") UUID id, @RequestBody CreateUserDTO providedUser) {
         var command = new UpdateUserCommand(id, providedUser.getPhoneNumber(), providedUser.getPassword(),
                 providedUser.getBalance(), providedUser.getBirthday(), providedUser.getOrdersHistory());
         UserDetailsDTO user = null;

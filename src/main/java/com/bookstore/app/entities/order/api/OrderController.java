@@ -1,17 +1,15 @@
 package com.bookstore.app.entities.order.api;
 
-import com.bookstore.app.entities.order.Order;
 import com.bookstore.app.entities.order.api.responses.OrderIDResponse;
 import com.bookstore.app.entities.order.api.responses.OrderResponse;
-import com.bookstore.app.entities.order.api.viewModels.CreateOrderViewModel;
-import com.bookstore.app.entities.order.api.viewModels.UpdateOrderViewModel;
+import com.bookstore.app.entities.order.dto.CreateOrderDTO;
+import com.bookstore.app.entities.order.dto.UpdateOrderDTO;
 import com.bookstore.app.entities.order.persistance.FindCriteria;
 import com.bookstore.app.entities.order.usecases.*;
 import com.bookstore.app.entities.order.usecases.DTOs.OrderDetailsDTO;
 import com.bookstore.app.entities.order.usecases.commands.CreateOrderCommand;
 import com.bookstore.app.entities.order.usecases.commands.UpdateOrderCommand;
 import com.bookstore.app.exceptions.QueryException;
-import org.aspectj.bridge.ICommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -37,7 +35,7 @@ public class OrderController {
     @Autowired
     private DeleteOrderUseCase deleteOrderUseCase;
     @PostMapping("/orders")
-    public OrderResponse createOrder(@RequestBody CreateOrderViewModel providedOrder) throws InvalidKeySpecException {
+    public OrderResponse createOrder(@RequestBody CreateOrderDTO providedOrder) throws InvalidKeySpecException {
         var command = new CreateOrderCommand(providedOrder.getUserId(), providedOrder.getDate(), providedOrder.getShopId(),
                 providedOrder.getOrderState(), providedOrder.getProductList());
         var createOrderDTO = createOrderUseCase.handle(command);
@@ -70,7 +68,7 @@ public class OrderController {
     }
 
     @PutMapping("/order/{orderId}")
-    public OrderIDResponse updateOrder(@PathVariable("orderId") UUID id, @RequestBody UpdateOrderViewModel providedOrder) {
+    public OrderIDResponse updateOrder(@PathVariable("orderId") UUID id, @RequestBody UpdateOrderDTO providedOrder) {
         var command = new UpdateOrderCommand(providedOrder.getId(), providedOrder.getUserId(),
                 providedOrder.getDate(), providedOrder.getShopId(), providedOrder.getOrderState(),
                 providedOrder.getProductList());

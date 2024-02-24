@@ -3,8 +3,8 @@ package com.bookstore.app.entities.product.api;
 import com.bookstore.app.entities.product.Product;
 import com.bookstore.app.entities.product.api.responses.IDResponse;
 import com.bookstore.app.entities.product.api.responses.ProductResponse;
-import com.bookstore.app.entities.product.api.viewModels.CreateProductViewModel;
-import com.bookstore.app.entities.product.api.viewModels.UpdateProductViewModel;
+import com.bookstore.app.entities.product.dto.CreateProductDTO;
+import com.bookstore.app.entities.product.dto.UpdateProductDTO;
 import com.bookstore.app.entities.product.persistance.FindCriteria;
 import com.bookstore.app.entities.product.usecases.commands.CreateProductCommand;
 import com.bookstore.app.entities.product.usecases.commands.UpdateProductCommand;
@@ -35,7 +35,7 @@ public class ProductController {
     @Autowired
     private DeleteProductUseCase deleteProductUseCase;
     @PostMapping("/products")
-    public IDResponse createProduct(@RequestBody CreateProductViewModel providedProduct) throws InvalidKeySpecException {
+    public IDResponse createProduct(@RequestBody CreateProductDTO providedProduct) throws InvalidKeySpecException {
         var command = new CreateProductCommand(providedProduct.getType(), providedProduct.getName(),
                 providedProduct.getPrice(), providedProduct.getFeatures());
         try {
@@ -69,7 +69,7 @@ public class ProductController {
     }
 
     @PutMapping("/product/{productId}")
-    public IDResponse updateProduct(@PathVariable("productId") UUID id, @RequestBody UpdateProductViewModel providedProduct) {
+    public IDResponse updateProduct(@PathVariable("productId") UUID id, @RequestBody UpdateProductDTO providedProduct) {
         var command = new UpdateProductCommand(providedProduct.getType(),
                 providedProduct.getName(), providedProduct.getPrice(), providedProduct.getFeatures());
         try {
