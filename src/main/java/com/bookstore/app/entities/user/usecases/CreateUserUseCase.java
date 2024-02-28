@@ -7,16 +7,16 @@ import com.bookstore.app.entities.user.usecases.DTOs.UserDetailsDTO;
 import com.bookstore.app.entities.user.usecases.commands.CreateUserCommand;
 import com.bookstore.app.exceptions.IncorrectArgumentsException;
 import com.bookstore.app.infrastructure.HashingConfigure;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
 @Service
+@AllArgsConstructor
 public class CreateUserUseCase {
-    @Autowired
     private IUsersRepository usersRepository;
-    @Autowired
     private HashingConfigure hashingConfigure;
     public boolean validateUser(CreateUserCommand command) {
         if (command.getPassword() == null || command.getPhoneNumber() == null) {

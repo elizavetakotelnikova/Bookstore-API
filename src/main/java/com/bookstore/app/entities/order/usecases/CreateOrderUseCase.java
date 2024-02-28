@@ -18,12 +18,9 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class CreateOrderUseCase {
-    @Autowired
     private IOrdersRepository ordersRepository;
-    @Autowired
     private IProductsRepository productsRepository;
-    @Autowired
-    OrderDetailsMapper mapper;
+    private OrderDetailsMapper mapper;
     public OrderDetailsDTO handle(CreateOrderCommand command) {
         var products = new ArrayList<Product>();
         for (UUID productId : command.getProductList()) {

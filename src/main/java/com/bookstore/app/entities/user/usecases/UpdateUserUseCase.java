@@ -8,6 +8,7 @@ import com.bookstore.app.entities.user.usecases.DTOs.UserDetailsDTO;
 import com.bookstore.app.entities.user.usecases.commands.UpdateUserCommand;
 import com.bookstore.app.exceptions.IncorrectArgumentsException;
 import com.bookstore.app.infrastructure.HashingConfigure;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +16,10 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class UpdateUserUseCase {
-    @Autowired
     private IUsersRepository usersRepository;
-    @Autowired
     private IOrdersRepository ordersRepository;
-    @Autowired
     private HashingConfigure hashingConfigure;
     public UserDetailsDTO handle(UpdateUserCommand command) throws IncorrectArgumentsException {
         if (command.getBirthday() == null) {

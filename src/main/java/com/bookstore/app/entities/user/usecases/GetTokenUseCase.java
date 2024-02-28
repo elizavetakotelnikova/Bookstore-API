@@ -3,9 +3,11 @@ package com.bookstore.app.entities.user.usecases;
 import com.bookstore.app.entities.user.persistance.FindCriteria;
 import com.bookstore.app.entities.user.persistance.IUsersRepository;
 import com.bookstore.app.infrastructure.HashingConfigure;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class GetTokenUseCase {
     IUsersRepository usersRepository;
     HashingConfigure hashingConfigure;

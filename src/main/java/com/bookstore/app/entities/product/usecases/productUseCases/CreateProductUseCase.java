@@ -7,18 +7,17 @@ import com.bookstore.app.entities.productFeature.ProductFeature;
 import com.bookstore.app.entities.productFeature.persistance.IFeatureTypesRepository;
 import com.bookstore.app.entities.product.persistance.IProductFeaturesRepository;
 import com.bookstore.app.exceptions.IncorrectArgumentsException;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
 @Service
+@AllArgsConstructor
 public class CreateProductUseCase {
-    @Autowired
     private IProductsRepository productsRepository;
-    @Autowired
     private IProductFeaturesRepository productFeaturesRepository;
-    @Autowired
     IFeatureTypesRepository featureTypesRepository;
     public Product handle(CreateProductCommand command) throws IncorrectArgumentsException {
         // validation

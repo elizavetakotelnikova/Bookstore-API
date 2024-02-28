@@ -2,6 +2,7 @@ package com.bookstore.app.configuration;
 
 import com.bookstore.app.entities.order.persistance.IOrdersRepository;
 import com.bookstore.app.entities.order.persistance.OrdersRepository;
+import com.bookstore.app.entities.order.usecases.DTOs.OrderDetailsMapper;
 import com.bookstore.app.entities.product.persistance.*;
 import com.bookstore.app.entities.productFeature.persistance.FeatureTypesRepository;
 import com.bookstore.app.entities.productFeature.persistance.IFeatureTypesRepository;
@@ -58,5 +59,9 @@ public class BeansConfiguration {
     @Bean
     public HashingConfigure HashingConfigure() throws NoSuchAlgorithmException {
         return new HashingConfigure();
+    }
+    @Bean
+    public OrderDetailsMapper OrderDetailsMapper() {
+        return new OrderDetailsMapper();
     }
 }

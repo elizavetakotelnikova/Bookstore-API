@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class UpdateShopUseCase {
-    @Autowired
     private IShopsRepository shopsRepository;
     public Shop handle(UpdateShopDTO command) throws IncorrectArgumentsException {
         if (command.address == null) throw new IncorrectArgumentsException("cannot update Shop");

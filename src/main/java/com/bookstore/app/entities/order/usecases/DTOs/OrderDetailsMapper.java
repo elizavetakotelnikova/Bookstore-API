@@ -3,7 +3,7 @@ package com.bookstore.app.entities.order.usecases.DTOs;
 import com.bookstore.app.entities.order.Order;
 import org.springframework.stereotype.Service;
 
-@Service
+
 public class OrderDetailsMapper {
     public OrderDetailsDTO MapOrderToOrderDetails(Order order) {
         var totalPrice = order.calculateTotalPrice();

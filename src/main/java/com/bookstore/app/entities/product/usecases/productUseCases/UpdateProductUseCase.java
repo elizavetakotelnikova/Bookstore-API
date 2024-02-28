@@ -6,16 +6,16 @@ import com.bookstore.app.entities.product.usecases.commands.UpdateProductCommand
 import com.bookstore.app.entities.productFeature.ProductFeature;
 import com.bookstore.app.entities.productFeature.persistance.IFeatureTypesRepository;
 import com.bookstore.app.exceptions.IncorrectArgumentsException;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
 @Service
+@AllArgsConstructor
 public class UpdateProductUseCase {
-    @Autowired
     private IProductsRepository productsRepository;
-    @Autowired
     private IFeatureTypesRepository featureTypesRepository;
     public Product handle(UpdateProductCommand command) throws IncorrectArgumentsException {
         var productFeatures = new ArrayList<ProductFeature>();

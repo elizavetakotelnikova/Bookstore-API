@@ -5,6 +5,7 @@ import com.bookstore.app.entities.user.User;
 import com.bookstore.app.entities.user.persistance.FindCriteria;
 import com.bookstore.app.entities.user.persistance.IUsersRepository;
 import com.bookstore.app.entities.user.usecases.DTOs.UserDetailsDTO;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class FindUsersByCriteriaUseCase {
-    @Autowired
     private IUsersRepository usersRepository;
-    @Autowired
     private IOrdersRepository ordersRepository;
 
     public List<UserDetailsDTO> handle(FindCriteria criteria) {
