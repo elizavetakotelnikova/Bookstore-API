@@ -4,6 +4,7 @@ import com.bookstore.app.entities.product.Product;
 import com.bookstore.app.entities.product.api.responses.IDResponse;
 import com.bookstore.app.entities.product.api.responses.ProductResponse;
 import com.bookstore.app.entities.product.dto.CreateProductDTO;
+import com.bookstore.app.entities.product.dto.CreateProductFeatureDTO;
 import com.bookstore.app.entities.product.dto.UpdateProductDTO;
 import com.bookstore.app.entities.product.persistance.FindCriteria;
 import com.bookstore.app.entities.product.usecases.commands.CreateProductCommand;
@@ -11,6 +12,7 @@ import com.bookstore.app.entities.product.usecases.commands.UpdateProductCommand
 import com.bookstore.app.entities.product.usecases.productUseCases.*;
 import com.bookstore.app.exceptions.IncorrectArgumentsException;
 import com.bookstore.app.exceptions.QueryException;
+import org.antlr.v4.runtime.misc.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -36,8 +38,12 @@ public class ProductController {
     private DeleteProductUseCase deleteProductUseCase;
     @PostMapping("/products")
     public IDResponse createProduct(@RequestBody CreateProductDTO providedProduct) throws InvalidKeySpecException {
-        var command = new CreateProductCommand(providedProduct.getType(), providedProduct.getName(),
-                providedProduct.getPrice(), providedProduct.getFeatures());
+        List<Pair<UUID, String>> featuresList = new ArrayList<>();
+        for (CreateProductFeatureDTO each : providedProduct.getFeatures()) {
+            featuresList.add(new Pair<>(each.getFeatureTypeId(), each.getValue()));
+        }
+        var command = new CreateProductCommand(providedProduct.getTypeId(), providedProduct.getName(),
+                providedProduct.getPrice(), featuresList);
         try {
             var product = createProductUseCase.handle(command);
             return new IDResponse(product.getId());

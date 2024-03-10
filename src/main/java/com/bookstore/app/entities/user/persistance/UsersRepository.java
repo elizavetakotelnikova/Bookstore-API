@@ -4,6 +4,14 @@ package com.bookstore.app.entities.user.persistance;
 import com.bookstore.app.entities.user.User;
 import com.bookstore.app.exceptions.QueryException;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
+import org.springframework.data.relational.core.query.Criteria;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -11,52 +19,40 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@AllArgsConstructor
 public class UsersRepository implements IUsersRepository {
-    private Connection connection;
+    private static SessionFactory factory;
+    public UsersRepository() {
+        try {
+            factory = new Configuration().configure().buildSessionFactory();
+        } catch (Throwable ex) {
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
 
     @Override
     public User saveUser(User user) {
-        try {
-            PreparedStatement st = connection.prepareStatement(
-                    "INSERT INTO users(id, phone_number, password, balance, birthday) VALUES(?, ?, ?, ?, ?)");
-            st.setObject(1, user.getId());
-            st.setString(2, user.getPhoneNumber());
-            st.setBytes(3, user.getPassword());
-            st.setInt(4, user.getBalance());
-            st.setObject(5, user.getBirthday());
-            st.execute();
-            st.close();
-        } catch (Exception e) {
+        try (Session session = factory.openSession()) {
+            Transaction tx = session.beginTransaction();
+            session.persist(user);
+            tx.commit();
+        } catch (HibernateException e) {
             throw new RuntimeException(e.getMessage());
         }
-
         return user;
     }
 
     @Override
     public User findUserById(UUID id) {
-        try {
-        PreparedStatement st = connection.prepareStatement(
-                "SELECT id, phone_number, password, balance, birthday FROM users " +
-                "WHERE id = ?");
-        st.setObject(1, id);
-        ResultSet rs = st.executeQuery();
-        if (!rs.next()) throw new QueryException("No such user");
-        User user = new User(UUID.fromString(rs.getString("id")),
-                rs.getString("phone_number"),
-                rs.getBytes("password"),
-                rs.getInt("balance"),
-                rs.getObject("birthday", LocalDate.class));
-        rs.close();
-        st.close();
-        return user;
-    } catch (QueryException e) {
+        try (Session session = factory.openSession()) {
+            var user = (User) session.get(User.class, id);
+            if (user == null) throw new QueryException("No such user");
+            return user;
+        } catch (QueryException e) {
             return null;
         }
         catch (Exception e) {
         throw new RuntimeException(e.getMessage());
-    }
+        }
     }
 
     @Override
@@ -71,22 +67,13 @@ public class UsersRepository implements IUsersRepository {
     }
 
     public User findUserByPhoneNumber(String phoneNumber) {
-        try {
-            PreparedStatement st = connection.prepareStatement(
-                    "SELECT id, phone_number, password, balance, birthday FROM users " +
-                            "WHERE phone_number = ?");
-            st.setObject(1, phoneNumber);
-            ResultSet rs = st.executeQuery();
-            if (!rs.next()) throw new QueryException("No such user");
-            User user = new User(UUID.fromString(rs.getString("id")),
-                    rs.getString("phone_number"),
-                    rs.getBytes("password"),
-                    rs.getInt("balance"),
-                    rs.getObject("birthday", LocalDate.class));
-            rs.close();
-            st.close();
-            return user;
-        } catch (QueryException exception) {
+        try (Session session = factory.openSession()) {
+            Query query = session.createQuery("from User u where u.phoneNumber = :phoneNumber");
+            query.setParameter("phoneNumber", phoneNumber);
+            var user = query.list();
+            if (user.isEmpty()) throw new QueryException("No such user");
+            return (User) user.getFirst();
+        } catch (QueryException e) {
             return null;
         }
         catch (Exception e) {
@@ -95,24 +82,14 @@ public class UsersRepository implements IUsersRepository {
     }
 
     public List<User> findUserByBirthday(LocalDate date) {
-        try {
-            PreparedStatement st = connection.prepareStatement(
-                    "SELECT id, phone_number, password, balance, birthday FROM users " +
-                            "WHERE birthday = ?");
-            st.setObject(1, date);
-            ResultSet rs = st.executeQuery();
-            List<User> listOfUsers = new ArrayList<>();
-            while(rs.next()) {
-                User user = new User(UUID.fromString(rs.getString("id")),
-                        rs.getString("phone_number"),
-                        rs.getBytes("password"),
-                        rs.getInt("balance"),
-                        rs.getObject("birthday", LocalDate.class));
-                listOfUsers.add(user);
-            }
-            rs.close();
-            st.close();
-            return listOfUsers;
+        try (Session session = factory.openSession()) {
+            Query query = session.createQuery("from User u where u.birthday = :birthday");
+            query.setParameter("birthday", date);
+            var users = query.list();
+            if (users == null) throw new QueryException("No such user");
+            return users;
+        } catch (QueryException e) {
+            return null;
         }
         catch (Exception e) {
             throw new RuntimeException(e.getMessage());
@@ -121,16 +98,10 @@ public class UsersRepository implements IUsersRepository {
 
     @Override
     public User updateUser(User user) {
-        try {
-            PreparedStatement st = connection.prepareStatement(
-                    "UPDATE users SET id = ?, phone_number = ?, password = ?, balance = ?, birthday = ?");
-            st.setObject(1, user.getId());
-            st.setString(2, user.getPhoneNumber());
-            st.setBytes(3, user.getPassword());
-            st.setInt(4, user.getBalance());
-            st.setObject(5, user.getBirthday());
-            st.execute();
-            st.close();
+        try (Session session = factory.openSession()) {
+            Transaction tx = session.beginTransaction();
+            session.update(user);
+            tx.commit();
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -139,12 +110,11 @@ public class UsersRepository implements IUsersRepository {
 
     @Override
     public void deleteUserById(UUID id) {
-        try {
-            PreparedStatement st = connection.prepareStatement(
-                    "DELETE FROM users WHERE id = ?");
-            st.setObject(1, id);
-            st.execute();
-            st.close();
+        try (Session session = factory.openSession()) {
+            Transaction tx = session.beginTransaction();
+            User user = (User)session.get(User.class, id);
+            session.delete(user);
+            tx.commit();
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }

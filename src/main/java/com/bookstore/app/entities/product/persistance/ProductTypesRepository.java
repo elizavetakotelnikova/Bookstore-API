@@ -1,50 +1,53 @@
 package com.bookstore.app.entities.product.persistance;
-
 import com.bookstore.app.entities.product.ProductType;
-import com.bookstore.app.entities.product.persistance.IProductTypesRepository;
 import com.bookstore.app.exceptions.QueryException;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.data.jpa.repository.Modifying;
-
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.UUID;
 
-@AllArgsConstructor
 public class ProductTypesRepository implements IProductTypesRepository {
+    private static SessionFactory factory;
     private Connection connection;
+    public ProductTypesRepository() {
+        try {
+            factory = new Configuration().configure().buildSessionFactory();
+        } catch (Throwable ex) {
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+
+    public ProductTypesRepository(Connection connection) {
+        try {
+            factory = new Configuration().configure().buildSessionFactory();
+        } catch (Throwable ex) {
+            throw new ExceptionInInitializerError(ex);
+        }
+        this.connection = connection;
+    }
+
     @Override
     public ProductType saveProductType(ProductType productType) {
-        try {
-            PreparedStatement st = connection.prepareStatement(
-                    "INSERT INTO product_types(id, name) VALUES(?, ?)");
-            st.setObject(1, productType.getId());
-            st.setString(2, productType.getName());
-            st.execute();
-            st.close();
-            return productType;
-        } catch (Exception e) {
+        try (Session session = factory.openSession()) {
+            Transaction tx = session.beginTransaction();
+            session.persist(productType);
+            tx.commit();
+        } catch (HibernateException e) {
             throw new RuntimeException(e.getMessage());
         }
+        return productType;
     }
 
     @Override
     public ProductType findProductTypeById(UUID id) {
-        try {
-            PreparedStatement st = connection.prepareStatement(
-                    "SELECT id, name " +
-                            "WHERE id = ?");
-            st.setObject(1, id);
-            ResultSet rs = st.executeQuery();
-            if (!rs.next()) throw new QueryException("No such product type");
-            ProductType productType = new ProductType(
-                    UUID.fromString(rs.getString("id")),
-                    rs.getString("name"));
-            rs.close();
-            st.close();
+        try (Session session = factory.openSession()) {
+            var productType = (ProductType) session.get(ProductType.class, id);
+            if (productType == null) throw new QueryException("No such product type");
             return productType;
         } catch (QueryException e) {
             return null;
@@ -55,54 +58,40 @@ public class ProductTypesRepository implements IProductTypesRepository {
     }
 
     @Override
-    public ProductType findProductTypeByName(String name) {
-        try {
-            PreparedStatement st = connection.prepareStatement(
-                    "SELECT id, name " +
-                            "WHERE name = ?");
-            st.setString(1, name);
-            ResultSet rs = st.executeQuery();
-            if (!rs.next()) throw new QueryException("No such product type");
-            ProductType productType = new ProductType(
-                    UUID.fromString(rs.getString("id")),
-                    rs.getString("name"));
-            rs.close();
-            st.close();
-            return productType;
-        } catch (QueryException e) {
-            return null;
-        }
-        catch (Exception e) {
+    public ProductType updateProductType(ProductType productType) {
+        try (Session session = factory.openSession()) {
+            Transaction tx = session.beginTransaction();
+            session.update(productType);
+            tx.commit();
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
+        return productType;
     }
 
     @Override
     public void deleteProductTypeById(UUID id) {
-        try {
-            PreparedStatement st = connection.prepareStatement(
-                    "DELETE FROM product_types WHERE id = ?");
-            st.setObject(1, id);
-            st.execute();
-            st.close();
+        try (Session session = factory.openSession()) {
+            Transaction tx = session.beginTransaction();
+            ProductType productType = (ProductType)session.get(ProductType.class, id);
+            session.delete(productType);
+            tx.commit();
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
-
     @Override
-    @Transactional
-    @Modifying
-    public ProductType updateProductType(ProductType productType) {
-        try {
-            PreparedStatement st = connection.prepareStatement(
-                    "UPDATE product_types SET name = ? " +
-                            "WHERE id = type.id");
-            st.setString(1, productType.getName());
-            st.execute();
-            st.close();
-            return productType;
-        } catch (Exception e) {
+    public ProductType findProductTypeByName(String name) {
+        try (Session session = factory.openSession()) {
+            Query query = session.createQuery("from ProductType productType where productType.name = :name");
+            query.setParameter("name", name);
+            var productTypes = query.list();
+            if (productTypes.isEmpty()) throw new QueryException("No such productType");
+            return (ProductType) productTypes;
+        } catch (QueryException e) {
+            return null;
+        }
+        catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
