@@ -4,12 +4,14 @@ import com.bookstore.app.entities.productFeature.ProductFeature;
 import com.bookstore.app.entities.product.ProductType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.UUID;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ProductResponse {
     private UUID id;
     private ProductType type;

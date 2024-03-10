@@ -1,0 +1,25 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name = "com.bookstore.app.entities.shop.Shop" table = "shops">
+
+        <meta attribute = "class-description">
+            This class contains user mapping description.
+        </meta>
+
+        <id name = "id" type = "java.util.UUID" column = "id">
+            <!--<generator class="native"/>-->
+        </id>
+
+        <component name="address" node="address">
+            <property name="country" column="country" type="string"/>
+            <property name="city" column="city" type="string"/>
+            <property name="buildingNumber" column="building_number" type="java.lang.Integer"/>
+            <property name="street" column="street" type="java.lang.String"/>
+            <property name="houseNumber" column="house_number" type="java.lang.String"/>
+        </component>
+    </class>
+</hibernate-mapping>

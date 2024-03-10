@@ -1,0 +1,25 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name = "com.bookstore.app.entities.product.Product" table = "product_features">
+
+        <meta attribute = "class-description">
+            This class contains user mapping description.
+        </meta>
+
+        <id name="id" type="long" >
+            <column name="id"  />
+            <generator class="native" />
+        </id>
+
+        <many-to-one name="product" class="com.bookstore.app.entities.product.Product"
+                     column="product_id"  cascade="all" unique="true" lazy="false"/>
+
+        <many-to-one name="productFeature" class="com.bookstore.app.entities.productFeature.ProductFeature"
+                     column="feature_value_id"  cascade="all" unique="true" lazy="false"/>
+
+    </class>
+</hibernate-mapping>

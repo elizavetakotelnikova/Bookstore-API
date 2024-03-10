@@ -12,7 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CreateOrderDTO {
     private UUID userId;
-    private Date date;
+    private java.time.LocalDate date;
     private UUID shopId;
     private OrderState orderState;
     private List<UUID> productList;

@@ -1,13 +1,12 @@
 package com.bookstore.app.entities.user;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.ArrayList;
-import java.util.List;
+import lombok.NoArgsConstructor;
 import java.util.UUID;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class User {
     private UUID id;
     private String phoneNumber;

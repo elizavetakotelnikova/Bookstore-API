@@ -1,7 +1,10 @@
 package com.bookstore.app.entities.product.usecases.productUseCases;
 
 import com.bookstore.app.entities.product.Product;
+import com.bookstore.app.entities.product.ProductType;
+import com.bookstore.app.entities.product.persistance.IProductTypesRepository;
 import com.bookstore.app.entities.product.persistance.IProductsRepository;
+import com.bookstore.app.entities.product.persistance.ProductTypesRepository;
 import com.bookstore.app.entities.product.usecases.commands.CreateProductCommand;
 import com.bookstore.app.entities.productFeature.ProductFeature;
 import com.bookstore.app.entities.productFeature.persistance.IFeatureTypesRepository;
@@ -18,11 +21,12 @@ import java.util.ArrayList;
 public class CreateProductUseCase {
     private IProductsRepository productsRepository;
     private IProductFeaturesRepository productFeaturesRepository;
+    private IProductTypesRepository productTypesRepository;
     IFeatureTypesRepository featureTypesRepository;
     public Product handle(CreateProductCommand command) throws IncorrectArgumentsException {
         // validation
-        if (command.getName() == null ||
-        command.getType().getName() == null) throw new RuntimeException("Cannot create product");
+        if (command.getName() == null) throw new RuntimeException("Cannot create product");
+        var productType = productTypesRepository.findProductTypeById(command.getTypeId());
         var productFeatures = new ArrayList<ProductFeature>();
         //getting features
         for (var each : command.getFeatures()) {
@@ -31,7 +35,7 @@ public class CreateProductUseCase {
             productFeatures.add(new ProductFeature(type, each.b));
         }
         //creating product entity
-        var product = new Product(command.getType(), command.getName(), command.getPrice(), productFeatures);
+        var product = new Product(productType, command.getName(), command.getPrice(), productFeatures);
         product = productsRepository.saveProduct(product);
         return product;
     }

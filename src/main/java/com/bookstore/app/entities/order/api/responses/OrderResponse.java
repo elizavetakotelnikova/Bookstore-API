@@ -14,7 +14,7 @@ import java.util.UUID;
 public class OrderResponse {
     private UUID id;
     private UUID userId;
-    private Date date;
+    private java.time.LocalDate date;
     private UUID shopId;
     private OrderState orderState;
     private List<Product> productList;

@@ -9,7 +9,6 @@ import com.bookstore.app.entities.product.Product;
 import com.bookstore.app.entities.product.persistance.IProductsRepository;
 import com.bookstore.app.valueObjects.OrderState;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class UpdateOrderUseCase {
             products.add(productsRepository.findProductById(productId));
         }
         var order = new Order(command.getId(), command.getUserId(), command.getDate(),
-                command.getShopId(), OrderState.Created, products);
+                command.getShopId(), OrderState.CREATED, products);
         order = ordersRepository.updateOrder(order);
         return mapper.MapOrderToOrderDetails(order);
     }

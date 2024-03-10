@@ -1,46 +1,52 @@
 package com.bookstore.app.entities.productFeature.persistance;
-
 import com.bookstore.app.exceptions.QueryException;
 import com.bookstore.app.entities.productFeature.FeatureType;
-import lombok.AllArgsConstructor;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.UUID;
-
-@AllArgsConstructor
 public class FeatureTypesRepository implements IFeatureTypesRepository {
+    private static SessionFactory factory;
     private Connection connection;
+    public FeatureTypesRepository() {
+        try {
+            factory = new Configuration().configure().buildSessionFactory();
+        } catch (Throwable ex) {
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+
+    public FeatureTypesRepository(Connection connection) {
+        try {
+            factory = new Configuration().configure().buildSessionFactory();
+        } catch (Throwable ex) {
+            throw new ExceptionInInitializerError(ex);
+        }
+        this.connection = connection;
+    }
+
     @Override
     public FeatureType saveFeatureType(FeatureType featureType) {
-        try {
-            PreparedStatement st = connection.prepareStatement(
-                    "INSERT INTO feature_types(id, name) VALUES(?, ?)");
-            st.setObject(1, featureType.getId());
-            st.setString(2, featureType.getName());
-            st.execute();
-            st.close();
-            return featureType;
-        } catch (Exception e) {
+        try (Session session = factory.openSession()) {
+            Transaction tx = session.beginTransaction();
+            session.persist(featureType);
+            tx.commit();
+        } catch (HibernateException e) {
             throw new RuntimeException(e.getMessage());
         }
+        return featureType;
     }
 
     @Override
     public FeatureType findFeatureTypeById(UUID id) {
-        try {
-            PreparedStatement st = connection.prepareStatement(
-                    "SELECT id, name FROM feature_types " +
-                            "WHERE id = ?");
-            st.setObject(1, id);
-            ResultSet rs = st.executeQuery();
-            if (!rs.next()) throw new QueryException("No sucjh feature type");
-           FeatureType featureType = new FeatureType(
-                    UUID.fromString(rs.getString("id")),
-                    rs.getString("name"));
-            rs.close();
-            st.close();
+        try (Session session = factory.openSession()) {
+            var featureType = (FeatureType) session.get(FeatureType.class, id);
+            if (featureType == null) throw new QueryException("No such featureType");
             return featureType;
         } catch (QueryException e) {
             return null;
@@ -52,19 +58,12 @@ public class FeatureTypesRepository implements IFeatureTypesRepository {
 
     @Override
     public FeatureType findFeatureByName(String name) {
-        try {
-            PreparedStatement st = connection.prepareStatement(
-                    "SELECT id, name FROM feature_types " +
-                            "WHERE name = ?");
-            st.setObject(1, name);
-            ResultSet rs = st.executeQuery();
-            if (!rs.next()) throw new QueryException("No such feature type");
-            FeatureType featureType = new FeatureType(
-                    UUID.fromString(rs.getString("id")),
-                    rs.getString("name"));
-            rs.close();
-            st.close();
-            return featureType;
+        try (Session session = factory.openSession()) {
+            Query query = session.createQuery("from FeatureType feature_type where feature_type.name = :name");
+            query.setParameter("name", name);
+            var featureTypes = query.list();
+            if (featureTypes.isEmpty()) throw new QueryException("No such feature types");
+            return (FeatureType) featureTypes;
         } catch (QueryException e) {
             return null;
         }
@@ -72,29 +71,26 @@ public class FeatureTypesRepository implements IFeatureTypesRepository {
             throw new RuntimeException(e.getMessage());
         }
     }
+
     @Override
     public FeatureType updateFeatureType(FeatureType featureType) {
-        try {
-            PreparedStatement st = connection.prepareStatement(
-                    "UPDATE feature_types SET id = ?, name = ?");
-            st.setObject(1, featureType.getId());
-            st.setString(2, featureType.getName());
-            st.execute();
-            st.close();
-            return featureType;
+        try (Session session = factory.openSession()) {
+            Transaction tx = session.beginTransaction();
+            session.update(featureType);
+            tx.commit();
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
+        return featureType;
     }
 
     @Override
     public void deleteFeatureTypeById(UUID id) {
-        try {
-            PreparedStatement st = connection.prepareStatement(
-                    "DELETE FROM feature_types WHERE id == ?");
-            st.setObject(1, id);
-            st.executeQuery();
-            st.close();
+        try (Session session = factory.openSession()) {
+            FeatureType featureType = (FeatureType)session.get(FeatureType.class, id);
+            Transaction tx = session.beginTransaction();
+            session.delete(featureType);
+            tx.commit();
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
