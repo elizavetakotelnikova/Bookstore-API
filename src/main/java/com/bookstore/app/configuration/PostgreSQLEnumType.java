@@ -2,7 +2,6 @@ package com.bookstore.app.configuration;
 
 import com.bookstore.app.valueObjects.OrderState;
 import org.hibernate.HibernateException;
-import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 
 import java.sql.PreparedStatement;

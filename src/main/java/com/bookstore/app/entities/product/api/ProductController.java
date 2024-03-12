@@ -36,7 +36,7 @@ public class ProductController {
     private UpdateProductUseCase updateProductUseCase;
     @Autowired
     private DeleteProductUseCase deleteProductUseCase;
-    @PostMapping("/products")
+    @PostMapping("/product")
     public IDResponse createProduct(@RequestBody CreateProductDTO providedProduct) throws InvalidKeySpecException {
         List<Pair<UUID, String>> featuresList = new ArrayList<>();
         for (CreateProductFeatureDTO each : providedProduct.getFeatures()) {
@@ -60,7 +60,7 @@ public class ProductController {
         return new ProductResponse(product.getId(), product.getType(),
                 product.getName(), product.getPrice(), product.getFeatures());
     }
-    @GetMapping("/products/")
+    @GetMapping("/product/")
     public List<ProductResponse> getProductByCriteria(@Param("typeId") UUID typeId, @Param("name") String name) {
         var criteria = new FindCriteria(null, null);
         if (typeId != null) criteria.setTypeId(typeId);

@@ -502,7 +502,7 @@ response:
 
 ### Create
 
-**route:** /products
+**route:** /product
 
 **Method:** POST
 
@@ -582,7 +582,7 @@ response:
 
 ### Product Type: FindByID
 
-**route:** /productTypes/{productTypeId}
+**route:** /productType/{productTypeId}
 
 **Method:** GET
 
@@ -603,7 +603,7 @@ response:
 
 ### Product Type: FindByName
 
-**route:** /productTypes
+**route:** /productType
 
 **Method:** GET
 
@@ -624,7 +624,7 @@ response:
 
 ### Product Type: Create
 
-**route:** /productTypes
+**route:** /productType
 
 **Method:** POST
 
@@ -687,7 +687,7 @@ response:
 
 ### Feature Type: FindByID
 
-**route:** /featureTypes/{featureTypeId}
+**route:** /featureType/{featureTypeId}
 
 **Method:** GET
 
@@ -708,7 +708,7 @@ response:
 
 ### Feature Type: FindByName
 
-**route:** /featureTypes
+**route:** /featureType
 
 **Method:** GET
 
@@ -729,7 +729,7 @@ response:
 
 ### Feature Type: Create
 
-**route:** /featureTypes
+**route:** /featureType
 
 **Method:** POST
 

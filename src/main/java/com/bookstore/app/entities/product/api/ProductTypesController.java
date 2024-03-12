@@ -29,7 +29,7 @@ public class ProductTypesController {
     @Autowired
     private DeleteProductTypeUseCase deleteProductTypeUseCase;
 
-    @PostMapping("/productTypes")
+    @PostMapping("/productType")
     public IDResponse createProductType(@RequestBody CreateProductTypeDTO providedProductType) throws InvalidKeySpecException {
         try {
             var productType = createProductTypeUseCase.handle(providedProductType.getName());
@@ -41,12 +41,12 @@ public class ProductTypesController {
         }
     }
 
-    @GetMapping("/productTypes/{productTypeId}")
+    @GetMapping("/productType/{productTypeId}")
     public ProductTypeResponse getProductTypeById(@PathVariable("productTypeId") UUID productTypeId) {
         var productType = findFeatureByIdUseCase.handle(productTypeId);
         return new ProductTypeResponse(productType.getId(), productType.getName());
     }
-    @GetMapping("/productTypes/")
+    @GetMapping("/productType/")
     public ProductTypeResponse getProductTypeByName(@Param("name") String name) {
         var productType = findProductTypeByNameUseCase.handle(name);
         return new ProductTypeResponse(productType.getId(), productType.getName());

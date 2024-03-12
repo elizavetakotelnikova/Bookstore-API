@@ -1,5 +1,4 @@
 package com.bookstore.app.entities.shop.persistance;
-import com.bookstore.app.entities.order.Order;
 import com.bookstore.app.entities.product.Product;
 import com.bookstore.app.entities.product.ProductType;
 import com.bookstore.app.entities.productFeature.FeatureType;
