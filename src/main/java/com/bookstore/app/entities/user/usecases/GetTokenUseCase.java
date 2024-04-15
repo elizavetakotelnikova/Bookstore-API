@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class GetTokenUseCase {
-    IUsersRepository usersRepository;
-    HashingConfigure hashingConfigure;
+    private final IUsersRepository usersRepository;
+    private final HashingConfigure hashingConfigure;
     public String validatePasswordFromDB(String passwordFromUser, String phoneNumber) {
         var criteria = new FindCriteria(phoneNumber, null);
         var users = usersRepository.findUserByCriteria(criteria);

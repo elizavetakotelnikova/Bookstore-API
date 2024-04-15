@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class FindFeatureTypeByNameUseCase {
-    private IFeatureTypesRepository featureTypesRepository;
+    private final IFeatureTypesRepository featureTypesRepository;
     public FeatureType handle(String name) {
         return featureTypesRepository.findFeatureByName(name);
     }

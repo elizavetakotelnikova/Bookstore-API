@@ -10,8 +10,7 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class DeleteUserUseCase {
-    private IUsersRepository usersRepository;
-
+    private final IUsersRepository usersRepository;
     public void handle(UUID id) {
         if (usersRepository.findUserById(id) == null) throw new RuntimeException("There is no such user");
         usersRepository.deleteUserById(id);

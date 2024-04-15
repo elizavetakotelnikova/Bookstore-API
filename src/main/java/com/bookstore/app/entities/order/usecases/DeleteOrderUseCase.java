@@ -11,7 +11,7 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class DeleteOrderUseCase {
-    private IOrdersRepository ordersRepository;
+    private final IOrdersRepository ordersRepository;
     public void handle(UUID id) throws QueryException {
         if (ordersRepository.findOrderById(id) == null) throw new QueryException("There is no such order");
         ordersRepository.deleteOrderById(id);

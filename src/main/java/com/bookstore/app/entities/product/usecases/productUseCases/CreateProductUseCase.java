@@ -16,8 +16,8 @@ import java.util.ArrayList;
 @Service
 @AllArgsConstructor
 public class CreateProductUseCase {
-    private IProductsRepository productsRepository;
-    private IProductFeaturesRepository productFeaturesRepository;
+    private final IProductsRepository productsRepository;
+    private final IProductFeaturesRepository productFeaturesRepository;
     IFeatureTypesRepository featureTypesRepository;
     public Product handle(CreateProductCommand command) throws IncorrectArgumentsException {
         // validation

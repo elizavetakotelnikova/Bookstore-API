@@ -11,7 +11,7 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class FindShopByIdUseCase {
-    private IShopsRepository shopsRepository;
+    private final IShopsRepository shopsRepository;
     public Shop handle(UUID id) {
         return shopsRepository.findShopById(id);
     }

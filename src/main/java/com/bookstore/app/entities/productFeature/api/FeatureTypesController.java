@@ -6,6 +6,7 @@ import com.bookstore.app.entities.productFeature.usecases.*;
 import com.bookstore.app.entities.productFeature.usecases.commands.UpdateCommand;
 import com.bookstore.app.exceptions.IncorrectArgumentsException;
 import com.bookstore.app.exceptions.QueryException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -16,17 +17,13 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.UUID;
 
 @RestController
+@RequiredArgsConstructor
 public class FeatureTypesController {
-    @Autowired
-    private CreateFeatureTypeUseCase createFeatureTypeUseCase;
-    @Autowired
-    private FindFeatureTypeByIdUseCase findFeatureByIdUseCase;
-    @Autowired
-    private FindFeatureTypeByNameUseCase findFeatureTypeByNameUseCase;
-    @Autowired
-    private UpdateFeatureTypeByIdUseCase updateFeatureTypeByIdUseCase;
-    @Autowired
-    private DeleteFeatureTypeUseCase deleteFeatureTypeUseCase;
+    private final CreateFeatureTypeUseCase createFeatureTypeUseCase;
+    private final FindFeatureTypeByIdUseCase findFeatureByIdUseCase;
+    private final FindFeatureTypeByNameUseCase findFeatureTypeByNameUseCase;
+    private final UpdateFeatureTypeByIdUseCase updateFeatureTypeByIdUseCase;
+    private final DeleteFeatureTypeUseCase deleteFeatureTypeUseCase;
 
     @PostMapping("/featureTypes")
     public IDResponse createFeatureType(@RequestBody CreateFeatureTypeDTO providedFeatureType) throws InvalidKeySpecException {

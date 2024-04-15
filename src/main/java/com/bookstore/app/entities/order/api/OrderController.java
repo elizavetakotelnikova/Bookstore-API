@@ -10,6 +10,7 @@ import com.bookstore.app.entities.order.usecases.DTOs.OrderDetailsDTO;
 import com.bookstore.app.entities.order.usecases.commands.CreateOrderCommand;
 import com.bookstore.app.entities.order.usecases.commands.UpdateOrderCommand;
 import com.bookstore.app.exceptions.QueryException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -23,17 +24,13 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequiredArgsConstructor
 public class OrderController {
-    @Autowired
-    private CreateOrderUseCase createOrderUseCase;
-    @Autowired
-    private GetOrderByIdUseCase getOrderByIdUseCase;
-    @Autowired
-    private GetOrdersByCriteriaUseCase getOrdersByCriteriaUsecase;
-    @Autowired
-    private UpdateOrderUseCase updateOrderUseCase;
-    @Autowired
-    private DeleteOrderUseCase deleteOrderUseCase;
+    private final CreateOrderUseCase createOrderUseCase;
+    private final GetOrderByIdUseCase getOrderByIdUseCase;
+    private final GetOrdersByCriteriaUseCase getOrdersByCriteriaUsecase;
+    private final UpdateOrderUseCase updateOrderUseCase;
+    private final DeleteOrderUseCase deleteOrderUseCase;
     @PostMapping("/orders")
     public OrderResponse createOrder(@RequestBody CreateOrderDTO providedOrder) throws InvalidKeySpecException {
         var command = new CreateOrderCommand(providedOrder.getUserId(), providedOrder.getDate(), providedOrder.getShopId(),

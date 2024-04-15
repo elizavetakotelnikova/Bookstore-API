@@ -13,7 +13,7 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class DeleteProductTypeUseCase {
-    private IProductTypesRepository productTypesRepository;
+    private final IProductTypesRepository productTypesRepository;
     public void handle(UUID id) throws QueryException {
         if (productTypesRepository.findProductTypeById(id) == null)
             throw new QueryException("No such product type");

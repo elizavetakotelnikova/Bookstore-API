@@ -11,7 +11,7 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class DeleteProductUseCase {
-    private IProductsRepository productsRepository;
+    private final IProductsRepository productsRepository;
     public void handle(UUID id) throws QueryException {
         if (productsRepository.findProductById(id) == null) throw new QueryException("There is no such product");
         productsRepository.deleteProductById(id);

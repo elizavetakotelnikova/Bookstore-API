@@ -9,6 +9,7 @@ import com.bookstore.app.entities.shop.persistance.IShopsRepository;
 import com.bookstore.app.entities.shop.persistance.FindCriteria;
 import com.bookstore.app.entities.shop.usecases.*;
 import com.bookstore.app.exceptions.IncorrectArgumentsException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -20,20 +21,13 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequiredArgsConstructor
 public class ShopController {
-    @Autowired
-    private IShopsRepository shopsRepository;
-    @Autowired
-    private CreateShopUseCase createShopUseCase;
-    @Autowired
-    private FindShopByIdUseCase findShopByIdUseCase;
-    @Autowired
-    private FindShopsByCriteriaUseCase findShopsByCriteriaUseCase;
-    @Autowired
-    private UpdateShopUseCase updateShopUseCase;
-    @Autowired
-    private DeleteShopUsesCase deleteShopUseCase;
-
+    private final CreateShopUseCase createShopUseCase;
+    private final FindShopByIdUseCase findShopByIdUseCase;
+    private final FindShopsByCriteriaUseCase findShopsByCriteriaUseCase;
+    private final UpdateShopUseCase updateShopUseCase;
+    private final DeleteShopUsesCase deleteShopUseCase;
     @PostMapping("/shops")
     public IDResponse createShop(@RequestBody CreateShopDTO providedShop) {
         var command = new com.bookstore.app.entities.shop.usecases.DTOs.CreateShopDTO(providedShop.getAddress());

@@ -18,9 +18,9 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class UpdateUserUseCase {
-    private IUsersRepository usersRepository;
-    private IOrdersRepository ordersRepository;
-    private HashingConfigure hashingConfigure;
+    private final IUsersRepository usersRepository;
+    private final IOrdersRepository ordersRepository;
+    private final HashingConfigure hashingConfigure;
     public UserDetailsDTO handle(UpdateUserCommand command) throws IncorrectArgumentsException {
         if (command.getBirthday() == null) {
             throw new IncorrectArgumentsException("cannot update user, invalid password");

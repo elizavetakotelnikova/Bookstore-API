@@ -13,6 +13,7 @@ import com.bookstore.app.entities.user.usecases.commands.CreateUserCommand;
 import com.bookstore.app.entities.user.usecases.commands.UpdateUserCommand;
 import com.bookstore.app.exceptions.IncorrectArgumentsException;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -25,23 +26,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserController {
-    @Autowired
-    private IUsersRepository usersRepository;
-    @Autowired
-    private GetTokenUseCase getTokenUsecase;
-    @Autowired
-    private CreateUserUseCase createUserUsecase;
-    @Autowired
-    private FindUserByIdUseCase findUserByIdUsecase;
-    @Autowired
-    private FindUsersByCriteriaUseCase findUsersByCriteriaUsecase;
-    @Autowired
-    private UpdateUserUseCase updateUserUsecase;
-    @Autowired
-    private DeleteUserUseCase deleteUserUsecase;
-
+    private final GetTokenUseCase getTokenUsecase;
+    private final CreateUserUseCase createUserUsecase;
+    private final FindUserByIdUseCase findUserByIdUsecase;
+    private final FindUsersByCriteriaUseCase findUsersByCriteriaUsecase;
+    private final UpdateUserUseCase updateUserUsecase;
+    private final DeleteUserUseCase deleteUserUsecase;
     @PostMapping("/users")
     public IDResponse createUser(@RequestBody CreateUserDTO providedUser) {
         var command = new CreateUserCommand(providedUser.getPhoneNumber(), providedUser.getPassword(), providedUser.getBalance(), providedUser.getBirthday(), providedUser.getOrdersHistory());

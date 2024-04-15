@@ -10,7 +10,7 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class DeleteShopUsesCase {
-    private IShopsRepository shopsRepository;
+    private final IShopsRepository shopsRepository;
     public void handle(UUID id) {
         shopsRepository.deleteShopById(id);
     }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class UpdateProductTypeUseCase {
-    private IProductTypesRepository productTypesRepository;
+    private final IProductTypesRepository productTypesRepository;
     public ProductType handle(UpdateProductTypeCommand command) throws IncorrectArgumentsException {
         if (productTypesRepository.findProductTypeByName(command.getName()) == null)
             throw new IncorrectArgumentsException("No such product type");
