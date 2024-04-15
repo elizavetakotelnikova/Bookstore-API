@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class CreateProductTypeUseCase {
-    private IProductTypesRepository productTypesRepository;
+    private final IProductTypesRepository productTypesRepository;
     public ProductType handle(String name) throws IncorrectArgumentsException {
         if (productTypesRepository.findProductTypeByName(name) != null)
             throw new IncorrectArgumentsException("Already exists");

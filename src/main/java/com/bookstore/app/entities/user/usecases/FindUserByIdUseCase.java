@@ -14,9 +14,8 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class FindUserByIdUseCase {
-    private IUsersRepository usersRepository;
-    private IOrdersRepository ordersRepository;
-
+    private final IUsersRepository usersRepository;
+    private final IOrdersRepository ordersRepository;
     public UserDetailsDTO handle(UUID id) {
         var user = usersRepository.findUserById(id);
         var orders = ordersRepository.findOrdersByCriteria(new FindCriteria(user.getId(), null));

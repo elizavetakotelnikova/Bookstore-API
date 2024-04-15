@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/bookstore
+    url: jdbc:postgresql://localhost:6477/bookstore
     username: postgres
     password: postgres
   main:
@@ -10,7 +10,7 @@ spring:
 
 
 flyway:
-  url: jdbc:postgresql://localhost:5432/bookstore;
+  url: jdbc:postgresql://localhost:6477/bookstore;
   user: postgres
   password: postgres
   enabled: true

@@ -12,6 +12,7 @@ import com.bookstore.app.entities.product.usecases.commands.UpdateProductCommand
 import com.bookstore.app.entities.product.usecases.productUseCases.*;
 import com.bookstore.app.exceptions.IncorrectArgumentsException;
 import com.bookstore.app.exceptions.QueryException;
+import lombok.AllArgsConstructor;
 import org.antlr.v4.runtime.misc.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -25,17 +26,13 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@AllArgsConstructor
 public class ProductController {
-    @Autowired
-    private CreateProductUseCase createProductUseCase;
-    @Autowired
-    private GetProductByIdUseCase getProductByIdUseCase;
-    @Autowired
-    private GetProductsByCriteriaUseCase getProductsByCriteriaUsecase;
-    @Autowired
-    private UpdateProductUseCase updateProductUseCase;
-    @Autowired
-    private DeleteProductUseCase deleteProductUseCase;
+    private final CreateProductUseCase createProductUseCase;
+    private final GetProductByIdUseCase getProductByIdUseCase;
+    private final GetProductsByCriteriaUseCase getProductsByCriteriaUsecase;
+    private final UpdateProductUseCase updateProductUseCase;
+    private final DeleteProductUseCase deleteProductUseCase;
     @PostMapping("/product")
     public IDResponse createProduct(@RequestBody CreateProductDTO providedProduct) throws InvalidKeySpecException {
         List<Pair<UUID, String>> featuresList = new ArrayList<>();

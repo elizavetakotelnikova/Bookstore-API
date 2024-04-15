@@ -12,8 +12,8 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class GetOrderByIdUseCase {
-    private IOrdersRepository ordersRepository;
-    private OrderDetailsMapper mapper;
+    private final IOrdersRepository ordersRepository;
+    private final OrderDetailsMapper mapper;
     public OrderDetailsDTO handle(UUID id) {
         var order = ordersRepository.findOrderById(id);
         return mapper.MapOrderToOrderDetails(order);

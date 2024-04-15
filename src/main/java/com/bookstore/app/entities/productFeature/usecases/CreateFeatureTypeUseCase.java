@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class CreateFeatureTypeUseCase {
-    private IFeatureTypesRepository featureTypesRepository;
+    private final IFeatureTypesRepository featureTypesRepository;
     public FeatureType handle(String name) throws IncorrectArgumentsException {
         if (featureTypesRepository.findFeatureByName(name) != null) {
             throw new IncorrectArgumentsException();

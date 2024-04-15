@@ -27,19 +27,12 @@ import java.util.UUID;
 @RestController
 @AllArgsConstructor
 public class UserController {
-    @Autowired
-    private GetTokenUseCase getTokenUsecase;
-    @Autowired
-    private CreateUserUseCase createUserUsecase;
-    @Autowired
-    private FindUserByIdUseCase findUserByIdUsecase;
-    @Autowired
-    private FindUsersByCriteriaUseCase findUsersByCriteriaUsecase;
-    @Autowired
-    private UpdateUserUseCase updateUserUsecase;
-    @Autowired
-    private DeleteUserUseCase deleteUserUsecase;
-
+    private final GetTokenUseCase getTokenUsecase;
+    private final CreateUserUseCase createUserUsecase;
+    private final FindUserByIdUseCase findUserByIdUsecase;
+    private final FindUsersByCriteriaUseCase findUsersByCriteriaUsecase;
+    private final UpdateUserUseCase updateUserUsecase;
+    private final DeleteUserUseCase deleteUserUsecase;
     @PostMapping("/users")
     public IDResponse createUser(@RequestBody CreateUserDTO providedUser) {
         var command = new CreateUserCommand(providedUser.getPhoneNumber(), providedUser.getPassword(), providedUser.getBalance(), providedUser.getBirthday(), providedUser.getOrdersHistory());

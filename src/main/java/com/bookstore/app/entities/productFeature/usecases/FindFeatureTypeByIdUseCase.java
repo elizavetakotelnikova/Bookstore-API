@@ -11,7 +11,7 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class FindFeatureTypeByIdUseCase {
-    private IFeatureTypesRepository featureTypesRepository;
+    private final IFeatureTypesRepository featureTypesRepository;
     public FeatureType handle(UUID id) {
         return featureTypesRepository.findFeatureTypeById(id);
     }

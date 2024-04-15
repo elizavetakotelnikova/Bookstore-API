@@ -11,7 +11,7 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class FindProductTypeByNameUseCase {
-    private IProductTypesRepository productTypesRepository;
+    private final IProductTypesRepository productTypesRepository;
     public ProductType handle(String name) {
         return productTypesRepository.findProductTypeByName(name);
     }

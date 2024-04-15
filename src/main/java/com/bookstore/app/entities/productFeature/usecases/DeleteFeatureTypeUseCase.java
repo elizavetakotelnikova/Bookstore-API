@@ -11,7 +11,7 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class DeleteFeatureTypeUseCase {
-    private IFeatureTypesRepository featureTypesRepository;
+    private final IFeatureTypesRepository featureTypesRepository;
     public void handle(UUID id) throws QueryException {
         if (featureTypesRepository.findFeatureTypeById(id) != null) {
             throw new QueryException("No such feature type");

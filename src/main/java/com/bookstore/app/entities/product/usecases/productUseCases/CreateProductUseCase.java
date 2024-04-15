@@ -19,10 +19,10 @@ import java.util.ArrayList;
 @Service
 @AllArgsConstructor
 public class CreateProductUseCase {
-    private IProductsRepository productsRepository;
-    private IProductFeaturesRepository productFeaturesRepository;
-    private IProductTypesRepository productTypesRepository;
-    IFeatureTypesRepository featureTypesRepository;
+    private final IProductsRepository productsRepository;
+    private final IProductFeaturesRepository productFeaturesRepository;
+    private final IProductTypesRepository productTypesRepository;
+    private final IFeatureTypesRepository featureTypesRepository;
     public Product handle(CreateProductCommand command) throws IncorrectArgumentsException {
         // validation
         if (command.getName() == null) throw new RuntimeException("Cannot create product");
