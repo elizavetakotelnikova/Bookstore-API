@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class UpdateFeatureTypeByIdUseCase {
-    private IFeatureTypesRepository featureTypesRepository;
+    private final IFeatureTypesRepository featureTypesRepository;
     public FeatureType handle(UpdateCommand command) throws IncorrectArgumentsException {
         if (featureTypesRepository.findFeatureByName(command.getName()) != null) {
             throw new IncorrectArgumentsException();

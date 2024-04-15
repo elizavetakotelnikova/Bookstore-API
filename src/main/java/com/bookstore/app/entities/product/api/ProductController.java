@@ -11,6 +11,7 @@ import com.bookstore.app.entities.product.usecases.commands.UpdateProductCommand
 import com.bookstore.app.entities.product.usecases.productUseCases.*;
 import com.bookstore.app.exceptions.IncorrectArgumentsException;
 import com.bookstore.app.exceptions.QueryException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -23,17 +24,13 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequiredArgsConstructor
 public class ProductController {
-    @Autowired
-    private CreateProductUseCase createProductUseCase;
-    @Autowired
-    private GetProductByIdUseCase getProductByIdUseCase;
-    @Autowired
-    private GetProductsByCriteriaUseCase getProductsByCriteriaUsecase;
-    @Autowired
-    private UpdateProductUseCase updateProductUseCase;
-    @Autowired
-    private DeleteProductUseCase deleteProductUseCase;
+    private final CreateProductUseCase createProductUseCase;
+    private final GetProductByIdUseCase getProductByIdUseCase;
+    private final GetProductsByCriteriaUseCase getProductsByCriteriaUsecase;
+    private final UpdateProductUseCase updateProductUseCase;
+    private final DeleteProductUseCase deleteProductUseCase;
     @PostMapping("/products")
     public IDResponse createProduct(@RequestBody CreateProductDTO providedProduct) throws InvalidKeySpecException {
         var command = new CreateProductCommand(providedProduct.getType(), providedProduct.getName(),

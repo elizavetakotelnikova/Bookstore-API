@@ -16,9 +16,8 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class FindUsersByCriteriaUseCase {
-    private IUsersRepository usersRepository;
-    private IOrdersRepository ordersRepository;
-
+    private final IUsersRepository usersRepository;
+    private final IOrdersRepository ordersRepository;
     public List<UserDetailsDTO> handle(FindCriteria criteria) {
         var users = usersRepository.findUserByCriteria(criteria);
         var usersDTO = new ArrayList<UserDetailsDTO>();

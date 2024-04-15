@@ -15,8 +15,8 @@ import java.util.ArrayList;
 @Service
 @AllArgsConstructor
 public class UpdateProductUseCase {
-    private IProductsRepository productsRepository;
-    private IFeatureTypesRepository featureTypesRepository;
+    private final IProductsRepository productsRepository;
+    private final IFeatureTypesRepository featureTypesRepository;
     public Product handle(UpdateProductCommand command) throws IncorrectArgumentsException {
         var productFeatures = new ArrayList<ProductFeature>();
         //getting features from command

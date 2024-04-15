@@ -9,5 +9,7 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=bookstore
     ports:
-      - "5432:5432"
+      - "6477:5432"
     restart: unless-stopped
+    volumes:
+      - ./log-directory:/var/lib/postgresql/data

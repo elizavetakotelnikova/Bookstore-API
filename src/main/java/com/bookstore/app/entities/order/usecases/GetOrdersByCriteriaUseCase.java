@@ -15,8 +15,8 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class GetOrdersByCriteriaUseCase {
-    private IOrdersRepository ordersRepository;
-    private OrderDetailsMapper mapper;
+    private final IOrdersRepository ordersRepository;
+    private final OrderDetailsMapper mapper;
     public List<OrderDetailsDTO> handle(FindCriteria criteria) {
         var orders = ordersRepository.findOrdersByCriteria(criteria);
         var ordersDTO = new ArrayList<OrderDetailsDTO>();

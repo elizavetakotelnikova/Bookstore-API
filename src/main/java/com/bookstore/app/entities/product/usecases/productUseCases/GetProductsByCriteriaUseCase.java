@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class GetProductsByCriteriaUseCase {
-    private IProductsRepository productsRepository;
+    private final IProductsRepository productsRepository;
     public List<Product> handle(FindCriteria criteria) {
         return productsRepository.findProductsByCriteria(criteria);
     }

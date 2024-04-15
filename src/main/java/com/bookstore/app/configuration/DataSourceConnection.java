@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DataSourceConnection {
-    private final String url = "jdbc:postgresql://localhost:5432/bookstore";
+    private final String url = "jdbc:postgresql://localhost:6477/bookstore";
     private final String user = "postgres";
     private final String password = "postgres";
     public Connection connect() {

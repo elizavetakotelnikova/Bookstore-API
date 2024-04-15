@@ -16,8 +16,8 @@ import java.util.ArrayList;
 @Service
 @AllArgsConstructor
 public class CreateUserUseCase {
-    private IUsersRepository usersRepository;
-    private HashingConfigure hashingConfigure;
+    private final IUsersRepository usersRepository;
+    private final HashingConfigure hashingConfigure;
     public boolean validateUser(CreateUserCommand command) {
         if (command.getPassword() == null || command.getPhoneNumber() == null) {
             return false;
