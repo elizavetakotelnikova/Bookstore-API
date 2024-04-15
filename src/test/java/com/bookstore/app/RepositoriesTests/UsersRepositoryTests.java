@@ -49,7 +49,7 @@ public class UsersRepositoryTests {
         var flyaway = setupFlyway(postgres);
         flyaway.clean();
         flyaway.migrate();
-        usersRepostirory = new UsersRepository(connectionProvider);
+        usersRepostirory = new UsersRepository();
     }
     private Flyway setupFlyway(PostgreSQLContainer container) {
         return new Flyway(

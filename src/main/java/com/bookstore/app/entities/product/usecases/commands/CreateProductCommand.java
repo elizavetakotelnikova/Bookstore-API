@@ -11,7 +11,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 public class CreateProductCommand {
-    private ProductType type;
+    private UUID typeId;
     private String name;
     private int price;
     private List<Pair<UUID, String>> features;

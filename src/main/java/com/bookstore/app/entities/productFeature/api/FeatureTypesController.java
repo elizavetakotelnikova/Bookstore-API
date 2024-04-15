@@ -28,7 +28,7 @@ public class FeatureTypesController {
     @Autowired
     private DeleteFeatureTypeUseCase deleteFeatureTypeUseCase;
 
-    @PostMapping("/featureTypes")
+    @PostMapping("/featureType")
     public IDResponse createFeatureType(@RequestBody CreateFeatureTypeDTO providedFeatureType) throws InvalidKeySpecException {
         try {
             var FeatureType = createFeatureTypeUseCase.handle(providedFeatureType.getName());
@@ -40,12 +40,12 @@ public class FeatureTypesController {
         }
     }
 
-    @GetMapping("/featureTypes/{featureTypeId}")
+    @GetMapping("/featureType/{featureTypeId}")
     public FeatureDetailsResponse getFeatureTypeById(@PathVariable("featureTypeId") UUID featureTypeId) {
         var featureType = findFeatureByIdUseCase.handle(featureTypeId);
         return new FeatureDetailsResponse(featureType.getId(), featureType.getName());
     }
-    @GetMapping("/featureTypes/")
+    @GetMapping("/featureType/")
     public FeatureDetailsResponse getFeatureTypeByName(@Param("name") String name) {
         var featureType = findFeatureTypeByNameUseCase.handle(name);
         return new FeatureDetailsResponse(featureType.getId(), featureType.getName());

@@ -434,7 +434,7 @@ response:
 
 ### FindByID
 
-**route:** /products/{productId}
+**route:** /product/{productId}
 
 **Method:** GET
 
@@ -455,8 +455,10 @@ response:
   "name": "Yellow notebook",
   "price": "78",
   "features": [
-    "featureTypeId": "04056053-5d96-4069-94c3-4b3281ef32a0",
-    "value": "yellow"
+    {
+      "featureTypeId": "04056053-5d96-4069-94c3-4b3281ef32a0",
+      "value": "yellow"
+    }
   ]
 }
 ```
@@ -486,8 +488,10 @@ response:
     "name": "Yellow notebook",
     "price": "78",
     "features": [
-      "featureTypeId": "04056053-5d96-4069-94c3-4b3281ef32a0",
-      "value": "yellow"
+      {
+        "featureTypeId": "04056053-5d96-4069-94c3-4b3281ef32a0",
+        "value": "yellow"
+      }
     ]
   },
   "04056053-5d96-4069-94c3-4b3281ef32a0": {
@@ -498,7 +502,7 @@ response:
 
 ### Create
 
-**route:** /products
+**route:** /product
 
 **Method:** POST
 
@@ -506,15 +510,14 @@ response:
 
 ```json
 {
-  "type": {
-    "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
-    "name": "notebook"
-  },
+  "typeId": "04056053-5d96-4069-94c3-4b3281ef32a0",
   "name": "Yellow notebook",
   "price": "78",
   "features": [
+    {
     "featureTypeId": "04056053-5d96-4069-94c3-4b3281ef32a0",
     "value": "yellow"
+    }
   ]
 }
 ```
@@ -541,15 +544,14 @@ response:
 
 ```json
 {
-  "type": {
-    "id": "04056053-5d96-4069-94c3-4b3281ef32a0",
-    "name": "notebook"
-  },
+  "typeId": "04056053-5d96-4069-94c3-4b3281ef32a0",
   "name": "Yellow notebook",
   "price": "78",
   "features": [
-    "featureTypeId": "04056053-5d96-4069-94c3-4b3281ef32a0",
-    "value": "yellow"
+    {
+      "featureTypeId": "04056053-5d96-4069-94c3-4b3281ef32a0",
+      "value": "yellow"
+    }
   ]
 }
 ```
@@ -580,7 +582,7 @@ response:
 
 ### Product Type: FindByID
 
-**route:** /productTypes/{productTypeId}
+**route:** /productType/{productTypeId}
 
 **Method:** GET
 
@@ -601,7 +603,7 @@ response:
 
 ### Product Type: FindByName
 
-**route:** /productTypes
+**route:** /productType
 
 **Method:** GET
 
@@ -622,7 +624,7 @@ response:
 
 ### Product Type: Create
 
-**route:** /productTypes
+**route:** /productType
 
 **Method:** POST
 
@@ -685,7 +687,7 @@ response:
 
 ### Feature Type: FindByID
 
-**route:** /featureTypes/{featureTypeId}
+**route:** /featureType/{featureTypeId}
 
 **Method:** GET
 
@@ -706,7 +708,7 @@ response:
 
 ### Feature Type: FindByName
 
-**route:** /featureTypes
+**route:** /featureType
 
 **Method:** GET
 
@@ -727,7 +729,7 @@ response:
 
 ### Feature Type: Create
 
-**route:** /featureTypes
+**route:** /featureType
 
 **Method:** POST
 

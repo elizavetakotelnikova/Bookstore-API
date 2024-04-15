@@ -33,7 +33,7 @@ public class BeansConfiguration {
     }
     @Bean
     public IUsersRepository IUsersRepository() {
-        return new UsersRepository(connection);
+        return new UsersRepository();
     }
     @Bean
     public IProductFeaturesRepository IFeatureValuesRepository() {

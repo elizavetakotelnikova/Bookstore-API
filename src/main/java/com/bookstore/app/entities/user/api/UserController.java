@@ -28,8 +28,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserController {
     @Autowired
-    private IUsersRepository usersRepository;
-    @Autowired
     private GetTokenUseCase getTokenUsecase;
     @Autowired
     private CreateUserUseCase createUserUsecase;
