@@ -1,15 +1,20 @@
 package com.bookstore.app.entities.productFeature;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.*;
 
 import java.util.UUID;
 
-@Data
+@Entity
+@Table(name="feature_types")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class FeatureType {
+    @Id
     private UUID id;
     private String name;
 

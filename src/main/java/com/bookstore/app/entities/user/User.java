@@ -1,14 +1,22 @@
 package com.bookstore.app.entities.user;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.*;
+
 import java.util.UUID;
 
-@Data
+@Entity
+@Table(name="users")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
+    @Id
     private UUID id;
+    @Column(name = "phone_number")
     private String phoneNumber;
     private byte[] password;
     private int balance;

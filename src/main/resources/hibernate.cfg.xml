@@ -1,6 +1,7 @@
 <?xml version = "1.0" encoding = "utf-8"?>
 <!DOCTYPE hibernate-configuration SYSTEM
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
 <hibernate-configuration>
     <session-factory>
 
@@ -25,15 +26,13 @@
         <property name = "hibernate.connection.password">
             postgres
         </property>
-
-        <!-- List of XML mapping files -->
-        <mapping resource = "Order.hbm.xml"/>
-        <mapping resource = "User.hbm.xml"/>
-        <mapping resource = "Product.hbm.xml"/>
-        <mapping resource = "Shop.hbm.xml"/>
-        <mapping resource = "ProductType.hbm.xml"/>
-        <mapping resource = "ProductFeature.hbm.xml"/>
-        <mapping resource = "FeatureType.hbm.xml"/>
-
+        <mapping class="com.bookstore.app.entities.user.User"/>
+        <mapping class="com.bookstore.app.entities.order.Order"/>
+        <mapping class="com.bookstore.app.entities.shop.Shop"></mapping>
+        <mapping class="com.bookstore.app.entities.productFeature.FeatureType"></mapping>
+        <mapping class="com.bookstore.app.entities.productFeature.ProductFeature"></mapping>
+        <mapping class="com.bookstore.app.entities.product.Product"></mapping>
+        <mapping class="com.bookstore.app.models.ShopAddress"></mapping>
+        <mapping class="com.bookstore.app.entities.product.ProductType"></mapping>
     </session-factory>
 </hibernate-configuration>

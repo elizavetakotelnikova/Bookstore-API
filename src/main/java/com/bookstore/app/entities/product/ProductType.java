@@ -1,16 +1,21 @@
 package com.bookstore.app.entities.product;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.*;
 import org.hibernate.annotations.Proxy;
 
 import java.util.UUID;
 
-@Data
+@Entity
+@Table(name="product_types")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductType {
+    @Id
     private UUID id;
     private String name;
 

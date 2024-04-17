@@ -31,7 +31,7 @@ public class UpdateUserUseCase {
         user = usersRepository.updateUser(user);
         var orders = ordersRepository.findOrdersByCriteria(new FindCriteria(user.getId(), null));
         var ordersIds = new ArrayList<UUID>();
-        for (var each : orders) ordersIds.add(each.getUserId());
+        for (var each : orders) ordersIds.add(each.getUser().getId());
         return new UserDetailsDTO(user.getId(), user.getPhoneNumber(),
                 user.getPassword(), user.getBalance(), user.getBirthday(), ordersIds);
     }

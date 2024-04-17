@@ -24,7 +24,7 @@ public class FindUsersByCriteriaUseCase {
         for (User each : users) {
             var orders = ordersRepository.findOrdersByCriteria(new com.bookstore.app.entities.order.persistance.FindCriteria(each.getId(), null));
             var ordersIds = new ArrayList<UUID>();
-            for (var eachOrder : orders) ordersIds.add(eachOrder.getUserId());
+            for (var eachOrder : orders) ordersIds.add(eachOrder.getUser().getId());
             usersDTO.add(new UserDetailsDTO(each.getId(), each.getPhoneNumber(),
                     each.getPassword(), each.getBalance(), each.getBirthday(), ordersIds));
         }

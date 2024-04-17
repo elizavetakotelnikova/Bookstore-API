@@ -10,7 +10,6 @@ public class OrderStateConverter implements AttributeConverter<OrderState, Strin
     public String convertToDatabaseColumn(OrderState state) {
         return state.name().toLowerCase();
     }
-
     @Override
     public OrderState convertToEntityAttribute(String dbData) {
         return OrderState.valueOf(dbData);
